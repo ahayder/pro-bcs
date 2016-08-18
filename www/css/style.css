@@ -1,0 +1,35 @@
+.wrong-answer .popup{
+    background-color: #e66258;
+}
+
+.right-answer .popup{
+    background-color: #2cc759;
+}
+
+.total-questions{
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.bg-red{
+    background-color: #e66258;
+    color: white;
+}
+
+.bg-green{
+    background-color: #2cc759;
+    color: white;
+}
+
+.bg-current{
+    background-color: #11c1f3;
+    color: white;
+}
+
+.custom-row{
+    padding: 0 !important;
+}
+
+.custom-col{
+    padding: 0 !important;
+}

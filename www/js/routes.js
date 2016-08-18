@@ -1,0 +1,99 @@
+angular.module('app.routes', [])
+
+.config(function($stateProvider, $urlRouterProvider) {
+
+  // Ionic uses AngularUI Router which uses the concept of states
+  // Learn more here: https://github.com/angular-ui/ui-router
+  // Set up the various states which the app can be in.
+  // Each state's controller can be found in controllers.js
+  $stateProvider
+    
+  
+
+  .state('bcsQuiz.categories', {
+    url: '/categories',
+    views: {
+      'tab1': {
+        templateUrl: 'templates/categories.html',
+        controller: 'categoriesCtrl'
+      }
+    }
+  })
+
+  .state('bcsQuiz.hot', {
+    url: '/hot',
+    views: {
+      'tab2': {
+        templateUrl: 'templates/hot.html',
+        controller: 'hotCtrl'
+      }
+    }
+  })
+
+
+
+  // .state('bcsQuiz.tags', {
+  //   url: '/tags',
+  //   views: {
+  //     'tab3': {
+  //       templateUrl: 'templates/tags.html',
+  //       controller: 'tagsCtrl'
+  //     }
+  //   }
+  // })
+
+  .state('bcsQuiz', {
+    url: '/tabs',
+    templateUrl: 'templates/bcsQuiz.html',
+    abstract:true
+  })
+
+  .state('login', {
+    url: '/login',
+    templateUrl: 'templates/login.html',
+    controller: 'loginCtrl'
+  })
+
+  .state('bcsQuiz.subCategories', {
+    url: '/subCategories/:id',
+    views: {
+      'tab1': {
+        templateUrl: 'templates/subCategories.html',
+        controller: 'subCategoriesCtrl'
+      }
+    }
+  })
+
+  .state('bcsQuiz.quiz', {
+    url: '/quiz/:id/:subName',
+    cache: false,
+    views: {
+      'tab1': {
+        templateUrl: 'templates/quiz.html',
+        controller: 'quizCtrl'
+      }
+    }
+  })
+
+  .state('bcsQuiz.result', {
+    url: '/result/:subCatName',
+    cache: false,
+    views: {
+      'tab1': {
+        templateUrl: 'templates/result.html',
+        controller: 'resultCtrl'
+      }
+    }
+  })
+
+  .state('aboutUs', {
+    url: '/about-us',
+    templateUrl: 'templates/aboutUs.html',
+    controller: 'aboutUsCtrl'
+  })
+
+$urlRouterProvider.otherwise('tabs/categories')
+
+  
+
+});
