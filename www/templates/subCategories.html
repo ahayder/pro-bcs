@@ -8,7 +8,7 @@
                 <input type="search" placeholder="খুঁজুন" ng-model="search.title">
             </label>
 
-            <ion-item  ng-repeat="sub in subs | filter: search:strict" class="item-icon-right  " id="subCategories-list-item9" ui-sref="bcsQuiz.quiz({id: sub.$id, subName: sub.title})">{{sub.title}}
+            <ion-item  ng-repeat="sub in subs | filter: search:strict" class="animated flipInX item-icon-right  " id="subCategories-list-item9" ui-sref="bcsQuiz.quizConfig({id: sub.$id, subName: sub.title})">{{sub.title}}
                 <i class="icon ion-ios-arrow-thin-right"></i>
             </ion-item>
         </ion-list>

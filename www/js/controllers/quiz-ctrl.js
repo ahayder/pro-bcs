@@ -10,10 +10,24 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
 
     var qusRef = firebase.database().ref().child("questions");
 
+    // Sate Params /quiz/:id/:subCatName/:qType/:startIdx/:endIdx
+    $scope.subCatName = $stateParams.subName;
+    console.log($stateParams.id);
+    console.log($stateParams.subCatName);
+    console.log($stateParams.qType);
+    console.log($stateParams.startIdx);
+    var start = parseInt($stateParams.startIdx) - 1;
+    console.log("Start"+ start);
+    console.log($stateParams.endIdx);
+    var end = parseInt($stateParams.endIdx);
+    console.log("End"+ end);
+
+
+
+    // query
     var query = qusRef.orderByChild("subCatId").equalTo($stateParams.id);
 
-    // Subcat name
-    $scope.subCatName = $stateParams.subName;
+    
 
     // Score
     $rootScope.score = {}
@@ -50,12 +64,14 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
     // Doing a shuffle for options and answer
     allQtns.$loaded(function(allqs){
 
+        var rangedQtns = allqs.slice(start, end);
+
         // Total questions in this subcategory
-        $scope.totalQuestions = allqs.length;
+        $scope.totalQuestions = rangedQtns.length;
         console.log($scope.totalQuestions)
 
         // Shuffling all questions
-        $scope.allQuestions = shuffle(allqs);
+        $scope.allQuestions = shuffle(rangedQtns);
 
         // Shuffling respective question's answers
         var tempOptionsArray = [

@@ -1,0 +1,31 @@
+<ion-view title="Quiz Config" id="page7">
+    <ion-content padding="true" class="has-header">
+
+        <h2 class="title" style="text-align: center;">{{totalQuestions}} questions</h2>
+
+        <div class="card">
+            <div class="item item-divider">Select a method</div>
+            <ion-list>
+                <ion-radio name="forType" ng-model="type" ng-value="'quiz'">Quiz</ion-radio>
+                <ion-radio name="forType" ng-model="type" ng-value="'study'">Study</ion-radio>
+            </ion-list>
+        </div>
+
+        <div class="card">
+            <div class="item item-divider">Select range</div>
+            <ion-list>
+                <ion-radio name="forRange" ng-repeat="range in ranges" ng-model="$parent.rangeValue" ng-value="range">{{range.starting}} to {{range.ending}}</ion-radio>
+            </ion-list>
+        </div>
+        
+
+        <button class="button button-block button-positive" 
+            ui-sref="bcsQuiz.quiz({id: data.id, subCatName: data.title, qType: type, startIdx: rangeValue.starting, endIdx: rangeValue.ending})">
+        Go</button>
+
+        <!--<button class="button button-block button-positive" ng-click="test(type, rangeValue)">Go</button>        -->
+                
+
+
+    </ion-content>
+</ion-view>

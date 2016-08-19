@@ -64,8 +64,19 @@ angular.module('app.routes', [])
     }
   })
 
+  .state('bcsQuiz.quizConfig', {
+    url: '/quizConfig/:id/:subName',
+    cache: false,
+    views: {
+      'tab1': {
+        templateUrl: 'templates/quiz-config.html',
+        controller: 'quizConfigCtrl'
+      }
+    }
+  })
+
   .state('bcsQuiz.quiz', {
-    url: '/quiz/:id/:subName',
+    url: '/quiz/:id/:subCatName/:qType/:startIdx/:endIdx',  
     cache: false,
     views: {
       'tab1': {

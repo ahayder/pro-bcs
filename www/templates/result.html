@@ -11,22 +11,24 @@
 
     <ion-content padding="true" class=" manual-remove-top-padding has-header">
         <h3 class="title" style="text-align: center; margin: 10px 0 3px 0;">Result</h3>
+        
         <div class="row custom-row">
             <div class="col custom-col">
                 <div class="card" style="margin: 5px 5px 0 0">
                     <div class="item item-text-wrap bg-green">
-                    Correct: {{marks.correct}}({{marks.correctPercentage}}%)
+                    <i class="icon ion-checkmark-circled"></i> {{marks.correct}}  ({{marks.correctPercentage | number:2}}%)
                     </div>
                 </div>
             </div>
             <div class="col custom-col">
                 <div class="card" style="margin: 5px 0 0 5px">
                     <div class="item item-text-wrap bg-red">
-                    Wrong: {{marks.wrong}}({{marks.wrongPercentage}}%)
+                    <i class="icon ion-close-circled"></i> {{marks.wrong}}  ({{marks.wrongPercentage | number:2}}%)
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="row custom-row">
             <div class="col custom-col">
                 <div class="card" style="margin: 10px 0 0 0">

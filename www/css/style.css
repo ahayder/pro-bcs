@@ -1,9 +1,10 @@
 .wrong-answer .popup{
-    background-color: #e66258;
+    background-color: #e66258 !important;
+
 }
 
 .right-answer .popup{
-    background-color: #2cc759;
+    background-color: #2cc759 !important;
 }
 
 .total-questions{

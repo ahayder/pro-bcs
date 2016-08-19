@@ -1,14 +1,16 @@
 <ion-view title="Categories" id="page4">
     <ion-content padding="true" class="has-header" scroll="true">
+
         <ion-list id="categories-list3">
             <label class="item item-input">
                 <i class="icon ion-search placeholder-icon"></i>
                 <input type="search" placeholder="খুঁজুন" ng-model="search.$value">
             </label>
 
-            <ion-item  ng-repeat="cat in cats | filter: search:strict" class="item-icon-right  " id="categories-list-item4" ui-sref="bcsQuiz.subCategories({id: cat.$id})">{{cat.$value}}
+            <ion-item  ng-repeat="cat in cats | filter: search:strict" class="animated flipInX item-icon-right" id="categories-list-item4" ui-sref="bcsQuiz.subCategories({id: cat.$id})">{{cat.$value}}
                 <i class="icon ion-ios-arrow-thin-right"></i>
             </ion-item>
         </ion-list>
+
     </ion-content>
 </ion-view>
