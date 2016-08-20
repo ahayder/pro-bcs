@@ -20,7 +20,8 @@
 
                 <div class="item item-divider item-text-wrap">{{allQuestions[currentIndexNum].title}}</div>
                 
-                <div class="item item-text-wrap" ng-repeat="opt in options" ng-class="rightAnswer">{{opt.title}}</div>
+                <div class="item item-text-wrap" ng-repeat="opt in options" 
+                ng-class="{ 'right-answer': awesome, 'text-large': giant }">{{opt.title}}</div>
 
             </div>
 
