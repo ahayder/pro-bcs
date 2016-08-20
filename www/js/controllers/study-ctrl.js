@@ -1,6 +1,6 @@
-angular.module('app.quizController', [])
+angular.module('app.studyController', [])
 
-.controller('quizCtrl', ['$scope', '$stateParams', '$firebaseArray', '$ionicPopup', 'ionicToast', '$state', '$timeout', '$rootScope', 'ResultFacotry', '$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('studyCtrl', ['$scope', '$stateParams', '$firebaseArray', '$ionicPopup', 'ionicToast', '$state', '$timeout', '$rootScope', 'ResultFacotry', '$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state, $timeout, $rootScope, ResultFacotry, $ionicLoading) {
@@ -94,61 +94,22 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
     });
 
 
-
-
-    // Right or wrong answer
-    $scope.count = {
-        right: 0,
-        wrong: 0
+    $scope.next = function(){
+        $scope.currentIndexNum++;
+                // Shuffling next question's answers
+                var tempOptionsArray = [
+                                {title: $scope.allQuestions[$scope.currentIndexNum].option1, selected: false},
+                                {title: $scope.allQuestions[$scope.currentIndexNum].option2, selected: false},
+                                {title: $scope.allQuestions[$scope.currentIndexNum].option3, selected: false},
+                                {title: $scope.allQuestions[$scope.currentIndexNum].answer, selected: false}
+                                ];
+        
+                $scope.options = shuffle(tempOptionsArray);
     }
 
 
-    // Making a variable for storing data to show result
-    var singleQuestion = {};
-
-     // Initializing the localstorage result variable as empty
-    localStorage.setItem('results',[]);
-
-    // Checking answer    
-    $scope.checkAnswer = function(userAns){
-
-        // saving into result
-        singleQuestion.question = $scope.allQuestions[$scope.currentIndexNum];
-        singleQuestion.userAnswer = userAns;
-        console.log(singleQuestion);
-        ResultFacotry.saveResult(singleQuestion);  
-
-        // If Right asnwer
-        if($scope.allQuestions[$scope.currentIndexNum].answer == userAns){
-            console.log("Right");
-
-            $rootScope.score.mark += 1;
-            var rightAnsAlert = $ionicPopup.show({
-                    title: '<h3 class="title light">Congratz!</h3>',
-                    cssClass: 'right-answer',
-                    template: '<h5 class="title light">Answer is correct</h5>'
-                });
-            
-            $timeout(function() {
-                rightAnsAlert.close(); //close the popup after specified seconds for some reason
-            }, 1000);
-
-            $scope.count.right++;
-
-            // checking whether no more questions available
-            if($scope.allQuestions.length == $scope.currentIndexNum+1){
-
-                $timeout(function() {
-                    ionicToast.show("You've completed all the questions in this category", 'top', false, 2000);
-                    $state.go("bcsQuiz.result", {subCatName: $scope.subCatName});
-                }, 1000);
-                
-
-                return;
-            }
-
-            $timeout(function() {
-                $scope.currentIndexNum++;
+    $scope.previous = function(){
+        $scope.currentIndexNum--;
                 // Shuffling next question's answers
                 var tempOptionsArray = [
                                 {title: $scope.allQuestions[$scope.currentIndexNum].option1, selected: false},
@@ -158,60 +119,22 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
                                 ];
         
                 $scope.options = shuffle(tempOptionsArray);
-            }, 1000);
-            
-            
-
-            
-        }
-        // If Wrong Answer
-        else{
-            $rootScope.score.mark -= 1.25;
-            console.log("Wrong! Right answer is " + $scope.allQuestions[$scope.currentIndexNum].answer);
-
-            //ionicToast.show("Wrong! Right answer is " + $scope.allQuestions[$scope.currentIndexNum].answer, 'bottom', false, 2500);
-            var wrongAnsAlert = $ionicPopup.show({
-                    title: '<h3 class="title light">Oops!</h3>',
-                    cssClass: 'wrong-answer',
-                    template: '<h5 class="title light">'+'Right answer is ' + $scope.allQuestions[$scope.currentIndexNum].answer+'</h5>'
-                });
-            
-            $timeout(function() {
-                wrongAnsAlert.close(); //close the popup after specified seconds for some reason
-            }, 2500);
+    }
 
 
-            $scope.count.wrong++;
-            // checking whether no more questions available
-            if($scope.allQuestions.length == $scope.currentIndexNum+1){
 
-                $timeout(function() {
-                    ionicToast.show("You've completed all the questions in this category", 'top', false, 2000);
-                    $state.go("bcsQuiz.result", {subCatName: $scope.subCatName});
-                }, 1000);
-                
-                return;
+
+
+    $scope.showAnswer = function(options){
+
+        for(var i = 0 ; i < options.length; i++){
+            if($scope.allQuestions[$scope.currentIndexNum].answer == options[i].title){
+                console.log(options[i].title);
+                $scope.rightAnswer = options[i].title;
             }
-
-            $timeout(function() {
-                $scope.currentIndexNum++;
-                // Shuffling next question's answers
-                var tempOptionsArray = [
-                                {title: $scope.allQuestions[$scope.currentIndexNum].option1, selected: false},
-                                {title: $scope.allQuestions[$scope.currentIndexNum].option2, selected: false},
-                                {title: $scope.allQuestions[$scope.currentIndexNum].option3, selected: false},
-                                {title: $scope.allQuestions[$scope.currentIndexNum].answer, selected: false}
-                                ];
-        
-                $scope.options = shuffle(tempOptionsArray);
-            }, 2500);
-            
-
-            
         }
 
-        
-    } // End of check answer function
+    }
     
 
 

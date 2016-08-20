@@ -76,12 +76,23 @@ angular.module('app.routes', [])
   })
 
   .state('bcsQuiz.quiz', {
-    url: '/quiz/:id/:subCatName/:qType/:startIdx/:endIdx',  
+    url: '/quiz/:id/:subCatName/:startIdx/:endIdx',  
     cache: false,
     views: {
       'tab1': {
         templateUrl: 'templates/quiz.html',
         controller: 'quizCtrl'
+      }
+    }
+  })
+
+  .state('bcsQuiz.study', {
+    url: '/study/:id/:subCatName/:startIdx/:endIdx',  
+    cache: false,
+    views: {
+      'tab1': {
+        templateUrl: 'templates/study.html',
+        controller: 'studyCtrl'
       }
     }
   })

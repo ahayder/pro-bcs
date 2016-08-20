@@ -1,0 +1,56 @@
+<ion-view title="{{subCatName}}" id="page7">
+
+    <ion-header-bar class="bar-subheader">
+        <div class="button-bar">
+            <div class="button" ng-model="view" ng-click="view = false">Slide View</div>
+            <div class="button" ng-model="view" ng-click="view = true">List View</div>
+        </div>
+        
+    </ion-header-bar>
+
+    <ion-content padding="true" class="has-header has-subheader">
+
+        <div ng-hide="view">
+
+            <button class="button button-block button-light" style="margin-bottom: 0px;">
+             ({{currentIndexNum+1}}/{{totalQuestions}})
+            </button>
+
+            <div class="list card ">
+
+                <div class="item item-divider item-text-wrap">{{allQuestions[currentIndexNum].title}}</div>
+                
+                <div class="item item-text-wrap" ng-repeat="opt in options" ng-class="rightAnswer">{{opt.title}}</div>
+
+            </div>
+
+            <div class="button-bar">
+                <div class="button button-positive" ng-click="previous()">Previous</div>
+                <div class="button button-positive" ng-click="showAnswer(options)">Answer</div>
+                <div class="button button-positive" ng-click="next()">Next</div>
+            </div>
+        </div>
+
+
+
+
+
+        <!--list View-->
+
+
+        <div ng-show="view">
+            <div class="card " ng-repeat="q in allQuestions">
+                <div class="item item-divider item-text-wrap">
+                    {{q.title}}
+                </div>
+                <div class="item item-text-wrap">
+                    Answer: {{q.answer}}
+                </div>
+
+            </div>
+        </div>
+
+        
+
+    </ion-content>
+</ion-view>

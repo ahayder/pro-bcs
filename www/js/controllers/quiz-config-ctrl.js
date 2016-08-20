@@ -32,7 +32,7 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
         $scope.totalQuestions = allqs.length;
 
         // Range system
-        var interval = 3;
+        var interval = 5;
 
         var questionsChunks = Math.floor(allqs.length / interval);
 
@@ -94,9 +94,15 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
 
 
 
-    $scope.test = function(type, range){
-        console.log(type);
-        console.log(range);
+    $scope.go = function(subId, subTitle, type, range){
+
+
+        if(type == 'quiz'){
+            $state.go("bcsQuiz.quiz", {id: subId, subCatName: subTitle, startIdx: range.starting, endIdx: range.ending});
+        }
+        else{
+            $state.go("bcsQuiz.study", {id: subId, subCatName: subTitle, startIdx: range.starting, endIdx: range.ending});
+        }
     }
 
     
