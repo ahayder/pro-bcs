@@ -11,6 +11,10 @@
     background-color: #2cc759 !important;
 }
 
+.nothing-class{
+    color: black;
+}
+
 .total-questions{
     font-weight: 700;
     font-size: 20px;
