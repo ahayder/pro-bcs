@@ -1,9 +1,11 @@
-<ion-view title="Login" id="page5">
-    <ion-content padding="true" class="has-header">
+<ion-view title="লগইন" id="page5">
+    <ion-content padding="true" class="padding has-header">
         <form id="login-form1" class="list ">
             <div class="spacer" style="width: 300px; height: 130px;"></div>
-            <button id="login-button1" class=" button button-positive  button-block icon-left ion-social-facebook ">Log in with Facebook</button>
-            <button id="login-button3" class=" button button-assertive  button-block icon-left ion-social-google ">Log in with Google</button>
+            <button id="login-button1" class=" button button-positive  button-block icon-left ion-social-facebook "
+            ng-click="fbLogin()">Log in with Facebook</button>
+            <button id="login-button3" class=" button button-assertive  button-block icon-left ion-social-google "
+            ng-click="googleLogin()">Log in with Google</button>
         </form>
     </ion-content>
 </ion-view>

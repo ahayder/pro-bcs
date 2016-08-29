@@ -15,8 +15,31 @@ $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
 
+
+$calm:                            #3F51B5 !default;
+$dark:                            #303F9F !default;
+$royal:                           #C5CAE9 !default;
+$positive:                        #2cc759 !default;
+$assertive:                       #e66258 !default;
+
+
+
+// .dark-primary-color    { background: #303F9F; }
+// .default-primary-color { background: #3F51B5; }
+// .light-primary-color   { background: #C5CAE9; }
+// .text-primary-color    { color: #FFFFFF; }
+// .accent-color          { background: #4CAF50; }
+// .primary-text-color    { color: #212121; }
+// .secondary-text-color  { color: #757575; }
+// .divider-color         { border-color: #BDBDBD; }
+
+
+
+
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
+
+
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";

@@ -4,22 +4,24 @@ angular.module('app.quizController', [])
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state, $timeout, $rootScope, ResultFacotry, $ionicLoading) {
+
+
     $ionicLoading.show({
-      template: 'Loading...'
+      template: '<ion-spinner icon="spiral"></ion-spinner>'
     });
 
     var qusRef = firebase.database().ref().child("questions");
 
     // Sate Params /quiz/:id/:subCatName/:qType/:startIdx/:endIdx
     $scope.subCatName = $stateParams.subName;
-    console.log($stateParams.id);
-    console.log($stateParams.subCatName);
-    console.log($stateParams.startIdx);
+    // console.log($stateParams.id);
+    // console.log($stateParams.subCatName);
+    // console.log($stateParams.startIdx);
     var start = parseInt($stateParams.startIdx) - 1;
-    console.log("Start"+ start);
-    console.log($stateParams.endIdx);
+    //console.log("Start"+ start);
+    //console.log($stateParams.endIdx);
     var end = parseInt($stateParams.endIdx);
-    console.log("End"+ end);
+    //console.log("End"+ end);
 
 
 
@@ -106,8 +108,7 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
     // Making a variable for storing data to show result
     var singleQuestion = {};
 
-     // Initializing the localstorage result variable as empty
-    localStorage.setItem('results',[]);
+     
 
     // Checking answer    
     $scope.checkAnswer = function(userAns){
@@ -120,13 +121,13 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
 
         // If Right asnwer
         if($scope.allQuestions[$scope.currentIndexNum].answer == userAns){
-            console.log("Right");
+            ////console.log("Right");
 
             $rootScope.score.mark += 1;
             var rightAnsAlert = $ionicPopup.show({
-                    title: '<h3 class="title light">Congratz!</h3>',
+                    title: '<h3 class="title light">সাবাস বাঘের বাচ্চা!</h3>',
                     cssClass: 'right-answer',
-                    template: '<h5 class="title light">Answer is correct</h5>'
+                    template: '<h5 class="title light" style="text-align:center;">উত্তর সঠিক</h5>'
                 });
             
             $timeout(function() {
@@ -139,7 +140,7 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
             if($scope.allQuestions.length == $scope.currentIndexNum+1){
 
                 $timeout(function() {
-                    ionicToast.show("You've completed all the questions in this category", 'top', false, 2000);
+                    //ionicToast.show("You've completed all the questions in this category", 'top', false, 2000);
                     $state.go("bcsQuiz.result", {subCatName: $scope.subCatName});
                 }, 1000);
                 
@@ -166,14 +167,14 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
         }
         // If Wrong Answer
         else{
-            $rootScope.score.mark -= 1.25;
-            console.log("Wrong! Right answer is " + $scope.allQuestions[$scope.currentIndexNum].answer);
+            $rootScope.score.mark -= 0.50;
+            //console.log("ভুল! সঠিক উত্তরঃ " + $scope.allQuestions[$scope.currentIndexNum].answer);
 
             //ionicToast.show("Wrong! Right answer is " + $scope.allQuestions[$scope.currentIndexNum].answer, 'bottom', false, 2500);
             var wrongAnsAlert = $ionicPopup.show({
-                    title: '<h3 class="title light">Oops!</h3>',
+                    title: '<h3 class="title light">ভুল!</h3>',
                     cssClass: 'wrong-answer',
-                    template: '<h5 class="title light">'+'Right answer is ' + $scope.allQuestions[$scope.currentIndexNum].answer+'</h5>'
+                    template: '<h5 class="title light" style="text-align:center;">'+'সঠিক উত্তরঃ ' + $scope.allQuestions[$scope.currentIndexNum].answer+'</h5>'
                 });
             
             $timeout(function() {
@@ -186,7 +187,7 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
             if($scope.allQuestions.length == $scope.currentIndexNum+1){
 
                 $timeout(function() {
-                    ionicToast.show("You've completed all the questions in this category", 'top', false, 2000);
+                    //ionicToast.show("You've completed all the questions in this category", 'top', false, 2000);
                     $state.go("bcsQuiz.result", {subCatName: $scope.subCatName});
                 }, 1000);
                 

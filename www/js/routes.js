@@ -78,6 +78,10 @@ angular.module('app.routes', [])
   .state('bcsQuiz.quiz', {
     url: '/quiz/:id/:subCatName/:startIdx/:endIdx',  
     cache: false,
+    onEnter: function(){
+      localStorage.setItem('results',[]);
+      console.log("emptied");
+    },
     views: {
       'tab1': {
         templateUrl: 'templates/quiz.html',
@@ -108,10 +112,11 @@ angular.module('app.routes', [])
     }
   })
 
-  .state('aboutUs', {
-    url: '/about-us',
-    templateUrl: 'templates/aboutUs.html',
-    controller: 'aboutUsCtrl'
+  .state('leaderboard', {
+    url: '/leaderboard',
+    cache: false,
+    templateUrl: 'templates/leaderboard.html',
+    controller: 'leaderboardCtrl'
   })
 
 $urlRouterProvider.otherwise('tabs/categories')

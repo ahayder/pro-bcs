@@ -19,7 +19,7 @@ function ($scope, $stateParams, $firebaseArray) {
 function ($scope, $stateParams, $firebaseArray, $ionicLoading, ionicToast) {
 
     $ionicLoading.show({
-      template: 'Loading...'
+      template: '<ion-spinner icon="spiral"></ion-spinner>'
     });
 
     var catRef = firebase.database().ref().child("categories");
@@ -36,14 +36,6 @@ function ($scope, $stateParams, $firebaseArray, $ionicLoading, ionicToast) {
     });
 
 }])
-      
-.controller('loginCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
-
-}])
    
 .controller('subCategoriesCtrl', ['$scope', '$stateParams', '$firebaseArray', '$ionicLoading',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
@@ -51,7 +43,7 @@ function ($scope, $stateParams) {
 function ($scope, $stateParams, $firebaseArray, $ionicLoading) {
 
     $ionicLoading.show({
-      template: 'Loading...'
+      template: '<ion-spinner icon="spiral"></ion-spinner>'
     });
     
     var subCatRef = firebase.database().ref().child("subCategories");

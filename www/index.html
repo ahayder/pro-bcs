@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src  'self' 'unsafe-inline' *">
     <title></title>
 
     
@@ -10,37 +11,14 @@
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
+    <script src="lib/ngCordova/dist/ng-cordova.js"></script>
     <script src="cordova.js"></script>
+
+    <link href="css/style.css" rel="stylesheet">
 
     <!-- compiled css output -->
     <link href="css/ionic.app.css" rel="stylesheet">
     <link rel="stylesheet" href="lib/animate.css/animate.min.css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
-    
-
-    
-    
-
-    <style type="text/css">
-      .platform-ios .manual-ios-statusbar-padding{
-        padding-top:20px;
-      }
-      .manual-remove-top-padding{
-        padding-top:0px; 
-      }
-      .manual-remove-top-padding .scroll{
-        padding-top:0px !important;
-      }
-      ion-list.manual-list-fullwidth div.list, .list.card.manual-card-fullwidth {
-        margin-left:-10px;
-        margin-right:-10px;
-      }
-      ion-list.manual-list-fullwidth div.list > .item, .list.card.manual-card-fullwidth > .item {
-        border-radius:0px;
-        border-left:0px;
-        border-right: 0px;
-      }
-    </style>
 
     <script src="js/app.js"></script>
     <script src="js/controllers/small-ctrls.js"></script>
@@ -48,6 +26,8 @@
     <script src="js/controllers/quiz-ctrl.js"></script>
     <script src="js/controllers/study-ctrl.js"></script>
     <script src="js/controllers/result-ctrl.js"></script>
+    <script src="js/controllers/login-ctrl.js"></script>
+    <script src="js/controllers/leaderboard-ctrl.js"></script>
     <script src="js/routes.js"></script>
     
      
@@ -59,6 +39,8 @@
     <!-- Only required for Tab projects w/ pages in multiple tabs 
     <script src="lib/ionicuirouter/ionicUIRouter.js"></script>
     -->
+
+    <script src="lib/ng-cordova-oauth/dist/ng-cordova-oauth.min.js"></script>
 
     
     <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
@@ -75,18 +57,21 @@
     
 
     <!-- AngularFire -->
-    <script src="https://cdn.firebase.com/libs/angularfire/2.0.1/angularfire.min.js"></script>
+    <script src="lib/angularfire/dist/angularfire.min.js"></script>
 
     <!--Toast-->
     <script src="lib/ionic-toast/dist/ionic-toast.bundle.min.js"></script>
     
+
+    <script src="js/openfb.js"></script>
+    <script src="js/ngopenfb.js"></script>
 
   </head>
   <body ng-app="app" animation="slide-left-right-ios7">
   <div>
     <ion-side-menus enable-menu-with-back-views="true" data-componentid="side-menu21">
         <ion-side-menu-content>
-            <ion-nav-bar class="bar-stable">
+            <ion-nav-bar class="bar-dark">
                 <ion-nav-back-button></ion-nav-back-button>
                 <ion-nav-buttons side="left">
                     <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
@@ -95,17 +80,23 @@
             <ion-nav-view></ion-nav-view>
         </ion-side-menu-content>
         <ion-side-menu side="left" id="side-menu21">
-            <ion-header-bar class="bar-stable">
-                <div class="title">Menu</div>
+            <ion-header-bar class="bar-dark">
+                <div class="title">মেন্যু</div>
             </ion-header-bar>
-            <ion-content padding="false" class="side-menu-left has-header">
+            <ion-content padding="false" class="side-menu-left has-header" ng-controller="menuCtrl">
                 <ion-list id="menu-list1" data-componentid="list1">
-                    <ion-item id="menu-list-item2" ui-sref="bcsQuiz.categories" menu-close="" data-componentid="list-item2">Categories</ion-item>
-                    <ion-item id="menu-list-item1" ui-sref="bcsQuiz.hot" menu-close="" data-componentid="list-item1">Hot Topics</ion-item>
-                    <!--<ion-item id="menu-list-item2" ui-sref="bcsQuiz.tags" menu-close="" data-componentid="list-item2">Tags</ion-item>-->
-                    <ion-item id="menu-list-item3" ui-sref="login" menu-close="" data-componentid="list-item3">Login</ion-item>
-                    <ion-item id="menu-list-item26" data-componentid="list-item26">Give us your review</ion-item>
-                    <ion-item id="menu-list-item27" data-componentid="list-item27">About us</ion-item>
+                    <a class="item item-avatar default-primary-color" style="border-top:0;" href="#" ng-if="user">
+                      <img ng-src="{{user.photoURL || placeholderImage}}">
+                      <h2 class="text-primary-color">{{user.displayName || user.email}}</h2>
+                      <p class="light-primary-color-text">স্কোর: {{leader.score}}({{leader.correctness}}%)</p>
+                    </a>
+                    <ion-item class="menu-text" ui-sref="login" menu-close="" data-componentid="list-item3" ng-if="!user">লগইন</ion-item>
+                    <ion-item class="menu-text" ui-sref="bcsQuiz.categories" menu-close="" data-componentid="list-item2">কুইজ</ion-item>
+                    <ion-item class="menu-text" ui-sref="bcsQuiz.hot" menu-close="" data-componentid="list-item1">জনপ্রিয় বিষয়</ion-item>
+                    <ion-item class="menu-text" ui-sref="leaderboard" menu-close="" data-componentid="list-item2">লিডার বোর্ড</ion-item>
+                    <ion-item class="menu-text" data-componentid="list-item26">পরামর্শ দিন</ion-item>
+                    <ion-item class="menu-text" data-componentid="list-item27">টিউটোরিয়াল</ion-item>
+                    <ion-item class="menu-text" menu-close data-componentid="list-item28" ng-if="user" ng-click="signOut()">লগআউট</ion-item>
                 </ion-list>
             </ion-content>
         </ion-side-menu>

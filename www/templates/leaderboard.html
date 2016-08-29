@@ -1,0 +1,47 @@
+<ion-view title="লিডার বোর্ড" id="page3">
+    <ion-content padding="true" class="has-header">
+
+        <!--Show positoin-->
+        <div class="card list" ng-show="enrolled">
+            <div class="item item-divider positive-bg primary-text-color">
+                আপনি {{your.position}} তম অবস্থান এ আছেন {{totalLeaders}} জন এর মাঝে
+            </div>
+            <div class="item item-text-wrap">
+                স্কোর: {{your.score}}({{your.correctness}}%)
+            </div>
+        </div>
+
+
+        <!--When not enlisted in leader board-->
+        <div class="card list" ng-show="notEnrolled">
+            <div class="item item-divider energized-bg primary-text-color">
+                <i class="icon ion-alert-circled"></i> আজই লিডার বোর্ড এ যোগদান করুন
+            </div>
+            <div class="item item-text-wrap">
+                অন্যদের মাঝে আপনার অবস্থান দেখুন এই লিডার বোর্ড এ।</br>
+                আপনি এখনো লিডার বোর্ডে যোগদান করেননি! কুইজ দিয়ে লিডার বোর্ডে আপনার অবস্থান গড়ুন। 
+            </div>
+        </div>
+
+
+        <!--when logged out-->
+        <div class="card list" ng-hide="loginState">
+            <div class="item item-divider item-text-wrap energized-bg primary-text-color">
+                <i class="icon ion-alert-circled"></i> লগইন করুন লিডার বোর্ড এ আপনার অবস্থান দেখার জন্য
+            </div>
+            <div class="item item-text-wrap">
+                অন্যদের মাঝে আপনার অবস্থান দেখুন এই লিডার বোর্ড এ।
+            </div>
+        </div>
+
+
+
+        <ion-list>
+            <ion-item class="item-thumbnail-left" collection-repeat="leader in allleaders | orderBy: '-score'">
+                <img ng-src="{{leader.photoURL || placeholderImage}}">
+                <h2>{{$index+1}}. {{leader.name}}</h2>
+                <p>স্কোরঃ {{leader.score}}({{leader.correctness}}%)</p>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

@@ -1,9 +1,14 @@
-<ion-view title="{{subCatName}}" id="page7">
+<ion-view title="স্টাডি" id="page7">
 
-    <ion-header-bar class="bar-subheader">
+    <ion-header-bar class="bar-subheader calm-bg">
+
         <div class="button-bar">
-            <div class="button" ng-model="view" ng-click="view = false">Slide View</div>
-            <div class="button" ng-model="view" ng-click="view = true">List View</div>
+            <div class="button button-clear button-royal" style="border-right:1px solid black !important;" ng-model="view" ng-click="view = false">
+                <span class="primary-color-text">স্লাইড ভিউ</span>
+            </div>
+            <div class="button button-clear button-royal dark-primary-color-text" ng-model="view" ng-click="view = true">
+                <span class="primary-color-text">লিস্ট ভিউ</span>
+            </div>
         </div>
         
     </ion-header-bar>
@@ -11,26 +16,24 @@
     <ion-content padding="true" class="has-header has-subheader">
 
         <div ng-hide="view">
-
             <button class="button button-block button-light" style="margin-bottom: 0px;">
              ({{currentIndexNum+1}}/{{totalQuestions}})
             </button>
 
             <div class="list card ">
-
-                <div class="item item-divider item-text-wrap">{{allQuestions[currentIndexNum].title}}</div>
-                
+                <div class="item item-divider item-royal item-text-wrap primary-text-color">{{allQuestions[currentIndexNum].title}}</div>
                 <div class="item item-text-wrap" ng-repeat="opt in options" 
                 ng-class="opt.title == rightAnswer ? 'show-answer' : 'nothing-class'">{{opt.title}}</div>
-
             </div>
 
             <div class="button-bar">
-                <div class="button button-positive" ng-click="previous()">Previous</div>
-                <div class="button button-positive" ng-click="showAnswer(options)">Answer</div>
-                <div class="button button-positive" ng-click="next()">Next</div>
+                <div class="button button-calm" ng-click="previous()">পূর্ববর্তী</div>
+                <div class="button button-positive" ng-click="showAnswer(options)">উত্তর দেখুন</div>
+                <div class="button button-calm" ng-click="next()">পরবর্তী</div>
             </div>
         </div>
+
+
 
 
 
@@ -41,7 +44,7 @@
 
         <div ng-show="view">
             <div class="card " ng-repeat="q in allQuestions">
-                <div class="item item-divider item-text-wrap">
+                <div class="item item-divider item-royal item-text-wrap primary-text-color">
                     {{q.title}}
                 </div>
                 <div class="item item-text-wrap">

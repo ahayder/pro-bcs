@@ -1,22 +1,27 @@
 <ion-view title="{{subCatName}}" id="page7">
 
-    <ion-header-bar class="bar-subheader">
-        <span class="button button-positive">{{count.right}}</span>
-        <h1 class="title">Score: <span class="badge badge-positive">{{score.mark}}</span></h1>
-        <span class="button button-assertive">{{count.wrong}}</span>
+    <ion-nav-buttons side="right">
+      <button class="button"><span style="font-size:22px;">স্কোর: {{score.mark}}</span></button>
+    </ion-nav-buttons>
+
+    <ion-header-bar class="bar-subheader bar-royal">
+        <button class="button button-clear button-positive" style="font-size:22px"><i class="icon ion-ios-checkmark-empty">{{count.right}}</i></button>
+        <h1 class="title"></h1>
+        <button class="button button-clear button-assertive" style="font-size:22px"><i class="icon ion-ios-close-empty">{{count.wrong}}</i></button>
+        
     </ion-header-bar>
 
-    <ion-content padding="true" class=" manual-remove-top-padding has-header has-subheader">
+    <ion-content padding="true">
 
         <button class="button button-block button-light" style="margin-bottom: 0px;">
              ({{currentIndexNum+1}}/{{totalQuestions}})
         </button>
 
-        <div class="list card " id="quiz-card24" style="margin-top: 3px;">
+        <div class="list card royal-bg " id="quiz-card24" style="margin-top: 3px;">
 
-            <h4 id="quiz-heading1" style="color:#000000;text-align:center;">{{allQuestions[currentIndexNum].title}}</h4>
+            <h4 id="quiz-heading1" class="primary-text-color" style="text-align:center;">{{allQuestions[currentIndexNum].title}}</h4>
             
-            <ion-checkbox ng-repeat="opt in options" ng-click="checkAnswer(opt.title)" ng-selected="{{opt.selected}}">{{opt.title}}</ion-checkbox>
+            <ion-checkbox class="item-text-wrap" ng-repeat="opt in options" ng-click="checkAnswer(opt.title)" ng-selected="{{opt.selected}}">{{opt.title}}</ion-checkbox>
 
         </div>
 

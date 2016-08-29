@@ -5,7 +5,7 @@ angular.module('app.studyController', [])
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state, $timeout, $rootScope, ResultFacotry, $ionicLoading) {
     $ionicLoading.show({
-      template: 'Loading...'
+      template: '<ion-spinner icon="spiral"></ion-spinner>'
     });
 
     var qusRef = firebase.database().ref().child("questions");
@@ -95,8 +95,14 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
 
 
     $scope.next = function(){
-        $scope.currentIndexNum++;
-                // Shuffling next question's answers
+
+        if($scope.allQuestions.length == ($scope.currentIndexNum + 1) ){
+            return;
+        }
+        else{
+            $scope.currentIndexNum++;
+
+            // Shuffling next question's answers
                 var tempOptionsArray = [
                                 {title: $scope.allQuestions[$scope.currentIndexNum].option1, selected: false},
                                 {title: $scope.allQuestions[$scope.currentIndexNum].option2, selected: false},
@@ -104,12 +110,19 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
                                 {title: $scope.allQuestions[$scope.currentIndexNum].answer, selected: false}
                                 ];
         
-                $scope.options = shuffle(tempOptionsArray);
+            $scope.options = shuffle(tempOptionsArray);
+        }
+           
     }
 
 
     $scope.previous = function(){
-        $scope.currentIndexNum--;
+
+        if($scope.currentIndexNum == 0){
+            return;
+        }
+        else{
+            $scope.currentIndexNum--;
                 // Shuffling next question's answers
                 var tempOptionsArray = [
                                 {title: $scope.allQuestions[$scope.currentIndexNum].option1, selected: false},
@@ -118,7 +131,9 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
                                 {title: $scope.allQuestions[$scope.currentIndexNum].answer, selected: false}
                                 ];
         
-                $scope.options = shuffle(tempOptionsArray);
+            $scope.options = shuffle(tempOptionsArray);
+        }
+        
     }
 
 

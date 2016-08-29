@@ -1,17 +1,21 @@
 <ion-view id="page7">
     <ion-nav-title>
-        {{page.title}}
+        রিপোর্ট
     </ion-nav-title>
 
-    <!--<ion-header-bar class="bar-subheader">
-        <span class="button button-positive">{{count.right}}</span>
-        <h1 class="title">Score: <span class="badge badge-positive">{{score.mark}}</span></h1>
-        <span class="button button-assertive">{{count.wrong}}</span>
-    </ion-header-bar>-->
-
-    <ion-content padding="true" class=" manual-remove-top-padding has-header">
-        <h3 class="title" style="text-align: center; margin: 10px 0 3px 0;">Result</h3>
+    <ion-content padding="true" class="manual-remove-top-padding has-header">
         
+        <div class="row custom-row" style="margin-bottom:10px;">
+            <div class="col custom-col">
+                <div class="card" style="margin: 10px 0 0 0">
+                    <div class="item item-text-wrap">
+                    <h1 class="title dark-primary-color-text" style="text-align:center;">স্কোর : {{marks.score}}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <div class="row custom-row">
             <div class="col custom-col">
                 <div class="card" style="margin: 5px 5px 0 0">
@@ -29,28 +33,22 @@
             </div>
         </div>
 
-        <div class="row custom-row">
-            <div class="col custom-col">
-                <div class="card" style="margin: 10px 0 0 0">
-                    <div class="item item-text-wrap bg-current">
-                    <h3 class="title" style="text-align:center; color: white;">Score: {{marks.score}}</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
 
-        <button class="button button-block button-positive">Join Our National Score Board</button>
+        <button class="button button-block button-positive" ng-click="joinNLB(marks)" ng-disabled="lbButtonDisable"><i class="icon ion-trophy"></i> লিডার বোর্ডে যোগ দিন</button>
+        <button class="button button-block button-outline button-calm" ng-click="backToQuiz()"><i class="icon ion-arrow-return-left"></i> পুনরায় কুইজ দিন</button>
         <hr>
 
+        <h3 class="title dark-primary-color-text" style="text-align:center;">এক নজরে</h3>
         <div class="card" ng-repeat="r in results track by $index">
             <div class="item item-text-wrap {{r.bgColor}}">
                {{$index+1}}. প্রশ্নঃ {{r.question.title}}
             </div>
             <div class="item item-text-wrap {{r.bgColor}}">
-                Right Answer: {{r.question.answer}}
+                সঠিক উত্তরঃ {{r.question.answer}}
             </div>
             <div class="item item-text-wrap {{r.bgColor}}">
-                Your Answer: {{r.userAnswer}}
+                আপনার উত্তরঃ {{r.userAnswer}}
             </div>
         </div>
 
