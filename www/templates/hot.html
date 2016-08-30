@@ -1,9 +1,10 @@
 <ion-view title="জনপ্রিয় বিষয়" id="page3">
-    <ion-content padding="true" class="has-header">
-        <div>
-            <ul style="text-align: center; color: blue; text-decoration: underline; font-size: 18px; line-height: 1.25;">
-                <li ng-repeat="topic in allHots">{{topic.title}}</li>
-            </ul>
-        </div>
+    <ion-content padding="true" class="has-header center">
+
+        <ul style="text-align: center; color: blue; text-decoration: underline; font-size: 18px; line-height: 1.5;">
+            <li ng-repeat="sub in hotTopics | orderBy: '-' | limitTo: 15" 
+            ui-sref="bcsQuiz.quizConfig({id: sub.$id, subName: sub.title})">{{sub.title}}</li>
+        </ul>
+           
     </ion-content>
 </ion-view>

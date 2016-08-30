@@ -211,10 +211,10 @@ function ($scope, $state, $rootScope, ResultFacotry, $stateParams, $ionicModal, 
                         var oldScore = parseInt(ref[3].$value);
 
                         var newCorrectness = (oldCorrectness + $scope.marks.correctPercentage)/2;
-                        var newScore = oldScore + $scope.marks.score;
+                        var newScore = oldScore + parseInt($scope.marks.score);
 
-                        //console.log(newCorrectness);
-                        //console.log(newScore);
+                        console.log(newCorrectness);
+                        console.log(newScore);
 
                         var obj = $firebaseObject(leaderRef);
                         obj.$remove().then(function(result){

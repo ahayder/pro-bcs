@@ -21,6 +21,32 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.quizControl
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
+    // Admob code
+    if(window.plugins && window.plugins.AdMob) {
+        //var admob_key = device.platform == "Android" ? "ca-app-pub-9736917302037050/1857374724" : "IOS_PUBLISHER_KEY";
+        var admob_key = "ca-app-pub-9736917302037050/1857374724";
+        var admob = window.plugins.AdMob;
+        admob.createBannerView( 
+            {
+                'publisherId': admob_key,
+                'adSize': admob.AD_SIZE.BANNER,
+                'bannerAtTop': false
+            }, 
+            function() {
+                admob.requestAd(
+                    { 'isTesting': false }, 
+                    function() {
+                        admob.showAd(true);
+                    }, 
+                    function() { alert('failed to request ad'); }
+                );
+            }, 
+            function() { alert('failed to create banner view'); }
+        );
+    }
+    // End of Admob code
+
   });
 
   $firebaseAuth().$onAuthStateChanged(function(user) {

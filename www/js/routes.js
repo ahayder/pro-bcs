@@ -20,27 +20,29 @@ angular.module('app.routes', [])
     }
   })
 
+
+  // .state('bcsQuiz.study', {
+  //   url: '/tags',
+  //   views: {
+  //     'tab2': {
+  //       templateUrl: 'templates/study.html',
+  //       controller: 'studyCtrl'
+  //     }
+  //   }
+  // })
+
+
   .state('bcsQuiz.hot', {
     url: '/hot',
+    cache: false,
     views: {
-      'tab2': {
+      'tab3': {
         templateUrl: 'templates/hot.html',
         controller: 'hotCtrl'
       }
     }
   })
 
-
-
-  // .state('bcsQuiz.tags', {
-  //   url: '/tags',
-  //   views: {
-  //     'tab3': {
-  //       templateUrl: 'templates/tags.html',
-  //       controller: 'tagsCtrl'
-  //     }
-  //   }
-  // })
 
   .state('bcsQuiz', {
     url: '/tabs',
