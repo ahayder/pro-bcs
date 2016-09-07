@@ -2,8 +2,8 @@
     <ion-content padding="true" class="has-header center">
 
         <ul style="text-align: center; color: blue; text-decoration: underline; font-size: 18px; line-height: 1.5;">
-            <li ng-repeat="sub in hotTopics | orderBy: '-' | limitTo: 15" 
-            ui-sref="bcsQuiz.quizConfig({id: sub.$id, subName: sub.title})">{{sub.title}}</li>
+            <li collection-repeat="sub in hotTopics | orderBy: '-' | limitTo: 15" 
+            ui-sref="quizConfig({id: sub.$id, subName: sub.title})">{{sub.title}}</li>
         </ul>
            
     </ion-content>

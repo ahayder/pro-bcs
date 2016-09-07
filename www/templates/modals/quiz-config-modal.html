@@ -1,4 +1,5 @@
-<ion-view title="কুইজ সেটিংস" id="page7">
+<ion-modal-view>
+    
     <ion-header-bar class="bar-subheader calm-bg">
         <h2 class="title text-primary-color">মোট {{totalQuestions}} টি প্রশ্ন</h2>
     </ion-header-bar>
@@ -24,8 +25,9 @@
                 প্রশ্ন সেট সিলেক্ট করুন
             </div>
             <ion-list>
-                <ion-radio name="forRange" ng-repeat="range in ranges" ng-model="$parent.rangeValue" ng-value="range" ng-click="showActionSheet(range)">({{range.starting}} to {{range.ending}}) <span class="light-primary-color-text">সেট {{$index+1}}</span></ion-radio>
+                <ion-radio name="forRange" collection-repeat="range in ranges" ng-model="$parent.rangeValue" ng-value="range" ng-click="showActionSheet(range)">({{range.starting}} to {{range.ending}}) <span class="light-primary-color-text">সেট {{$index+1}}</span></ion-radio>
             </ion-list>
         </div>  
     </ion-content>
-</ion-view>
+
+</ion-modal-view>

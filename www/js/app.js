@@ -5,7 +5,23 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.quizController', 'app.resultController', 'app.quizConfigController', 'app.studyController', 'app.loginController', 'app.leaderboardController', 'app.routes', 'app.directives','app.services', 'firebase', 'ionic-toast', 'ngCordovaOauth', 'ngOpenFB'])
+angular.module('app', ['ionic', 
+'ngCordova', 
+'app.controllers', 
+'app.quizController', 
+'app.resultController', 
+'app.settingsController', 
+'app.studyController', 
+'app.loginController', 
+'app.leaderboardController',
+'app.subController',
+'app.routes', 
+'app.directives',
+'app.services', 
+'firebase', 
+'ionic-toast', 
+'ngCordovaOauth', 
+'ngOpenFB'])
 
 .run(function($ionicPlatform, $rootScope, $firebaseAuth, ngFB, $firebaseObject) {
   ngFB.init({appId: '1746998085570124'});
@@ -31,7 +47,8 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.quizControl
             {
                 'publisherId': admob_key,
                 'adSize': admob.AD_SIZE.BANNER,
-                'bannerAtTop': false
+                'bannerAtTop': false,
+                'overlap': false, // set to true, to allow banner overlap webview
             }, 
             function() {
                 admob.requestAd(
@@ -51,7 +68,7 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.quizControl
 
   $firebaseAuth().$onAuthStateChanged(function(user) {
       $rootScope.user = user;
-      console.log($rootScope.user);
+      //console.log($rootScope.user);
       if($rootScope.user == null){
         var uid = " ";
       }
@@ -61,10 +78,41 @@ angular.module('app', ['ionic', 'ngCordova', 'app.controllers', 'app.quizControl
       
       var leaderRef = firebase.database().ref().child("leaderboard/"+uid);
       $rootScope.leader = $firebaseObject(leaderRef);
-      console.log($rootScope.leader);
+      //console.log($rootScope.leader);
   });
 
+  // Initialization
   $rootScope.placeholderImage = "img/profile.jpg"
+
+  // This is for quiz range
+  if(localStorage.getItem('quizQuestionsRange') !== null){
+    console.log("Yes range quiz");
+    console.log(localStorage.getItem('quizQuestionsRange'));
+    $rootScope.quizQuestionsRange = localStorage.getItem('quizQuestionsRange');
+  }
+  else{
+    console.log("NO range quiz");
+    localStorage.setItem('quizQuestionsRange',"5");
+    console.log(localStorage.getItem('quizQuestionsRange'));
+    $rootScope.quizQuestionsRange = localStorage.getItem('quizQuestionsRange');
+  }
+  // end of quiz range
+
+
+  // This is for study range
+  if(localStorage.getItem('studyQuestionsRange') !== null){
+    console.log("Yes range study");
+    console.log(localStorage.getItem('studyQuestionsRange'));
+    $rootScope.studyQuestionsRange = localStorage.getItem('studyQuestionsRange');
+  }
+  else{
+    console.log("NO range study");
+    localStorage.setItem('studyQuestionsRange',"10");
+    console.log(localStorage.getItem('studyQuestionsRange'));
+    $rootScope.studyQuestionsRange = localStorage.getItem('studyQuestionsRange');
+  }
+  // end of study range
+
 })
 
 

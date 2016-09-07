@@ -6,10 +6,27 @@ angular.module('app.resultController', [])
 function ($scope, $state, $rootScope, ResultFacotry, $stateParams, $ionicModal, $firebaseAuth, Auth, ionicToast, $firebaseArray, $firebaseObject, ngFB, $ionicHistory) {
 
     
+    // Finding next set
+    $scope.subcategoryId = $stateParams.subId;
+    $scope.subName = $stateParams.subCatName;
+    var allSets = $rootScope.quizQuestionSets
+    var setIndex = parseInt($stateParams.setIdx);
+
+    if((allSets.length-1) > setIndex){
+        $scope.ifNextSet = true;
+        $scope.nextSetIndex = setIndex + 1;
+        // User Review functionality could be implemented here
+    }else{
+        $scope.ifNextSet = false;
+        // User Review functionality could be implemented here
+    }
+
+    // End of finding next set
 
 
-    $scope.page = {}
-    $scope.page.title = $stateParams.subCatName;
+
+
+
 
     // for result calculation
     var marks = {};
@@ -41,16 +58,18 @@ function ($scope, $state, $rootScope, ResultFacotry, $stateParams, $ionicModal, 
     marks.total = temp.length;
     marks.correctPercentage = marks.correct *  100 / marks.total;
     marks.wrongPercentage = marks.wrong *  100 / marks.total;
-    marks.score = marks.correct - (marks.wrong * 0.50);
+    var score = marks.correct - (marks.wrong * 0.50);
+    marks.score = score < 0 ? 0:score;
 
 
 
     $scope.marks = marks;
 
+    // For chlering the the temp value in result facotry
     $scope.$on('$ionicView.beforeLeave', function() {
         //do stuff before enter
         // Initializing the localstorage result variable as empty
-        ResultFacotry.emptyTemp();
+        $rootScope.temp = [];
     });
 
 

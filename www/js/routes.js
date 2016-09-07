@@ -8,46 +8,26 @@ angular.module('app.routes', [])
   // Each state's controller can be found in controllers.js
   $stateProvider
     
-  
-
-  .state('bcsQuiz.categories', {
-    url: '/categories',
-    views: {
-      'tab1': {
-        templateUrl: 'templates/categories.html',
-        controller: 'categoriesCtrl'
-      }
-    }
+  .state('quizWay', {
+    url: '/quizWay',
+    cache: false,
+    templateUrl: 'templates/categories.html',
+    controller: 'categoriesCtrl'
   })
 
 
-  // .state('bcsQuiz.study', {
-  //   url: '/tags',
-  //   views: {
-  //     'tab2': {
-  //       templateUrl: 'templates/study.html',
-  //       controller: 'studyCtrl'
-  //     }
-  //   }
-  // })
+  .state('studyWay', {
+    url: '/studyWay',
+    templateUrl: 'templates/categories.html',
+    controller: 'categoriesCtrl'
+  })
 
 
-  .state('bcsQuiz.hot', {
+  .state('hot', {
     url: '/hot',
     cache: false,
-    views: {
-      'tab3': {
-        templateUrl: 'templates/hot.html',
-        controller: 'hotCtrl'
-      }
-    }
-  })
-
-
-  .state('bcsQuiz', {
-    url: '/tabs',
-    templateUrl: 'templates/bcsQuiz.html',
-    abstract:true
+    templateUrl: 'templates/hot.html',
+    controller: 'hotCtrl'
   })
 
   .state('login', {
@@ -56,62 +36,48 @@ angular.module('app.routes', [])
     controller: 'loginCtrl'
   })
 
-  .state('bcsQuiz.subCategories', {
+
+
+  .state('subCategories', {
     url: '/subCategories/:id',
-    views: {
-      'tab1': {
-        templateUrl: 'templates/subCategories.html',
-        controller: 'subCategoriesCtrl'
-      }
-    }
-  })
-
-  .state('bcsQuiz.quizConfig', {
-    url: '/quizConfig/:id/:subName',
     cache: false,
-    views: {
-      'tab1': {
-        templateUrl: 'templates/quiz-config.html',
-        controller: 'quizConfigCtrl'
-      }
-    }
+    templateUrl: 'templates/subCategories.html',
+    controller: 'subCategoriesCtrl'
   })
 
-  .state('bcsQuiz.quiz', {
-    url: '/quiz/:id/:subCatName/:startIdx/:endIdx',  
+  .state('settings', {
+    url: '/settings',
+    templateUrl: 'templates/settings.html',
+    controller: 'settingsCtrl'
+  })
+
+  .state('quiz', {
+    url: '/quiz/:id/:subCatName/:setIdx',  
     cache: false,
     onEnter: function(){
       localStorage.setItem('results',[]);
-      console.log("emptied");
+      //console.log("emptied from enter");
     },
-    views: {
-      'tab1': {
-        templateUrl: 'templates/quiz.html',
-        controller: 'quizCtrl'
-      }
-    }
+    templateUrl: 'templates/quiz.html',
+    controller: 'quizCtrl'
   })
 
-  .state('bcsQuiz.study', {
-    url: '/study/:id/:subCatName/:startIdx/:endIdx',  
+  .state('study', {
+    url: '/study/:id/:subCatName/:setIdx',  
     cache: false,
-    views: {
-      'tab1': {
-        templateUrl: 'templates/study.html',
-        controller: 'studyCtrl'
-      }
-    }
+    templateUrl: 'templates/study.html',
+    controller: 'studyCtrl'
   })
 
-  .state('bcsQuiz.result', {
-    url: '/result/:subCatName',
+  .state('result', {
+    url: '/result/:subId/:subCatName/:setIdx',
     cache: false,
-    views: {
-      'tab1': {
-        templateUrl: 'templates/result.html',
-        controller: 'resultCtrl'
-      }
-    }
+    onExit: function(){
+      localStorage.setItem('results',[]);
+      console.log("emptied from exit");
+    },
+    templateUrl: 'templates/result.html',
+    controller: 'resultCtrl'
   })
 
   .state('leaderboard', {
@@ -119,9 +85,9 @@ angular.module('app.routes', [])
     cache: false,
     templateUrl: 'templates/leaderboard.html',
     controller: 'leaderboardCtrl'
-  })
+  });
 
-$urlRouterProvider.otherwise('tabs/categories')
+  $urlRouterProvider.otherwise('quizWay');
 
   
 

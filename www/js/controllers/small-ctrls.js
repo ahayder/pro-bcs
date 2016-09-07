@@ -62,50 +62,6 @@ function ($scope, $stateParams, $firebaseArray, $ionicLoading, ionicToast) {
     });
 
 }])
-   
-.controller('subCategoriesCtrl', ['$scope', '$stateParams', '$firebaseArray', '$ionicLoading', '$firebaseObject',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $firebaseArray, $ionicLoading, $firebaseObject) {
-
-    $ionicLoading.show({
-      template: '<ion-spinner icon="spiral"></ion-spinner>'
-    });
-    
-    var subCatRef = firebase.database().ref().child("subCategories");
-
-    var query = subCatRef.orderByChild("mainCatId").equalTo($stateParams.id);
-
-    $scope.subs = $firebaseArray(query);
-
-    $scope.subs.$loaded().then(function(ref){
-        $ionicLoading.hide();
-    },function(error){
-        $ionicLoading.hide().then(function(){
-            ionicToast.show("Sorry something went wrong! Please try again.", 'top', false, 2000);
-            console.log("The loading indicator is now hidden");
-        });
-    });
-
-    // Hot search section
-    
-    
-    $scope.forHotTopics = function(id){
-        console.log(id);
-        var hotRef = firebase.database().ref().child("hotTopics/"+id);
-        var hotArray = $firebaseObject(hotRef);
-
-        hotArray.$loaded().then(function(data){
-            data.$value = data.$value + 1;
-            data.$save();
-        },function(error){
-            console.log("Error while updating user info");
-        });
-    }
-
-    
-
-}])
 
 
 // .controller('tagsCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller

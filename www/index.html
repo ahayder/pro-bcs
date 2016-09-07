@@ -22,11 +22,12 @@
 
     <script src="js/app.js"></script>
     <script src="js/controllers/small-ctrls.js"></script>
-    <script src="js/controllers/quiz-config-ctrl.js"></script>
+    <script src="js/controllers/settings-ctrl.js"></script>
     <script src="js/controllers/quiz-ctrl.js"></script>
     <script src="js/controllers/study-ctrl.js"></script>
     <script src="js/controllers/result-ctrl.js"></script>
     <script src="js/controllers/login-ctrl.js"></script>
+    <script src="js/controllers/sub-cat-ctrl.js"></script>
     <script src="js/controllers/leaderboard-ctrl.js"></script>
     <script src="js/routes.js"></script>
     
@@ -89,10 +90,12 @@
                       <h2 class="text-primary-color">{{user.displayName || user.email}}</h2>
                       <p class="light-primary-color-text">স্কোর: {{leader.score}}({{leader.correctness}}%)</p>
                     </a>
-                    <ion-item class="menu-text" ui-sref="login" menu-close="" data-componentid="list-item3" ng-if="!user">লগইন</ion-item>
-                    <ion-item class="menu-text" ui-sref="bcsQuiz.categories" menu-close="" data-componentid="list-item2">কুইজ</ion-item>
-                    <ion-item class="menu-text" ui-sref="bcsQuiz.hot" menu-close="" data-componentid="list-item1">জনপ্রিয় বিষয়</ion-item>
-                    <ion-item class="menu-text" ui-sref="leaderboard" menu-close="" data-componentid="list-item2">লিডার বোর্ড</ion-item>
+                    <ion-item class="menu-text" ui-sref="login" menu-close="" ng-if="!user">লগইন</ion-item>
+                    <ion-item class="menu-text" ui-sref="quizWay" menu-close="">কুইজ</ion-item>
+                    <ion-item class="menu-text" ui-sref="studyWay" menu-close="">স্টাডি</ion-item>
+                    <ion-item class="menu-text" ui-sref="hot" menu-close="">জনপ্রিয় বিষয়</ion-item>
+                    <ion-item class="menu-text" ui-sref="leaderboard" menu-close="">লিডার বোর্ড</ion-item>
+                    <ion-item class="menu-text" ui-sref="settings" menu-close="">প্রশ্ন সেটিংস</ion-item>
                     <ion-item class="menu-text" data-componentid="list-item26">পরামর্শ দিন</ion-item>
                     <ion-item class="menu-text" data-componentid="list-item27">টিউটোরিয়াল</ion-item>
                     <ion-item class="menu-text" menu-close data-componentid="list-item28" ng-if="user" ng-click="signOut()">লগআউট</ion-item>

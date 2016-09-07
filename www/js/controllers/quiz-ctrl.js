@@ -4,7 +4,8 @@ angular.module('app.quizController', [])
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state, $timeout, $rootScope, ResultFacotry, $ionicLoading) {
-
+    // This if for result Factory resetting result array
+    $rootScope.temp = [];
 
     $ionicLoading.show({
       template: '<ion-spinner icon="spiral"></ion-spinner>'
@@ -17,11 +18,7 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
     // console.log($stateParams.id);
     // console.log($stateParams.subCatName);
     // console.log($stateParams.startIdx);
-    var start = parseInt($stateParams.startIdx) - 1;
-    //console.log("Start"+ start);
-    //console.log($stateParams.endIdx);
-    var end = parseInt($stateParams.endIdx);
-    //console.log("End"+ end);
+    
 
 
 
@@ -58,18 +55,65 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
     }
 
 
+
+
+
+    // question set settings
+    // question set settings
+
+    // Making sets
+    var sets = [];
+    for(var i = 0; i < $rootScope.ranges.length; i++){
+        var set = {};
+        set.id = i; // It is for setting question set with range index inside $loaded
+        set.starting = $rootScope.ranges[i].starting;
+        set.ending = $rootScope.ranges[i].ending;
+        var setNumber = i+1;
+        set.value = "সেট "+ setNumber +"("+$rootScope.ranges[i].starting + " থেকে " + $rootScope.ranges[i].ending+ ")";
+        sets.push(set);
+    }
+    $rootScope.quizQuestionSets = sets;
+    // End of Making sets
+
+    var setIndex = parseInt($stateParams.setIdx);
+    $scope.setShowing = {};
+    $scope.setShowing.selectedSet = sets[setIndex];
+    
+    $scope.fixSet = function(){
+        // var storageSet = JSON.stringify($scope.selectedSet);
+        //localStorage.setItem('selectedSet', storageSet);
+        console.log($scope.setShowing);
+        $state.go("quiz", {id: $stateParams.id, subCatName: $stateParams.subName, setIdx: $scope.setShowing.selectedSet.id});
+    }
+
+    // end of question set settings
+    // end of question set settings
+
+
+
+
+
     // arrray index number of the currently showing question
     $scope.currentIndexNum = 0;
 
 
+    // Question from index to index
+    //console.log($rootScope.ranges);
+    var start = parseInt($rootScope.ranges[setIndex].starting) -1;
+    var end = parseInt($rootScope.ranges[setIndex].ending);
+
+    
+
+    
     // Doing a shuffle for options and answer
     allQtns.$loaded(function(allqs){
 
+        
         var rangedQtns = allqs.slice(start, end);
 
         // Total questions in this subcategory
         $scope.totalQuestions = rangedQtns.length;
-        console.log($scope.totalQuestions)
+        //console.log($scope.totalQuestions)
 
         // Shuffling all questions
         $scope.allQuestions = shuffle(rangedQtns);
@@ -105,15 +149,14 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
     }
 
 
-    // Making a variable for storing data to show result
-    var singleQuestion = {};
+    
 
-     
 
     // Checking answer    
     $scope.checkAnswer = function(userAns){
 
         // saving into result
+        var singleQuestion = {};
         singleQuestion.question = $scope.allQuestions[$scope.currentIndexNum];
         singleQuestion.userAnswer = userAns;
         console.log(singleQuestion);
@@ -141,7 +184,7 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
 
                 $timeout(function() {
                     //ionicToast.show("You've completed all the questions in this category", 'top', false, 2000);
-                    $state.go("bcsQuiz.result", {subCatName: $scope.subCatName});
+                    $state.go("result", {subId: $stateParams.id, subCatName: $scope.subCatName, setIdx: setIndex});
                 }, 1000);
                 
 
@@ -167,7 +210,7 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
         }
         // If Wrong Answer
         else{
-            $rootScope.score.mark -= 0.50;
+            $rootScope.score.mark = $rootScope.score.mark <= 0 ? 0 : $rootScope.score.mark-0.50;
             //console.log("ভুল! সঠিক উত্তরঃ " + $scope.allQuestions[$scope.currentIndexNum].answer);
 
             //ionicToast.show("Wrong! Right answer is " + $scope.allQuestions[$scope.currentIndexNum].answer, 'bottom', false, 2500);
@@ -188,7 +231,7 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
 
                 $timeout(function() {
                     //ionicToast.show("You've completed all the questions in this category", 'top', false, 2000);
-                    $state.go("bcsQuiz.result", {subCatName: $scope.subCatName});
+                    $state.go("result", {subId: $stateParams.id, subCatName: $scope.subCatName, setIdx: setIndex});
                 }, 1000);
                 
                 return;

@@ -12,15 +12,9 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
 
     // Sate Params /quiz/:id/:subCatName/:qType/:startIdx/:endIdx
     $scope.subCatName = $stateParams.subName;
-    console.log($stateParams.id);
-    console.log($stateParams.subCatName);
-    console.log($stateParams.startIdx);
-    var start = parseInt($stateParams.startIdx) - 1;
-    console.log("Start"+ start);
-    console.log($stateParams.endIdx);
-    var end = parseInt($stateParams.endIdx);
-    console.log("End"+ end);
-
+    // console.log($stateParams.id);
+    // console.log($stateParams.subCatName);
+    // console.log($stateParams.startIdx);
 
 
     // query
@@ -56,9 +50,65 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
     }
 
 
+
+
+
+
+    // question set settings
+    // question set settings
+
+    // Making sets
+    var sets = [];
+    for(var i = 0; i < $rootScope.ranges.length; i++){
+        var set = {};
+        set.id = i; // It is for setting question set with range index inside $loaded
+        set.starting = $rootScope.ranges[i].starting;
+        set.ending = $rootScope.ranges[i].ending;
+        var setNumber = i+1;
+        set.value = "সেট "+ setNumber +"("+$rootScope.ranges[i].starting + " থেকে " + $rootScope.ranges[i].ending+ ")";
+        sets.push(set);
+    }
+    $scope.studyQuestionSets = sets;
+    // End of Making sets
+
+    var setIndex = parseInt($stateParams.setIdx);
+    $scope.setShowing = {};
+    $scope.setShowing.selectedSet = sets[setIndex];
+    
+    $scope.fixSet = function(){
+        console.log($scope.setShowing);
+        $state.go("study", {id: $stateParams.id, subCatName: $stateParams.subName, setIdx: $scope.setShowing.selectedSet.id});
+    }
+
+    // end of question set settings
+    // end of question set settings
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // arrray index number of the currently showing question
     $scope.currentIndexNum = 0;
 
+
+    // Question from index to index
+    //console.log($rootScope.ranges);
+    var start = parseInt($rootScope.ranges[setIndex].starting) -1;
+    var end = parseInt($rootScope.ranges[setIndex].ending);
 
     // Doing a shuffle for options and answer
     allQtns.$loaded(function(allqs){
@@ -94,6 +144,10 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
     });
 
 
+
+
+
+// next-------------------------
     $scope.next = function(){
 
         if($scope.allQuestions.length == ($scope.currentIndexNum + 1) ){

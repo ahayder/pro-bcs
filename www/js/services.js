@@ -1,7 +1,7 @@
 angular.module('app.services', [])
 
-.factory('ResultFacotry', [function(){
-    var temp = [];
+.factory('ResultFacotry', ['$rootScope', function($rootScope){
+    $rootScope.temp = [];
 
     return{
         saveResult: function(resultData){
@@ -10,14 +10,14 @@ angular.module('app.services', [])
 				//console.log("First if working")
 			}
             if(localStorage.getItem('results').length>0){
-				temp = JSON.parse(localStorage.getItem('results'));
-				temp.push(resultData);
-				localStorage.setItem('results',JSON.stringify(temp));
+				$rootScope.temp = JSON.parse(localStorage.getItem('results'));
+				$rootScope.temp.push(resultData);
+				localStorage.setItem('results',JSON.stringify($rootScope.temp));
 				//console.log("Second if working")
 			}
 			else{
-				temp.push(resultData);
-				localStorage.setItem('results',JSON.stringify(temp));
+				$rootScope.temp.push(resultData);
+				localStorage.setItem('results',JSON.stringify($rootScope.temp));
 				//console.log("Else if working")
 			}
         },
@@ -25,11 +25,8 @@ angular.module('app.services', [])
 
 		    temp = JSON.parse(localStorage.getItem('results'));
 
-			return temp;
-        },
-		emptyTemp: function(){
-			temp = [];
-		}
+			return $rootScope.temp;
+        }
     }
 }])
 

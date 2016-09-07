@@ -1,0 +1,42 @@
+<ion-view title="কুইজ সেটিংস" id="page7">
+
+    <ion-content padding="true" class="padding has-header">
+
+        <div class="card">
+            <div class="item item-divider calm-bg light-primary-color-text">
+                প্রশ্ন সংখ্যা
+            </div>
+
+            <label class="item item-input item-select">
+                <div class="input-label primary-text-color ">
+                    কুইজে কতগুলো প্রশ্ন থাকবে?
+                </div>
+                <select ng-model="quizSelectedValue"  ng-selected="quizSelectedValue" 
+                ng-options="qrange for qrange in quizRanges" ng-change="setForQuizRange(quizSelectedValue)">
+                </select>
+            </label>
+
+        </div>
+
+
+        <!--study-->
+        <div class="card">
+            <div class="item item-divider calm-bg light-primary-color-text">
+                প্রশ্ন সংখ্যা
+            </div>
+
+            <label class="item item-input item-select">
+                <div class="input-label primary-text-color ">
+                    স্টাডিতে কতগুলো প্রশ্ন থাকবে?
+                </div>
+                <select ng-model="studySelectedValue"  ng-selected="studySelectedValue" 
+                ng-options="srange for srange in studyRanges" ng-change="setForStudyRange(studySelectedValue)">
+                </select>
+            </label>
+
+        </div>
+
+        <button class="button button-block button-positive" ng-click="save()">সেভ</button>
+
+    </ion-content>
+</ion-view>

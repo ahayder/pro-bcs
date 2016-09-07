@@ -6,7 +6,7 @@
                 <input type="search" placeholder="খুঁজুন" ng-model="search.$value">
             </label>
 
-            <ion-item  ng-repeat="cat in cats | filter: search:strict" class="item-icon-right  " id="categories-list-item4" ui-sref="bcsQuiz.subCategories({id: cat.$id})">{{cat.$value}}
+            <ion-item  collection-repeat="cat in cats | filter: search:strict" class="item-icon-right  " id="categories-list-item4" ui-sref="bcsQuiz.subCategories({id: cat.$id})">{{cat.$value}}
                 <i class="icon ion-ios-arrow-thin-right"></i>
             </ion-item>
         </ion-list>

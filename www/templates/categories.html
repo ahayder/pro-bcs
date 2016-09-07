@@ -1,4 +1,11 @@
 <ion-view title="ক্যাটাগরি" id="page4">
+
+    <ion-nav-buttons side="right">
+        <button class="button button-clear icon ion-loop text-primary-color" ui-sref="update"></button>
+        <button class="button button-clear icon ion-ios-gear text-primary-color" ui-sref="settings"></button>
+    </ion-nav-buttons>
+
+
     <ion-content padding="true" class="has-header" scroll="true">
 
         <ion-list id="categories-list3">
@@ -7,7 +14,14 @@
                 <input type="search" placeholder="খুঁজুন" ng-model="search.$value">
             </label>
 
-            <ion-item  ng-repeat="cat in cats | filter: search:strict" class="animated flipInX item-icon-right" id="categories-list-item4" ui-sref="bcsQuiz.subCategories({id: cat.$id})">{{cat.$value}}
+            <ion-item  collection-repeat="cat in cats" class="animated flipInX item-icon-right" 
+                id="categories-list-item4" ui-sref="subCategories({id: cat.$id})" ng-if="$last">
+                {{cat.$value}}
+                <i class="icon ion-ios-arrow-thin-right"></i>
+            </ion-item>
+            <ion-item  collection-repeat="cat in cats | filter: search:strict" class="animated flipInX item-icon-right" 
+                id="categories-list-item4" ui-sref="subCategories({id: cat.$id})" ng-hide="$last">
+                {{cat.$value}}
                 <i class="icon ion-ios-arrow-thin-right"></i>
             </ion-item>
         </ion-list>
