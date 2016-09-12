@@ -1,14 +1,12 @@
 angular.module('app.studyController', [])
 
-.controller('studyCtrl', ['$scope', '$stateParams', '$firebaseArray', '$ionicPopup', 'ionicToast', '$state', '$timeout', '$rootScope', 'ResultFacotry', '$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('studyCtrl', ['$scope', 'Questions', '$stateParams', '$firebaseArray', '$ionicPopup', 'ionicToast', '$state', '$timeout', '$rootScope', 'ResultFacotry', '$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state, $timeout, $rootScope, ResultFacotry, $ionicLoading) {
+function ($scope, Questions, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state, $timeout, $rootScope, ResultFacotry, $ionicLoading) {
     $ionicLoading.show({
       template: '<ion-spinner icon="spiral"></ion-spinner>'
     });
-
-    var qusRef = firebase.database().ref().child("questions");
 
     // Sate Params /quiz/:id/:subCatName/:qType/:startIdx/:endIdx
     $scope.subCatName = $stateParams.subName;
@@ -16,17 +14,11 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
     // console.log($stateParams.subCatName);
     // console.log($stateParams.startIdx);
 
-
-    // query
-    var query = qusRef.orderByChild("subCatId").equalTo($stateParams.id);
-
     
 
     // Score
     $rootScope.score = {}
     $rootScope.score.mark = 0;
-
-    var allQtns = $firebaseArray(query);
 
     
 
@@ -86,21 +78,6 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // arrray index number of the currently showing question
     $scope.currentIndexNum = 0;
 
@@ -110,39 +87,37 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
     var start = parseInt($rootScope.ranges[setIndex].starting) -1;
     var end = parseInt($rootScope.ranges[setIndex].ending);
 
-    // Doing a shuffle for options and answer
-    allQtns.$loaded(function(allqs){
+    // All questions
+    var questions = Questions.getAllQuestions();
+    // console.log(questions);
+    var tempQuestions = [];
+    for(var i = 0; i < questions.length; i++){
+        if(questions[i].subCatId == $stateParams.id){
+            tempQuestions.push(questions[i]);
+        }
+    }
+    var allqs = tempQuestions; // // All questions
 
-        var rangedQtns = allqs.slice(start, end);
+    var rangedQtns = allqs.slice(start, end);
 
-        // Total questions in this subcategory
-        $scope.totalQuestions = rangedQtns.length;
-        console.log($scope.totalQuestions)
+    // Total questions in this subcategory
+    $scope.totalQuestions = rangedQtns.length;
+    console.log($scope.totalQuestions)
 
-        // Shuffling all questions
-        $scope.allQuestions = shuffle(rangedQtns);
+    // Shuffling all questions
+    $scope.allQuestions = shuffle(rangedQtns);
 
-        // Shuffling respective question's answers
-        var tempOptionsArray = [
-                                {title: $scope.allQuestions[$scope.currentIndexNum].option1, selected: false},
-                                {title: $scope.allQuestions[$scope.currentIndexNum].option2, selected: false},
-                                {title: $scope.allQuestions[$scope.currentIndexNum].option3, selected: false},
-                                {title: $scope.allQuestions[$scope.currentIndexNum].answer, selected: false}
-                                ];
-        
-        $scope.options = shuffle(tempOptionsArray);
+    // Shuffling respective question's answers
+    var tempOptionsArray = [
+                            {title: $scope.allQuestions[$scope.currentIndexNum].option1, selected: false},
+                            {title: $scope.allQuestions[$scope.currentIndexNum].option2, selected: false},
+                            {title: $scope.allQuestions[$scope.currentIndexNum].option3, selected: false},
+                            {title: $scope.allQuestions[$scope.currentIndexNum].answer, selected: false}
+                            ];
+    
+    $scope.options = shuffle(tempOptionsArray);
 
-        $ionicLoading.hide();
-
-                                
-    },
-    function(error){
-        $ionicLoading.hide().then(function(){
-            ionicToast.show("Sorry something went wrong! Please try again.", 'top', false, 2000);
-            console.log("The loading indicator is now hidden");
-        });
-    });
-
+    $ionicLoading.hide();
 
 
 
@@ -151,7 +126,7 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
     $scope.next = function(){
 
         if($scope.allQuestions.length == ($scope.currentIndexNum + 1) ){
-            return;
+            ionicToast.show('এই সেট এর প্রশ্ন শেষ। পরবর্তী সেট এর প্রশ্নের উপর স্টাডি করতে "প্রশ্ন বদলান" থেকে নতুন সেট সিলেক্ট করুন।', 'middle', true, 3500);
         }
         else{
             $scope.currentIndexNum++;
@@ -173,7 +148,7 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
     $scope.previous = function(){
 
         if($scope.currentIndexNum == 0){
-            return;
+            ionicToast.show('এই সেট এর প্রশ্ন শেষ। পরবর্তী সেট এর প্রশ্নের উপর স্টাডি করতে "প্রশ্ন বদলান" থেকে নতুন সেট সিলেক্ট করুন।', 'middle', true, 3500);
         }
         else{
             $scope.currentIndexNum--;

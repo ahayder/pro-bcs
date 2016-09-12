@@ -37,7 +37,7 @@
 
 
         <ion-list>
-            <ion-item class="item-thumbnail-left" collection-repeat="leader in allleaders | orderBy: '-score'">
+            <ion-item class="item-thumbnail-left" ng-repeat="leader in allleaders | orderBy: '-score'">
                 <img ng-src="{{leader.photoURL || placeholderImage}}">
                 <h2>{{$index+1}}. {{leader.name}}</h2>
                 <p>স্কোরঃ {{leader.score}}({{leader.correctness}}%)</p>

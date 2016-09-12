@@ -97,21 +97,13 @@ function ($scope, $state, $rootScope, ResultFacotry, $stateParams, $ionicModal, 
 
     // Join NLB
     $scope.joinNLB = function(){
-
         if ($rootScope.user) {
             // User is signed in.
             // Share score into leaderboard
-
-                
                 $scope.modal.show();
-
-
         } else { 
-            
                 $scope.loginModal.show();
-
         }
-
     }
 
 
@@ -193,82 +185,90 @@ function ($scope, $state, $rootScope, ResultFacotry, $stateParams, $ionicModal, 
 
     $scope.goToLeaderboard = function(){
 
-        
-        var leaderRef = firebase.database().ref().child("leaderboard/"+$rootScope.user.uid);
-        var leadersRef = firebase.database().ref().child("leaderboard");
+        // Checking network connection
+        if(window.Connection) {
+            if(navigator.connection.type == Connection.NONE) {
+                firebase.database().goOffline();
+                ionicToast.show("দুঃখিত আপনার ইন্টারনেট সংযোগ বিচ্ছিন্ন রয়েছে। ইন্টারনেট একটিভেট করে লিডারবোর্ডে যোগ দিয়ে সারা বাংলাদেশের মধ্যে আপনার অবস্থান দেখুন।", 'top', true, 1000);
+            }
+            else{
+                firebase.database().goOnline();
+                var leaderRef = firebase.database().ref().child("leaderboard/"+$rootScope.user.uid);
+                var leadersRef = firebase.database().ref().child("leaderboard");
 
 
-            var leader = $firebaseArray(leaderRef);
+                var leader = $firebaseArray(leaderRef);
 
 
-            leader.$loaded().then(
-                function(ref){
-                    if(ref.length == 0){
-                        var score = $scope.marks.score.toFixed(2);
-                        var correctness = $scope.marks.correctPercentage.toFixed(2);
+                leader.$loaded().then(
+                    function(ref){
+                        if(ref.length == 0){
+                            var score = $scope.marks.score.toFixed(2);
+                            var correctness = $scope.marks.correctPercentage.toFixed(2);
 
-                        leadersRef.child($rootScope.user.uid).set({
-
-                            name: $rootScope.user.displayName,
-                            email: $rootScope.user.email,
-                            score: score,
-                            correctness: correctness,
-                            photoURL: $rootScope.user.photoURL
-
-                        }).then(function(response){
-                            $scope.modal.hide();
-                            $scope.lbButtonDisable = true;
-                            ionicToast.show('Welcome to our national leaderboard. See your position inside Leaderboard page', 'middle', true, 5000);
-                        },function(error){
-                            $scope.modal.hide();
-                            ionicToast.show('Something went wrong, try again', 'middle', false, 1000);
-                        });
-
-                    }  // End of if
-                    else{
-                        var oldCorrectness = parseInt(ref[0].$value);
-                        var oldScore = parseInt(ref[3].$value);
-
-                        var newCorrectness = (oldCorrectness + $scope.marks.correctPercentage)/2;
-                        var newScore = oldScore + parseInt($scope.marks.score);
-
-                        console.log(newCorrectness);
-                        console.log(newScore);
-
-                        var obj = $firebaseObject(leaderRef);
-                        obj.$remove().then(function(result){
-                            console.log("Deleted");
                             leadersRef.child($rootScope.user.uid).set({
 
-                                    name: $rootScope.user.displayName,
-                                    email: $rootScope.user.email,
-                                    score: newScore.toFixed(2),
-                                    correctness: newCorrectness.toFixed(2),
-                                    photoURL: $rootScope.user.photoURL
+                                name: $rootScope.user.displayName,
+                                email: $rootScope.user.email,
+                                score: score,
+                                correctness: correctness,
+                                photoURL: $rootScope.user.photoURL
 
-                                }).then(function(response){
-                                    console.log("Newly Added from update func");
-                                    $scope.modal.hide();
-                                    $scope.lbButtonDisable = true;
-                                    ionicToast.show("Your information updated", 'middle', false, 2000);
-                                },function(error){
-                                    $scope.modal.hide();
-                                    ionicToast.show('Something went wrong, try again', 'middle', false, 1000);
-                                });
-                        },
-                        function(error){
-                            $scope.modal.hide();
-                            ionicToast.show('Something went wrong, try again', 'middle', false, 1000);
-                        });
-                    } // End of else
-                }, // End ot ref function
-                function(error){
-                    $scope.modal.hide();
-                    ionicToast.show('Something went wrong, try again', 'middle', false, 2000);
-                }// End of error funciton
-            ); // End of then
+                            }).then(function(response){
+                                $scope.modal.hide();
+                                $scope.lbButtonDisable = true;
+                                ionicToast.show('আপনার স্কোর লিডারবোর্ডে যোগ হয়েছে। আপনার অবস্থান দেখার জন্য লিডারবোর্ড মেনু তে যান।', 'middle', true, 5000);
+                            },function(error){
+                                $scope.modal.hide();
+                                ionicToast.show('দুঃখিত আবার চেষ্টা করুন।', 'middle', false, 1000);
+                            });
 
-        
+                        }  // End of if
+                        else{
+                            var oldCorrectness = parseInt(ref[0].$value);
+                            var oldScore = parseInt(ref[3].$value);
+
+                            var newCorrectness = (oldCorrectness + $scope.marks.correctPercentage)/2;
+                            var newScore = oldScore + parseInt($scope.marks.score);
+
+                            console.log(newCorrectness);
+                            console.log(newScore);
+
+                            var obj = $firebaseObject(leaderRef);
+                            obj.$remove().then(function(result){
+                                console.log("Deleted");
+                                leadersRef.child($rootScope.user.uid).set({
+
+                                        name: $rootScope.user.displayName,
+                                        email: $rootScope.user.email,
+                                        score: newScore.toFixed(2),
+                                        correctness: newCorrectness.toFixed(2),
+                                        photoURL: $rootScope.user.photoURL
+
+                                    }).then(function(response){
+                                        console.log("Newly Added from update func");
+                                        $scope.modal.hide();
+                                        $scope.lbButtonDisable = true;
+                                        ionicToast.show("আপনার স্কোর লিডারবোর্ডে আপডেট হয়েছে। আপনার অবস্থান দেখার জন্য লিডারবোর্ড মেনু তে যান।", 'middle', true, 2000);
+                                    },function(error){
+                                        $scope.modal.hide();
+                                        ionicToast.show('দুঃখিত আবার চেষ্টা করুন।', 'middle', false, 1000);
+                                    });
+                            },
+                            function(error){
+                                $scope.modal.hide();
+                                ionicToast.show('দুঃখিত আবার চেষ্টা করুন।', 'middle', false, 1000);
+                            });
+                        } // End of else
+                    }, // End ot ref function
+                    function(error){
+                        $scope.modal.hide();
+                        ionicToast.show('দুঃখিত আবার চেষ্টা করুন।', 'middle', false, 2000);
+                    }// End of error funciton
+                ); // End of then
+            } //else
+        }//if     
+
 
     } /// End of go to leaderboard funciton
 

@@ -75,11 +75,16 @@ border-right: 0px;
     border-bottom: #C5CAE9 !important;
 }
 
+.quiz-menu{
+    color: #4CAF50  !important;
+    border-bottom: #C5CAE9 !important;
+}
+
 .item {
     border-color: #C5CAE9 !important;
 }
 
-.center{
+/*.center{
   display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
@@ -108,7 +113,17 @@ border-right: 0px;
     -webkit-align-items: center;
     -ms-flex-align: center;
     align-items: center;
+}*/
+
+.small-font{
+    font-size: 70% !important;
 }
+
+.medium-font{
+    font-size: 75% !important;
+}
+
+
 
 
 .dark-primary-color    { background: #303F9F; }
@@ -118,7 +133,7 @@ border-right: 0px;
 .light-primary-color   { background: #C5CAE9; }
 .light-primary-color-text   { color: #C5CAE9 !important; }
 .text-primary-color    { color: #FFFFFF !important; }
-.accent-color          { background: #4CAF50; }
+.accent-color          { background: #4CAF50 !important;}
 .primary-text-color    { color: #212121 !important; }
 .secondary-text-color  { color: #757575 !important; }
 .divider-color         { border-color: #BDBDBD; }

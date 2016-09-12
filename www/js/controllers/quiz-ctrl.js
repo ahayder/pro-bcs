@@ -1,39 +1,57 @@
 angular.module('app.quizController', [])
 
-.controller('quizCtrl', ['$scope', '$stateParams', '$firebaseArray', '$ionicPopup', 'ionicToast', '$state', '$timeout', '$rootScope', 'ResultFacotry', '$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('quizCtrl', ['$scope', '$cordovaNativeAudio', 'Questions','$stateParams', '$ionicPopup', 'ionicToast', '$state', '$timeout', '$rootScope', 'ResultFacotry', '$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state, $timeout, $rootScope, ResultFacotry, $ionicLoading) {
+function ($scope, $cordovaNativeAudio, Questions, $stateParams, $ionicPopup, ionicToast, $state, $timeout, $rootScope, ResultFacotry, $ionicLoading) {
     // This if for result Factory resetting result array
+    $cordovaNativeAudio
+    .preloadSimple('correct', 'audio/correct.mp3')
+    .then(function (msg) {
+      console.log(msg);
+    }, function (error) {
+        console.log(error);
+    });
+    $cordovaNativeAudio
+    .preloadSimple('wrong', 'audio/wrong.mp3')
+    .then(function (msg) {
+      console.log(msg);
+    }, function (error) {
+        console.log(error);
+    });
+
+
+    var play = function (audio) {
+        $cordovaNativeAudio.play(audio);
+        console.log("halo");
+    };
+
+
+    $scope.muteAudio = function(){
+        $cordovaNativeAudio.unload('correct');
+        $cordovaNativeAudio.unload('wrong');
+    }
+
+
+
+
+
+
     $rootScope.temp = [];
 
     $ionicLoading.show({
       template: '<ion-spinner icon="spiral"></ion-spinner>'
     });
 
-    var qusRef = firebase.database().ref().child("questions");
-
     // Sate Params /quiz/:id/:subCatName/:qType/:startIdx/:endIdx
-    $scope.subCatName = $stateParams.subName;
+    $scope.subCatName = $stateParams.subCatName;
     // console.log($stateParams.id);
     // console.log($stateParams.subCatName);
     // console.log($stateParams.startIdx);
-    
-
-
-
-    // query
-    var query = qusRef.orderByChild("subCatId").equalTo($stateParams.id);
-
-    
 
     // Score
     $rootScope.score = {}
-    $rootScope.score.mark = 0;
-
-    var allQtns = $firebaseArray(query);
-
-    
+    $rootScope.score.mark = 0;    
 
     // Suffle function
     var shuffle = function(array) {
@@ -52,7 +70,7 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
         }
 
         return array;
-    }
+    } // Suffle function
 
 
 
@@ -60,7 +78,7 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
 
     // question set settings
     // question set settings
-
+    console.log($rootScope.ranges);
     // Making sets
     var sets = [];
     for(var i = 0; i < $rootScope.ranges.length; i++){
@@ -69,7 +87,7 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
         set.starting = $rootScope.ranges[i].starting;
         set.ending = $rootScope.ranges[i].ending;
         var setNumber = i+1;
-        set.value = "সেট "+ setNumber +"("+$rootScope.ranges[i].starting + " থেকে " + $rootScope.ranges[i].ending+ ")";
+        set.value = "সেট "+ setNumber +"("+$rootScope.ranges[i].starting + "-" + $rootScope.ranges[i].ending + ")";
         sets.push(set);
     }
     $rootScope.quizQuestionSets = sets;
@@ -102,42 +120,41 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
     var start = parseInt($rootScope.ranges[setIndex].starting) -1;
     var end = parseInt($rootScope.ranges[setIndex].ending);
 
+
+
+    // All questions
+    var questions = Questions.getAllQuestions();
+    // console.log(questions);
+    var tempQuestions = [];
+    for(var i = 0; i < questions.length; i++){
+        if(questions[i].subCatId == $stateParams.id){
+            tempQuestions.push(questions[i]);
+        }
+    }
+    var allqs = tempQuestions; // // All questions
+
+
+    // Doing Shuffle
+    var rangedQtns = allqs.slice(start, end);
+
+    // Total questions in this subcategory
+    $scope.totalQuestions = rangedQtns.length;
+    //console.log($scope.totalQuestions)
+
+    // Shuffling all questions
+    $scope.allQuestions = shuffle(rangedQtns);
+
+    // Shuffling respective question's answers
+    var tempOptionsArray = [
+                            {title: $scope.allQuestions[$scope.currentIndexNum].option1, selected: false},
+                            {title: $scope.allQuestions[$scope.currentIndexNum].option2, selected: false},
+                            {title: $scope.allQuestions[$scope.currentIndexNum].option3, selected: false},
+                            {title: $scope.allQuestions[$scope.currentIndexNum].answer, selected: false}
+                            ];
     
+    $scope.options = shuffle(tempOptionsArray);
 
-    
-    // Doing a shuffle for options and answer
-    allQtns.$loaded(function(allqs){
-
-        
-        var rangedQtns = allqs.slice(start, end);
-
-        // Total questions in this subcategory
-        $scope.totalQuestions = rangedQtns.length;
-        //console.log($scope.totalQuestions)
-
-        // Shuffling all questions
-        $scope.allQuestions = shuffle(rangedQtns);
-
-        // Shuffling respective question's answers
-        var tempOptionsArray = [
-                                {title: $scope.allQuestions[$scope.currentIndexNum].option1, selected: false},
-                                {title: $scope.allQuestions[$scope.currentIndexNum].option2, selected: false},
-                                {title: $scope.allQuestions[$scope.currentIndexNum].option3, selected: false},
-                                {title: $scope.allQuestions[$scope.currentIndexNum].answer, selected: false}
-                                ];
-        
-        $scope.options = shuffle(tempOptionsArray);
-
-        $ionicLoading.hide();
-
-                                
-    },
-    function(error){
-        $ionicLoading.hide().then(function(){
-            ionicToast.show("Sorry something went wrong! Please try again.", 'top', false, 2000);
-            console.log("The loading indicator is now hidden");
-        });
-    });
+    $ionicLoading.hide(); // Doing Shuffle
 
 
 
@@ -164,8 +181,7 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
 
         // If Right asnwer
         if($scope.allQuestions[$scope.currentIndexNum].answer == userAns){
-            ////console.log("Right");
-
+            play("correct");
             $rootScope.score.mark += 1;
             var rightAnsAlert = $ionicPopup.show({
                     title: '<h3 class="title light">সাবাস বাঘের বাচ্চা!</h3>',
@@ -210,10 +226,11 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
         }
         // If Wrong Answer
         else{
+            play("wrong");
             $rootScope.score.mark = $rootScope.score.mark <= 0 ? 0 : $rootScope.score.mark-0.50;
             //console.log("ভুল! সঠিক উত্তরঃ " + $scope.allQuestions[$scope.currentIndexNum].answer);
 
-            //ionicToast.show("Wrong! Right answer is " + $scope.allQuestions[$scope.currentIndexNum].answer, 'bottom', false, 2500);
+            //ionicToast.show("Wrong! Right answer is " + $scope.allQuestions[$scope.currentIndexNum].answer, 'bottom', false, 2250);
             var wrongAnsAlert = $ionicPopup.show({
                     title: '<h3 class="title light">ভুল!</h3>',
                     cssClass: 'wrong-answer',
@@ -222,7 +239,7 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
             
             $timeout(function() {
                 wrongAnsAlert.close(); //close the popup after specified seconds for some reason
-            }, 2500);
+            }, 2250);
 
 
             $scope.count.wrong++;
@@ -248,7 +265,7 @@ function ($scope, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state,
                                 ];
         
                 $scope.options = shuffle(tempOptionsArray);
-            }, 2500);
+            }, 2250);
             
 
             

@@ -85,6 +85,12 @@ angular.module('app.routes', [])
     cache: false,
     templateUrl: 'templates/leaderboard.html',
     controller: 'leaderboardCtrl'
+  })
+
+  .state('feedback', {
+    url: '/feedback',
+    cache: false,
+    templateUrl: 'templates/feedback.html'
   });
 
   $urlRouterProvider.otherwise('quizWay');

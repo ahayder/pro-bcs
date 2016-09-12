@@ -1,5 +1,9 @@
 <ion-view title="স্টাডি" id="page7">
 
+     <ion-nav-buttons side="right">
+      <button class="button"><span style="font-size:22px;">{{currentIndexNum+1}}/{{totalQuestions}}</span></button>
+    </ion-nav-buttons>
+
     <ion-header-bar class="bar-subheader calm-bg">
 
         <div class="button-bar">
@@ -13,38 +17,30 @@
         
     </ion-header-bar>
 
-    <ion-content padding="true" class="has-header has-subheader">
+    <ion-content class="has-header has-subheader">
 
         <div ng-hide="view">
-            <!--<button class="button button-block button-light" style="margin-bottom: 0px;">
-             ({{currentIndexNum+1}}/{{totalQuestions}})
-            </button>-->
 
-            <div class="row row-no-padding">
-                <div class="col-25">
-                    <div class="button button-light">({{currentIndexNum+1}}/{{totalQuestions}})</div>
-                </div>
-                <div class="col-75">
-                    <label class="item item-input item-select item-borderless">
-                        <div class="input-label primary-text-color ">
-                            প্রশ্ন চলছেঃ-
-                        </div>
-                        <select ng-model="setShowing.selectedSet" ng-selected="setShowing.selectedSet" 
-                        ng-options="set.value for set in studyQuestionSets" ng-change="fixSet()"></select>
-                    </label>
-                </div>
+            <div class="list" style="margin-bottom: 0 !important;">
+                <label class="item item-input item-select stable-bg">
+                    <div class="input-label">
+                    প্রশ্ন বদলানঃ
+                    </div>
+                    <select ng-model="setShowing.selectedSet" ng-selected="setShowing.selectedSet" 
+                            ng-options="set.value for set in studyQuestionSets" ng-change="fixSet()"></select>
+                </label>
             </div>
 
-            <div class="list card ">
-                <div class="item item-divider item-royal item-text-wrap primary-text-color">{{allQuestions[currentIndexNum].title}}</div>
-                <div class="item item-text-wrap" collection-repeat="opt in options" 
+            <div class="list card" style="margin-top:3px; margin-bottom:3px;">
+                <div class="item item-divider item-energized item-text-wrap primary-text-color">{{allQuestions[currentIndexNum].title}}</div>
+                <div class="item item-text-wrap" ng-repeat="opt in options" 
                 ng-class="opt.title == rightAnswer ? 'show-answer' : 'nothing-class'">{{opt.title}}</div>
             </div>
 
             <div class="button-bar">
-                <div class="button button-calm" ng-click="previous()">পূর্ববর্তী</div>
-                <div class="button button-positive" ng-click="showAnswer(options)">উত্তর দেখুন</div>
-                <div class="button button-calm" ng-click="next()">পরবর্তী</div>
+                <div class="button button-clear button-small button-calm" ng-click="previous()">পূর্ববর্তী</div>
+                <div class="button button-clear button-small button-positive" ng-click="showAnswer(options)">উত্তর দেখুন</div>
+                <div class="button button-clear button-small button-calm" ng-click="next()">পরবর্তী</div>
             </div>
         </div>
 
@@ -58,8 +54,8 @@
 
 
         <div ng-show="view">
-            <div class="card " collection-repeat="q in allQuestions">
-                <div class="item item-divider item-royal item-text-wrap primary-text-color">
+            <div class="card " ng-repeat="q in allQuestions">
+                <div class="item item-divider item-energized item-text-wrap primary-text-color">
                     {{q.title}}
                 </div>
                 <div class="item item-text-wrap">

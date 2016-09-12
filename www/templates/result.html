@@ -1,4 +1,9 @@
 <ion-view id="page7">
+
+     <ion-nav-buttons side="right">
+        <button class="button button-clear icon ion-settings text-primary-color" ui-sref="settings"></button>
+    </ion-nav-buttons>
+
     <ion-nav-title>
         রিপোর্ট
     </ion-nav-title>
@@ -41,7 +46,7 @@
         <hr>
 
         <h3 class="title dark-primary-color-text" style="text-align:center;">এক নজরে</h3>
-        <div class="card" collection-repeat="r in results track by $index">
+        <div class="card" ng-repeat="r in results track by $index">
             <div class="item item-text-wrap {{r.bgColor}}">
                {{$index+1}}. প্রশ্নঃ {{r.question.title}}
             </div>

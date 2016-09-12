@@ -10,79 +10,90 @@ function ($scope, $rootScope, $firebaseArray, ionicToast, $ionicLoading, $fireba
       template: '<ion-spinner icon="spiral"></ion-spinner>'
     });
 
-    var leadersRef = firebase.database().ref().child("leaderboard");
-    var allleaders = $firebaseArray(leadersRef);
-
-
-    // Fucntion for getting the array postion
-    function arrayObjectIndexOf(myArray, searchTerm, property) {
-        for(var i = 0, len = myArray.length; i < len; i++) {
-            if (myArray[i][property] === searchTerm) return i;
+    // Checking network connection
+    if(window.Connection) {
+        if(navigator.connection.type == Connection.NONE) {
+            firebase.database().goOffline();
+            ionicToast.show("দুঃখিত আপনার ইন্টারনেট সংযোগ বিচ্ছিন্ন রয়েছে। ইন্টারনেট একটিভেট করে কুইজ দিয়ে লিডারবোর্ডে যোগ দিন। সারা বাংলাদেশের মধ্যে আপনার অবস্থান দেখুন।", 'middle', true, 1000);
         }
-        return -1;
+        else{
+            firebase.database().goOnline();
+            var leadersRef = firebase.database().ref().child("leaderboard");
+            var allleaders = $firebaseArray(leadersRef);
+
+
+            // Fucntion for getting the array postion
+            function arrayObjectIndexOf(myArray, searchTerm, property) {
+                for(var i = 0, len = myArray.length; i < len; i++) {
+                    if (myArray[i][property] === searchTerm) return i;
+                }
+                return -1;
+            }
+
+
+            // Var for logged in enrolled user information
+            $scope.your = {};
+
+
+            
+            allleaders.$loaded().then(function(result){
+                $scope.allleaders = result;
+                $scope.totalLeaders = result.length;
+                console.log($scope.allleaders);
+                $ionicLoading.hide();
+
+                if($rootScope.user == null){ // if user is not logged in
+                    $scope.loginState = false;
+                    //console.log("true");
+                }else{ // if logged in
+                    $scope.loginState = true;
+                    var leaderRef = firebase.database().ref().child("leaderboard/"+$rootScope.user.uid);
+                    // console.log(leaderRef);
+                    var leader = $firebaseObject(leaderRef);
+                    
+                    leader.$loaded().then(function(data){
+                        console.log(data);
+
+                        if(data.$value !== null){ // if user is enrolled in leader board
+                            console.log("true");
+                            $scope.enrolled = true;
+                            $scope.notEnrolled = false;
+
+                            // Getting user position
+                            var allLeaders = result;
+                            allLeaders.sort(function(a, b){
+                                var aScore = parseInt(a.score);
+                                var bScore = parseInt(b.score);
+                                return bScore - aScore;
+                            });
+
+                            console.log($rootScope.user.displayName);
+                            var position = arrayObjectIndexOf(allLeaders, $rootScope.user.uid, "$id"); // 1
+                            $scope.your.position = position+1;
+                            $scope.your.score = allLeaders[position].score;
+                            $scope.your.correctness = allLeaders[position].correctness;
+                            // End of getting postion
+                            
+                            
+                        }else{ // if user is not enrolled in leader baord
+                            console.log("false");
+                            $scope.enrolled = false;
+                            $scope.notEnrolled = true;
+
+                        } // End of if user is not enrolled in leader baord
+                    },function(error){
+                        ionicToast.show('দুঃখিত আবার চেষ্টা করুন।', 'middle', false, 2000);
+                    });
+                } // end of if logged in
+            },function(error){
+                ionicToast.show('দুঃখিত আবার চেষ্টা করুন।', 'middle', false, 2000);
+                $ionicLoading.hide();
+            });
+        }
     }
-
-
-    // Var for logged in enrolled user information
-    $scope.your = {};
-
+                
 
     
-
-    allleaders.$loaded().then(function(result){
-        $scope.allleaders = result;
-        $scope.totalLeaders = result.length;
-        console.log($scope.allleaders);
-        $ionicLoading.hide();
-
-        if($rootScope.user == null){ // if user is not logged in
-            $scope.loginState = false;
-            //console.log("true");
-        }else{ // if logged in
-            $scope.loginState = true;
-            var leaderRef = firebase.database().ref().child("leaderboard/"+$rootScope.user.uid);
-            // console.log(leaderRef);
-            var leader = $firebaseObject(leaderRef);
-            
-            leader.$loaded().then(function(data){
-                console.log(data);
-
-                if(data.$value !== null){ // if user is enrolled in leader board
-                    console.log("true");
-                    $scope.enrolled = true;
-                    $scope.notEnrolled = false;
-
-                    // Getting user position
-                    var allLeaders = result;
-                    allLeaders.sort(function(a, b){
-                        var aScore = parseInt(a.score);
-                        var bScore = parseInt(b.score);
-                        return bScore - aScore;
-                    });
-
-                    console.log($rootScope.user.displayName);
-                    var position = arrayObjectIndexOf(allLeaders, $rootScope.user.uid, "$id"); // 1
-                    $scope.your.position = position+1;
-                    $scope.your.score = allLeaders[position].score;
-                    $scope.your.correctness = allLeaders[position].correctness;
-                    // End of getting postion
-                    
-                    
-                }else{ // if user is not enrolled in leader baord
-                    console.log("false");
-                    $scope.enrolled = false;
-                    $scope.notEnrolled = true;
-
-                } // End of if user is not enrolled in leader baord
-            },function(error){
-                ionicToast.show('Something went wrong, try again', 'middle', false, 2000);
-            });
-        } // end of if logged in
-    },function(error){
-        ionicToast.show('Something went wrong, try again', 'middle', false, 2000);
-        $ionicLoading.hide();
-    });    
-
 
 
 }])

@@ -4,39 +4,30 @@
       <button class="button"><span style="font-size:22px;">স্কোর: {{score.mark}}</span></button>
     </ion-nav-buttons>
 
-    <ion-header-bar class="bar-subheader bar-royal">
-        <button class="button button-clear button-positive" style="font-size:22px"><i class="icon ion-ios-checkmark-empty">{{count.right}}</i></button>
-        <h1 class="title"></h1>
-        <button class="button button-clear button-assertive" style="font-size:22px"><i class="icon ion-ios-close-empty">{{count.wrong}}</i></button>
+    <ion-content>
         
-    </ion-header-bar>
-
-    <ion-content padding="true">
-
-        <div class="row row-no-padding">
-            <div class="col-25">
-                <div class="button button-light">({{currentIndexNum+1}}/{{totalQuestions}})</div>
-            </div>
-            <div class="col-75">
-                <label class="item item-input item-select item-borderless">
-                    <div class="input-label primary-text-color ">
-                        প্রশ্ন চলছেঃ-
-                    </div>
-                    <!--<select ng-model="quizSelectedValue"  ng-selected="quizSelectedValue" 
-                    ng-options="qrange for qrange in quizRanges" ng-change="setForQuizRange(quizSelectedValue)">
-                    </select>-->
-                    <select ng-model="setShowing.selectedSet" ng-selected="setShowing.selectedSet" 
+        <div class="list" style="margin-bottom: 0 !important;">
+             <label class="item item-input item-select stable-bg">
+                <div class="input-label">
+                প্রশ্ন বদলানঃ
+                </div>
+                <select class="item-select" ng-model="setShowing.selectedSet" ng-selected="setShowing.selectedSet" 
                     ng-options="set.value for set in quizQuestionSets" ng-change="fixSet()"></select>
-                </label>
-            </div>
+            </label>
+        </div>
+
+        <div class="button-bar">
+            <button class="button button-large button-positive ion-ios-checkmark-empty" style="font-size:2rem;">{{count.right}}</button>
+            <button class="button button-large button-dark">({{currentIndexNum+1}}/{{totalQuestions}})</button>
+            <button class="button button-large button-assertive ion-ios-close-empty" style="font-size:2rem;">{{count.wrong}}</button>
         </div>
 
 
-        <div class="list card royal-bg " id="quiz-card24" style="margin-top: 3px;">
+        <div class="list card energized-bg " id="quiz-card24" style="margin-top: 3px;">
 
             <h4 id="quiz-heading1" class="primary-text-color" style="text-align:center;">{{allQuestions[currentIndexNum].title}}</h4>
             
-            <ion-checkbox class="item-text-wrap" collection-repeat="opt in options" ng-click="checkAnswer(opt.title)" ng-selected="{{opt.selected}}">{{opt.title}}</ion-checkbox>
+            <ion-checkbox class="item-text-wrap" ng-repeat="opt in options" ng-click="checkAnswer(opt.title)" ng-selected="{{opt.selected}}">{{opt.title}}</ion-checkbox>
 
         </div>
 
