@@ -60,29 +60,35 @@ angular.module('app',
     }// Checking network connection
 
     // Admob code
-    if(window.plugins && window.plugins.AdMob) {
-        //var admob_key = device.platform == "Android" ? "ca-app-pub-9736917302037050/1857374724" : "IOS_PUBLISHER_KEY";
-        var admob_key = "ca-app-pub-9736917302037050/1857374724";
-        var admob = window.plugins.AdMob;
-        admob.createBannerView( 
-            {
-                'publisherId': admob_key,
-                'adSize': admob.AD_SIZE.BANNER,
-                'bannerAtTop': false,
-                'overlap': false, // set to true, to allow banner overlap webview
-            }, 
-            function() {
-                admob.requestAd(
-                    { 'isTesting': false }, 
-                    function() {
-                        admob.showAd(true);
-                    }, 
-                    function() { alert('failed to request ad'); }
-                );
-            }, 
-            function() { alert('failed to create banner view'); }
-        );
-    }
+    // if(window.plugins && window.plugins.AdMob) {
+    //     //var admob_key = device.platform == "Android" ? "ca-app-pub-9736917302037050/1857374724" : "IOS_PUBLISHER_KEY";
+    //     var admob_key = "ca-app-pub-9736917302037050/1857374724";
+    //     var admob = window.plugins.AdMob;
+    //     admob.createBanner( 
+    //         {
+    //             'publisherId': admob_key,
+    //             'adSize': admob.AD_SIZE.BANNER,
+    //             'bannerAtTop': false,
+    //             'overlap': false, // set to true, to allow banner overlap webview
+    //         }, 
+    //         function() {
+    //             admob.requestAd(
+    //                 { 'isTesting': false }, 
+    //                 function() {
+    //                     admob.showAd(true);
+    //                 }, 
+    //                 function() { alert('failed to request ad'); }
+    //             );
+    //         }, 
+    //         function() { alert('failed to create banner view'); }
+    //     );
+    // }
+    var banner_key = "ca-app-pub-9736917302037050/1857374724";
+    if(AdMob) AdMob.createBanner({
+      adId: banner_key,
+      position: AdMob.AD_POSITION.BOTTOM_CENTER,
+      autoShow: true,
+      isTesting: false  });
     // End of Admob code
 
   });

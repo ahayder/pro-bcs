@@ -5,6 +5,13 @@ angular.module('app.resultController', [])
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $state, $rootScope, ResultFacotry, $stateParams, $ionicModal, $firebaseAuth, Auth, ionicToast, $firebaseArray, $firebaseObject, ngFB, $ionicHistory) {
 
+    // Admob code
+        // preppare and load ad resource in background, e.g. at begining of game level
+        var inter_key = "ca-app-pub-9736917302037050/7106879122";
+        if(AdMob) AdMob.prepareInterstitial( {adId: inter_key, autoShow:true, isTesting:false} );
+        // show the interstitial later, e.g. at end of game level
+        if(AdMob) AdMob.showInterstitial();
+    // End of Admob code
 
     
     // Finding next set
