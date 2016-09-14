@@ -5,6 +5,7 @@ angular.module('app.resultController', [])
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $state, $rootScope, ResultFacotry, $stateParams, $ionicModal, $firebaseAuth, Auth, ionicToast, $firebaseArray, $firebaseObject, ngFB, $ionicHistory) {
 
+
     
     // Finding next set
     $scope.subcategoryId = $stateParams.subId;

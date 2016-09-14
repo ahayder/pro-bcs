@@ -1,5 +1,10 @@
 <ion-view title="আপনার পরামর্শ" id="page4">
     <ion-content padding="true" class="has-header">
-        <h1>আপনার</h1>
+        <div class="list">
+            <label class="item item-input">
+                <textarea placeholder="আপনার মতামত, পরামর্শ অথবা প্রশ্ন ভুল থাকলে অভিযোগ জানান।" ng-model="feed.text"></textarea>
+            </label>
+        </div>
+        <button class="button button-block button-positive" ng-click="save(feed.text)">Submit</button>
     </ion-content>
 </ion-view>

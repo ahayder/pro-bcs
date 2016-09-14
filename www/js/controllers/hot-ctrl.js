@@ -7,12 +7,12 @@ function ($scope, $rootScope, $state, $ionicLoading, Questions, $stateParams, $f
 
 
     // Checking network connection
-    // if(window.Connection) {
-    //     if(navigator.connection.type == Connection.NONE) {
-    //         firebase.database().goOffline();
-    //         ionicToast.show("জনপ্রয় বিষয়সমূহ একটি অনলাইন ফিচার। বিষয়গুলো দেখতে ইন্টারনেট চালু করুন।", 'top', false, 3000);
-    //     }
-    //     else{
+    if(window.Connection) {
+        if(navigator.connection.type == Connection.NONE) {
+            firebase.database().goOffline();
+            ionicToast.show("জনপপ্রিয় বিষয়সমূহ একটি অনলাইন ফিচার। বিষয়গুলো দেখতে ইন্টারনেট চালু করুন।", 'top', false, 3000);
+        }
+        else{
             firebase.database().goOnline();
             var subRef = firebase.database().ref().child("subCategories");
             var allSubs = $firebaseArray(subRef);
@@ -42,8 +42,8 @@ function ($scope, $rootScope, $state, $ionicLoading, Questions, $stateParams, $f
             },function(error){
                 ionicToast.show('দুঃখিত আবার চেষ্টা করুন।', 'middle', false, 2000);
             });// end of all hot
-    //     }
-    // }// Checking network connection
+        }
+    }// Checking network connection
 
 
     
@@ -67,6 +67,11 @@ function ($scope, $rootScope, $state, $ionicLoading, Questions, $stateParams, $f
             }
         }
         var allqs = tempQuestions;
+        if(allqs.length == 0){
+            $ionicLoading.hide();
+            ionicToast.show("দুঃখিত এই সাবক্যাটাগরিতে এখনও কোন প্রশ্ন যোগ করা হয়নি। আমরা প্রতিদিন ১০০ এর বেশী প্রশ্ন যোগ করে যাচ্ছি। প্রতিদিন অ্যাপ এর মেন্যুতে গিয়ে আপডেট করুন এবং নতুন প্রশ্ন পান।", 'middle', true, 3000);
+            return;
+        }
         // console.log(allqs);
 
         // // All questions

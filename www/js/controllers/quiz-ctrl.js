@@ -5,35 +5,42 @@ angular.module('app.quizController', [])
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $cordovaNativeAudio, Questions, $stateParams, $ionicPopup, ionicToast, $state, $timeout, $rootScope, ResultFacotry, $ionicLoading) {
     // This if for result Factory resetting result array
-    $cordovaNativeAudio
-    .preloadSimple('correct', 'audio/correct.mp3')
-    .then(function (msg) {
-      console.log(msg);
-    }, function (error) {
-        console.log(error);
-    });
-    $cordovaNativeAudio
-    .preloadSimple('wrong', 'audio/wrong.mp3')
-    .then(function (msg) {
-      console.log(msg);
-    }, function (error) {
-        console.log(error);
-    });
+
+    $scope.mute = function(){
+        $rootScope.sound = !$rootScope.sound;
+        if($rootScope.sound){
+            ionicToast.show('সাউন্ড চালু হয়ছে', 'top', false, 1000);
+
+            $cordovaNativeAudio
+                .preloadSimple('wrong', 'audio/wrong.mp3')
+                .then(function (msg) {
+                console.log(msg);
+                }, function (error) {
+                    console.log(error);
+            });
+
+            $cordovaNativeAudio
+                .preloadSimple('correct', 'audio/correct.mp3')
+                .then(function (msg) {
+                console.log(msg);
+                }, function (error) {
+                    console.log(error);
+            });
+
+            
+
+        }
+        else{
+            ionicToast.show('সাউন্ড বন্ধ হয়ছে', 'top', false, 1000);
+        }
+    }
+    
 
 
     var play = function (audio) {
         $cordovaNativeAudio.play(audio);
         console.log("halo");
     };
-
-
-    $scope.muteAudio = function(){
-        $cordovaNativeAudio.unload('correct');
-        $cordovaNativeAudio.unload('wrong');
-    }
-
-
-
 
 
 
@@ -181,7 +188,13 @@ function ($scope, $cordovaNativeAudio, Questions, $stateParams, $ionicPopup, ion
 
         // If Right asnwer
         if($scope.allQuestions[$scope.currentIndexNum].answer == userAns){
-            play("correct");
+            if($rootScope.sound){
+                play("correct");
+            }
+            else{
+                console.log("Audio is muted");
+            }
+            
             $rootScope.score.mark += 1;
             var rightAnsAlert = $ionicPopup.show({
                     title: '<h3 class="title light">সাবাস বাঘের বাচ্চা!</h3>',
@@ -226,7 +239,13 @@ function ($scope, $cordovaNativeAudio, Questions, $stateParams, $ionicPopup, ion
         }
         // If Wrong Answer
         else{
-            play("wrong");
+            if($rootScope.sound){
+                play("wrong");
+            }
+            else{
+                console.log("Audio is muted");
+            }
+
             $rootScope.score.mark = $rootScope.score.mark <= 0 ? 0 : $rootScope.score.mark-0.50;
             //console.log("ভুল! সঠিক উত্তরঃ " + $scope.allQuestions[$scope.currentIndexNum].answer);
 
@@ -273,6 +292,42 @@ function ($scope, $cordovaNativeAudio, Questions, $stateParams, $ionicPopup, ion
 
         
     } // End of check answer function
+
+     if($rootScope.sound){
+        $scope.$on("$ionicView.beforeLeave", function(event, data){
+            $cordovaNativeAudio.unload('correct');
+            $cordovaNativeAudio.unload('wrong');
+        });
+    }
+
+    // report question
+    $scope.reportQuestion = function(id){
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'অনুমোদন',
+            template: 'অভিযোগ টি পাঠান'
+        });
+
+        confirmPopup.then(function(res) {
+            if(res) {
+                // Checking network connection
+                if(window.Connection) {
+                    if(navigator.connection.type == Connection.NONE) {
+                        firebase.database().goOffline();
+                        ionicToast.show("এটি একটি অনলাইন ফিচার। ইন্টারনেট একটিভেট করে চেষ্টা করুন।", 'top', false, 3000);
+                    }
+                    else{
+                        firebase.database().goOnline();
+                        var hotRef = firebase.database().ref().child("reportedQuestions");
+                        hotRef.child(id).set("reported");
+                        ionicToast.show("আপনার অভিযোগটি রাখা হয়েছে। ধন্যবাদ আপনার সহযোগিতার জন্য। শীঘ্রই আমরা আপানর অভিযোগ ভুলটি সংশোধন করে ফেলবো।", 'top', true, 3500);
+                    }
+                }// Checking network connection
+            } else {
+                return;
+            }
+        });
+        
+    }
     
 
 

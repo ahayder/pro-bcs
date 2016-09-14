@@ -15,6 +15,7 @@ angular.module('app',
 'app.loginController', 
 'app.leaderboardController',
 'app.categoriesController',
+'app.feedbackController',
 'app.subController',
 'app.hotController',
 'app.routes', 
@@ -134,6 +135,9 @@ angular.module('app',
     $rootScope.studyQuestionsRange = localStorage.getItem('studyQuestionsRange');
   }
   // end of study range
+
+  $rootScope.sound = false;
+
 
 })
 
