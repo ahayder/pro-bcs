@@ -8,6 +8,7 @@
 angular.module('app', 
 ['ionic', 
 'ngCordova',
+'app.tutorialController',
 'app.quizController', 
 'app.resultController', 
 'app.settingsController', 
@@ -36,6 +37,14 @@ angular.module('app',
 .run(function($ionicPlatform, $rootScope, $firebaseAuth, ngFB, $firebaseObject) {
   ngFB.init({appId: '1746998085570124'});
   $ionicPlatform.ready(function() {
+    // admob banner code
+    var banner_key = "ca-app-pub-9736917302037050/1857374724";
+    if(AdMob) AdMob.createBanner({
+      adId: banner_key,
+      position: AdMob.AD_POSITION.BOTTOM_CENTER,
+      autoShow: true,
+      isTesting: false  });
+    // End of Admob code
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     
@@ -58,38 +67,6 @@ angular.module('app',
           console.log("online");
         }
     }// Checking network connection
-
-    // Admob code
-    // if(window.plugins && window.plugins.AdMob) {
-    //     //var admob_key = device.platform == "Android" ? "ca-app-pub-9736917302037050/1857374724" : "IOS_PUBLISHER_KEY";
-    //     var admob_key = "ca-app-pub-9736917302037050/1857374724";
-    //     var admob = window.plugins.AdMob;
-    //     admob.createBanner( 
-    //         {
-    //             'publisherId': admob_key,
-    //             'adSize': admob.AD_SIZE.BANNER,
-    //             'bannerAtTop': false,
-    //             'overlap': false, // set to true, to allow banner overlap webview
-    //         }, 
-    //         function() {
-    //             admob.requestAd(
-    //                 { 'isTesting': false }, 
-    //                 function() {
-    //                     admob.showAd(true);
-    //                 }, 
-    //                 function() { alert('failed to request ad'); }
-    //             );
-    //         }, 
-    //         function() { alert('failed to create banner view'); }
-    //     );
-    // }
-    var banner_key = "ca-app-pub-9736917302037050/1857374724";
-    if(AdMob) AdMob.createBanner({
-      adId: banner_key,
-      position: AdMob.AD_POSITION.BOTTOM_CENTER,
-      autoShow: true,
-      isTesting: false  });
-    // End of Admob code
 
   });
   
@@ -144,12 +121,12 @@ angular.module('app',
 
   $rootScope.sound = false;
 
-
 })
 
 
-.controller('menuCtrl', ['$scope', '$ionicHistory', '$state', '$ionicLoading', 'UpdateFactory', '$firebaseAuth', 'InitFactory', 'ionicToast', '$rootScope',
-  function($scope, $ionicHistory, $state, $ionicLoading, UpdateFactory, $firebaseAuth, InitFactory, ionicToast, $rootScope){
+.controller('menuCtrl', ['$scope', '$timeout', '$ionicHistory', '$state', '$ionicLoading', 'UpdateFactory', '$firebaseAuth', 'InitFactory', 'ionicToast', '$rootScope',
+  function($scope, $timeout, $ionicHistory, $state, $ionicLoading, UpdateFactory, $firebaseAuth, InitFactory, ionicToast, $rootScope){
+
 
   $scope.signOut = function(){
     $firebaseAuth().$signOut();
@@ -223,6 +200,23 @@ angular.module('app',
     }
         
   }// Update App
+
+
+  // /intro
+  var introSettings = function(){
+     if(localStorage.getItem('isFirstTime') == 'true' || localStorage.getItem('isFirstTime') == null){
+
+      $timeout(function() {
+                $state.go("tutorial");
+            });
+      localStorage.setItem('isFirstTime', 'false');
+      console.log("tuts showing");
+     }
+  }
+
+  introSettings();
+ 
+  // end of intro 
   
 
 }])
