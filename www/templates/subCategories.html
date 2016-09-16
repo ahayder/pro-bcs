@@ -9,17 +9,20 @@
 
     <ion-content padding="true" class="has-header">
 
+        <ion-list>
 
-        <ion-list id="subCategories-list4">
             <label class="item item-input calm-bg">
                 <i class="icon ion-search placeholder-icon"></i>
                 <input type="search" placeholder="খুঁজুন" ng-model="search.title">
             </label>
 
-            <ion-item  ng-repeat="sub in subs | filter: search:strict" class="animated flipInX item-icon-right" id="subCategories-list-item9" 
+            <ion-item  ng-repeat="sub in subs | filter: search:strict" class="item-icon-right" 
             ng-click="goToQuizOrStudy(sub.$id, sub.title)">{{sub.title}}
                 <i class="icon ion-ios-arrow-thin-right"></i>
             </ion-item>
+
         </ion-list>
+
     </ion-content>
+
 </ion-view>

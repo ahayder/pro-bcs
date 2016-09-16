@@ -6,7 +6,7 @@
     </ion-nav-buttons>
 
 
-    <ion-content padding="true" class="has-header" scroll="true">
+    <ion-content padding="true" class="has-header">
 
         <ion-list id="categories-list3">
             <label class="item item-input calm-bg">
@@ -14,12 +14,12 @@
                 <input type="search" placeholder="খুঁজুন" ng-model="search.$value">
             </label>
 
-            <ion-item  ng-repeat="cat in cats" class="animated flipInX item-icon-right" 
+            <ion-item  ng-repeat="cat in cats" class="item-icon-right" 
                 id="categories-list-item4" ui-sref="subCategories({id: cat.$id})" ng-if="$last">
                 {{cat.$value}}
                 <i class="icon ion-ios-arrow-thin-right"></i>
             </ion-item>
-            <ion-item  ng-repeat="cat in cats | filter: search:strict" class="animated flipInX item-icon-right" 
+            <ion-item  ng-repeat="cat in cats | filter: search:strict" class="item-icon-right"
                 id="categories-list-item4" ui-sref="subCategories({id: cat.$id})" ng-hide="$last">
                 {{cat.$value}}
                 <i class="icon ion-ios-arrow-thin-right"></i>
@@ -27,4 +27,5 @@
         </ion-list>
 
     </ion-content>
+
 </ion-view>

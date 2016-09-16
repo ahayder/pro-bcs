@@ -6,6 +6,11 @@ angular.module('app.quizController', [])
 function ($scope, $cordovaNativeAudio, Questions, $stateParams, $ionicPopup, ionicToast, $state, $timeout, $rootScope, ResultFacotry, $ionicLoading) {
     // This if for result Factory resetting result array
 
+    if(localStorage.getItem('isQuizFirstTime') == 'true'){
+        ionicToast.show('এখানে সঠিক উত্তর নির্বাচন করুন', 'middle', false, 1500);
+        localStorage.setItem('isQuizFirstTime', "false");
+    }
+
     $scope.mute = function(){
         $rootScope.sound = !$rootScope.sound;
         if($rootScope.sound){
@@ -25,9 +30,7 @@ function ($scope, $cordovaNativeAudio, Questions, $stateParams, $ionicPopup, ion
                 console.log(msg);
                 }, function (error) {
                     console.log(error);
-            });
-
-            
+            });       
 
         }
         else{
@@ -94,7 +97,7 @@ function ($scope, $cordovaNativeAudio, Questions, $stateParams, $ionicPopup, ion
         set.starting = $rootScope.ranges[i].starting;
         set.ending = $rootScope.ranges[i].ending;
         var setNumber = i+1;
-        set.value = "সেট "+ setNumber +"("+$rootScope.ranges[i].starting + "-" + $rootScope.ranges[i].ending + ")";
+        set.value = "সেট "+ setNumber +"("+$rootScope.ranges[i].starting + "-" + $rootScope.ranges[i].ending+")";
         sets.push(set);
     }
     $rootScope.quizQuestionSets = sets;

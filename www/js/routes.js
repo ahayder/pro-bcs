@@ -98,6 +98,12 @@ angular.module('app.routes', [])
     url: '/tutorial',
     templateUrl: 'templates/tutorial.html',
     controller: 'tutorialCtrl'
+  })
+
+  .state('intro', {
+    url: '/intro',
+    templateUrl: 'templates/intro.html',
+    controller: 'introCtrl'
   });
 
   $urlRouterProvider.otherwise('quizWay');

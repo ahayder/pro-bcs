@@ -1,0 +1,63 @@
+<ion-view view-title="স্বাগতম">
+
+        <ion-nav-buttons side="left">
+
+          <button class="button button-light button-clear no-animation"
+                  ng-click="startApp()" ng-show="!slideIndex">
+            বাদ দিন
+          </button>
+          <button class="button button-light button-clear no-animation"
+                  ng-click="previous()" ng-show="slideIndex > 0">
+            পূর্ববর্তী
+          </button>
+
+        </ion-nav-buttons>
+
+        <ion-nav-buttons side="right"> 
+
+          <button class="button button-light button-clear no-animation"
+                  ng-click="next()" ng-show="slideIndex != 3">
+            পরবর্তী
+          </button>
+          <button class="button button-light button-clear no-animation"
+                  ng-click="startApp()" ng-show="slideIndex == 3">
+            শুরু করুন
+          </button>
+
+        </ion-nav-buttons>
+
+        <ion-slide-box on-slide-changed="slideChanged(index)">
+
+          <ion-slide>
+            <div id="logo">
+              <img src="img/icon.png" width="150" height="150">
+            </div>
+            <h2>স্বাগতম Pro BCS Preparation অ্যাপ এ</h2>
+            <h5>কুইজ/স্টাডি করুন অনলাইন অথবা অফলাইন এ</h5>
+            <p>স্কোর শেয়ার করুন লিডারবোর্ড এ</p>
+            <h3>শেষ মুহূর্তের প্রস্তুতি পাবেন ২০ তারিখ</h3>
+            <p>ঝালাই করে নিন ৩৭ তম BCS প্রিলি পরীক্ষার পড়া লেটেস্ট সাজেশন থেকে তৈরি করা প্রশ্ন থেকে। শেষ মুহূর্তের প্রস্তুতি মেন্যুতে পেতে ২০ তারিখ রাত ১২ টার পড় অ্যাপ আপডেট দিন।</p>
+          </ion-slide>
+
+          <ion-slide>
+            <div id="leader">
+            </div>
+          </ion-slide>
+
+          <ion-slide>
+            <div id="set-setting">
+            </div>
+          </ion-slide>
+
+          <ion-slide>
+            <div id="update">
+            </div>
+            <button class="button button-positive button-small no-animation"
+                  ng-click="startApp()">
+            শুরু করুন
+            </button>
+          </ion-slide>
+
+        </ion-slide-box>
+        
+</ion-view>

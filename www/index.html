@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src  'self' 'unsafe-inline' *">
     <title></title>
 
     
-    
+    <script src="lib/bluebird.min.js"></script>
     <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/ionic.cloud.min.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="lib/ngCordova/dist/ng-cordova.js"></script>
@@ -18,7 +20,54 @@
 
     <!-- compiled css output -->
     <link href="css/ionic.app.css" rel="stylesheet">
-    <link rel="stylesheet" href="lib/animate.css/animate.min.css">
+
+  </head>
+
+  <body ng-app="app" animation="slide-left-right-ios7">
+  <div>
+    <ion-side-menus enable-menu-with-back-views="true" data-componentid="side-menu21">
+        <ion-side-menu-content>
+            <ion-nav-bar class="bar-dark">
+                <ion-nav-back-button></ion-nav-back-button>
+                <ion-nav-buttons side="left">
+                    <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+                </ion-nav-buttons>
+            </ion-nav-bar>
+            <ion-nav-view></ion-nav-view>
+        </ion-side-menu-content>
+        <ion-side-menu side="left" id="side-menu21">
+            <ion-header-bar class="bar-dark">
+                <div class="title">মেন্যু</div>
+            </ion-header-bar>
+            <ion-content padding="false" class="side-menu-left has-header" ng-controller="menuCtrl">
+                <ion-list id="menu-list1" data-componentid="list1">
+                    <a class="item item-avatar default-primary-color" style="border-top:0;" href="#" ng-if="user">
+                      <img ng-src="{{user.photoURL || placeholderImage}}">
+                      <h2 class="text-primary-color">{{user.displayName || user.email}}</h2>
+                      <p class="light-primary-color-text">স্কোর: {{leader.score}}({{leader.correctness}}%)</p>
+                    </a>
+                    <ion-item class="menu-text item-icon-left" ui-sref="login" menu-close="" ng-if="!user"><i class="icon ion-log-in"></i>লগইন</ion-item>
+                    <ion-item class="menu-text item-icon-left" ng-click="updateApp()" menu-close=""><i class="icon ion-ios-loop-strong"></i>আপডেট</ion-item>
+                    <ion-item class="quiz-menu item-icon-left" ui-sref="quizWay" menu-close=""><i class="icon ion-ios-speedometer"></i>কুইজ</ion-item>
+                    <ion-item class="menu-text item-icon-left" ui-sref="studyWay" menu-close=""><i class="icon ion-ios-book"></i>স্টাডি</ion-item>
+                    <ion-item class="menu-text item-icon-left" ui-sref="hot" menu-close=""><i class="icon ion-fireball"></i>জনপ্রিয় বিষয়</ion-item>
+                    <ion-item class="menu-text item-icon-left" ui-sref="leaderboard" menu-close=""><i class="icon ion-connection-bars"></i>লিডার বোর্ড</ion-item>
+                    <ion-item class="menu-text item-icon-left" ui-sref="settings" menu-close=""><i class="icon ion-settings"></i>প্রশ্নসেট সেটিংস</ion-item>
+                    <ion-item class="menu-text item-icon-left" ui-sref="feedback" menu-close=""><i class="icon ion-ios-chatbubble-outline"></i>পরামর্শ দিন</ion-item>
+                    <ion-item class="menu-text item-icon-left" menu-close="" ui-sref="tutorial"><i class="icon ion-ios-glasses-outline"></i>টিউটোরিয়াল</ion-item>
+                    <ion-item class="menu-text item-icon-left" menu-close data-componentid="list-item28" ng-if="user" ng-click="signOut()"><i class="icon ion-log-out"></i>লগআউট</ion-item>
+                </ion-list>
+            </ion-content>
+        </ion-side-menu>
+     </ion-side-menus>
+    </div>
+
+
+
+
+
+
+
 
     <script src="js/app.js"></script>
     <script src="js/controllers/tutorial-ctrl.js"></script>
@@ -33,9 +82,7 @@
     <script src="js/controllers/feedback-ctrl.js"></script>
     <script src="js/controllers/hot-ctrl.js"></script>
     <script src="js/routes.js"></script>
-    
     <script src="js/directives.js"></script>
-    
     <script src="js/factories/init-factory.js"></script>
     <script src="js/factories/update-factory.js"></script>
     <script src="js/factories/auth-factory.js"></script>
@@ -74,45 +121,6 @@
 
     <script src="js/openfb.js"></script>
     <script src="js/ngopenfb.js"></script>
-
-  </head>
-  <body ng-app="app" animation="slide-left-right-ios7">
-  <div>
-    <ion-side-menus enable-menu-with-back-views="true" data-componentid="side-menu21">
-        <ion-side-menu-content>
-            <ion-nav-bar class="bar-dark">
-                <ion-nav-back-button></ion-nav-back-button>
-                <ion-nav-buttons side="left">
-                    <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
-                </ion-nav-buttons>
-            </ion-nav-bar>
-            <ion-nav-view></ion-nav-view>
-        </ion-side-menu-content>
-        <ion-side-menu side="left" id="side-menu21">
-            <ion-header-bar class="bar-dark">
-                <div class="title">মেন্যু</div>
-            </ion-header-bar>
-            <ion-content padding="false" class="side-menu-left has-header" ng-controller="menuCtrl">
-                <ion-list id="menu-list1" data-componentid="list1">
-                    <a class="item item-avatar default-primary-color" style="border-top:0;" href="#" ng-if="user">
-                      <img ng-src="{{user.photoURL || placeholderImage}}">
-                      <h2 class="text-primary-color">{{user.displayName || user.email}}</h2>
-                      <p class="light-primary-color-text">স্কোর: {{leader.score}}({{leader.correctness}}%)</p>
-                    </a>
-                    <ion-item class="menu-text item-icon-left" ui-sref="login" menu-close="" ng-if="!user"><i class="icon ion-log-in"></i>লগইন</ion-item>
-                    <ion-item class="menu-text item-icon-left" ng-click="updateApp()" menu-close=""><i class="icon ion-ios-loop-strong"></i>আপডেট</ion-item>
-                    <ion-item class="quiz-menu item-icon-left" ui-sref="quizWay" menu-close=""><i class="icon ion-ios-speedometer"></i>কুইজ</ion-item>
-                    <ion-item class="menu-text item-icon-left" ui-sref="studyWay" menu-close=""><i class="icon ion-ios-book"></i>স্টাডি</ion-item>
-                    <ion-item class="menu-text item-icon-left" ui-sref="hot" menu-close=""><i class="icon ion-fireball"></i>জনপ্রিয় বিষয়</ion-item>
-                    <ion-item class="menu-text item-icon-left" ui-sref="leaderboard" menu-close=""><i class="icon ion-connection-bars"></i>লিডার বোর্ড</ion-item>
-                    <ion-item class="menu-text item-icon-left" ui-sref="settings" menu-close=""><i class="icon ion-settings"></i>প্রশ্নসেট সেটিংস</ion-item>
-                    <ion-item class="menu-text item-icon-left" ui-sref="feedback" menu-close=""><i class="icon ion-ios-chatbubble-outline"></i>পরামর্শ দিন</ion-item>
-                    <ion-item class="menu-text item-icon-left" menu-close="" ui-sref="tutorial"><i class="icon ion-ios-glasses-outline"></i>টিউটোরিয়াল</ion-item>
-                    <ion-item class="menu-text item-icon-left" menu-close data-componentid="list-item28" ng-if="user" ng-click="signOut()"><i class="icon ion-log-out"></i>লগআউট</ion-item>
-                </ion-list>
-            </ion-content>
-        </ion-side-menu>
-    </ion-side-menus>
-    </div>
+    <script src="lib/ionic-native-transitions/dist/ionic-native-transitions.min.js"></script>
   </body>
 </html>

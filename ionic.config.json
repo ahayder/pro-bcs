@@ -1,6 +1,6 @@
 {
-  "name": "BCSQuiz",
-  "app_id": "",
+  "name": "Pro BCS",
+  "app_id": "336c51e9",
   "gulpStartupTasks": [
     "sass",
     "watch"

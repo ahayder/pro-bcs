@@ -8,6 +8,7 @@
 angular.module('app', 
 ['ionic', 
 'ngCordova',
+'ionic.cloud',
 'app.tutorialController',
 'app.quizController', 
 'app.resultController', 
@@ -34,8 +35,16 @@ angular.module('app',
 'ngOpenFB',
 'ngStorage'])
 
-.run(function($ionicPlatform, $rootScope, $firebaseAuth, ngFB, $firebaseObject) {
+.run(function($ionicPlatform, $rootScope, $firebaseAuth, ngFB, $firebaseObject, $ionicPush) {
+
+  $ionicPush.register().then(function(t) {
+    return $ionicPush.saveToken(t, "ignore_user");
+  }).then(function(t) {
+    console.log('Token saved:', t.token);
+  });
+
   ngFB.init({appId: '1746998085570124'});
+
   $ionicPlatform.ready(function() {
     // admob banner code
     var banner_key = "ca-app-pub-9736917302037050/1857374724";
@@ -43,7 +52,9 @@ angular.module('app',
       adId: banner_key,
       position: AdMob.AD_POSITION.BOTTOM_CENTER,
       autoShow: true,
-      isTesting: false  });
+      isTesting: false,
+      overlap: false
+    });
     // End of Admob code
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -68,7 +79,9 @@ angular.module('app',
         }
     }// Checking network connection
 
-  });
+  }); // end of platform ready
+
+
   
   $firebaseAuth().$onAuthStateChanged(function(user) {
       $rootScope.user = user;
@@ -98,7 +111,7 @@ angular.module('app',
   }
   else{
     //console.log("NO range quiz");
-    localStorage.setItem('quizQuestionsRange',"5");
+    localStorage.setItem('quizQuestionsRange',"20");
     //console.log(localStorage.getItem('quizQuestionsRange'));
     $rootScope.quizQuestionsRange = localStorage.getItem('quizQuestionsRange');
   }
@@ -113,13 +126,18 @@ angular.module('app',
   }
   else{
     //console.log("NO range study");
-    localStorage.setItem('studyQuestionsRange',"10");
+    localStorage.setItem('studyQuestionsRange',"25");
     //console.log(localStorage.getItem('studyQuestionsRange'));
     $rootScope.studyQuestionsRange = localStorage.getItem('studyQuestionsRange');
   }
   // end of study range
 
-  $rootScope.sound = false;
+  $rootScope.sound = true;
+
+  $rootScope.$on('cloud:push:notification', function(event, data) {
+    var msg = data.message;
+    alert(msg.title + ': ' + msg.text);
+  });
 
 })
 
@@ -207,24 +225,50 @@ angular.module('app',
      if(localStorage.getItem('isFirstTime') == 'true' || localStorage.getItem('isFirstTime') == null){
 
       $timeout(function() {
-                $state.go("tutorial");
+                $state.go("intro");
             });
       localStorage.setItem('isFirstTime', 'false');
+      localStorage.setItem('isQuizFirstTime', 'true');
       console.log("tuts showing");
      }
   }
 
   introSettings();
  
-  // end of intro 
+  // end of intro
   
 
 }])
 
 
-.config(function ($httpProvider) {
+.config(function ($httpProvider, $ionicConfigProvider, $ionicCloudProvider) {
+
+  $ionicConfigProvider.scrolling.jsScrolling(false);
+
+  $ionicConfigProvider.views.transition("none");
+
+
+  $ionicCloudProvider.init({
+    "core": {
+      "app_id": "336c51e9"
+    },
+    "push": {
+      "sender_id": "1079579771862",
+      "pluginConfig": {
+        "ios": {
+          "badge": true,
+          "sound": true
+        },
+        "android": {
+          "iconColor": "#343434"
+        }
+      }
+    }
+  });
+
   $httpProvider.defaults.headers.common = {};
   $httpProvider.defaults.headers.post = {};
   $httpProvider.defaults.headers.put = {};
   $httpProvider.defaults.headers.patch = {};
+
 });
