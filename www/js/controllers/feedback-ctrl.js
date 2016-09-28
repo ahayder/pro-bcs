@@ -1,9 +1,9 @@
 angular.module('app.feedbackController', [])
      
-.controller('feedbackCtrl', ['$scope', '$rootScope', '$state', '$ionicLoading', 'Questions', '$stateParams', '$firebaseArray', 'ionicToast', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('feedbackCtrl', ['$scope', '$state', '$firebaseArray', 'ionicToast', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $rootScope, $state, $ionicLoading, Questions, $stateParams, $firebaseArray, ionicToast) {
+function ($scope, $state, $firebaseArray, ionicToast) {
 
     $scope.feed = {};
     $scope.feed.text = "";

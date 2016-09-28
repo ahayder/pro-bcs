@@ -11,6 +11,27 @@ function ($scope, $cordovaNativeAudio, Questions, $stateParams, $ionicPopup, ion
         localStorage.setItem('isQuizFirstTime', "false");
     }
 
+    // sound
+    if($rootScope.sound){
+
+        $cordovaNativeAudio
+            .preloadSimple('wrong', 'audio/wrong.mp3')
+            .then(function (msg) {
+            console.log(msg);
+            }, function (error) {
+                console.log(error);
+        });
+
+        $cordovaNativeAudio
+            .preloadSimple('correct', 'audio/correct.mp3')
+            .then(function (msg) {
+            console.log(msg);
+            }, function (error) {
+                console.log(error);
+        });       
+
+    }
+
     $scope.mute = function(){
         $rootScope.sound = !$rootScope.sound;
         if($rootScope.sound){
@@ -45,6 +66,7 @@ function ($scope, $cordovaNativeAudio, Questions, $stateParams, $ionicPopup, ion
         console.log("halo");
     };
 
+    // end of sound
 
 
     $rootScope.temp = [];
@@ -53,12 +75,7 @@ function ($scope, $cordovaNativeAudio, Questions, $stateParams, $ionicPopup, ion
       template: '<ion-spinner icon="spiral"></ion-spinner>'
     });
 
-    // Sate Params /quiz/:id/:subCatName/:qType/:startIdx/:endIdx
     $scope.subCatName = $stateParams.subCatName;
-    // console.log($stateParams.id);
-    // console.log($stateParams.subCatName);
-    // console.log($stateParams.startIdx);
-
     // Score
     $rootScope.score = {}
     $rootScope.score.mark = 0;    
@@ -86,7 +103,47 @@ function ($scope, $cordovaNativeAudio, Questions, $stateParams, $ionicPopup, ion
 
 
 
-    // question set settings
+    var rightAnswerWish = [
+        "সাবাস বাঘের বাচ্চা!",
+        "চমক চলতেই থাক!",
+        "আরও হবে!",
+        "আজকে ঠেকানোর কেউ নাই!",
+        "এভাবেই চলছে চলবে!",
+        "তালি হবে, তালি!",
+        "দেখি আর কতো পারেন!",
+        "ভাই চিকন পিন এর চার্জার আছে?",
+        "হিরো আলম তো ফেইল!"
+    ];
+
+    var wrongAnswerWish = [
+        "হুম মনযোগ এর অভাব...",
+        "পরের টা কিন্তু ঠিক হবেই হবেই!",
+        "ভুল? তো কি হইসে, শিখলম তো?",
+        "ভুল? না..! সফলতার খুঁটি।",
+        "খেলা চলবে, হার মানবো? না!",
+        "ভুল যদি নাই হতো... তাহলে এতদিন এ...!",
+        "পরের বার আয়, দেখবো!",
+        "হাতিপুকে ডাকা লাগবে?",
+        "ইচ্ছা.... ভুল করসি! প্রবলেম?"
+    ];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // question set settings
     console.log($rootScope.ranges);
     // Making sets
@@ -199,8 +256,9 @@ function ($scope, $cordovaNativeAudio, Questions, $stateParams, $ionicPopup, ion
             }
             
             $rootScope.score.mark += 1;
+            var rwish = shuffle(rightAnswerWish);
             var rightAnsAlert = $ionicPopup.show({
-                    title: '<h3 class="title light">সাবাস বাঘের বাচ্চা!</h3>',
+                    title: '<h3 class="title light">'+rwish[0]+'</h3>',
                     cssClass: 'right-answer',
                     template: '<h5 class="title light" style="text-align:center;">উত্তর সঠিক</h5>'
                 });
@@ -253,15 +311,16 @@ function ($scope, $cordovaNativeAudio, Questions, $stateParams, $ionicPopup, ion
             //console.log("ভুল! সঠিক উত্তরঃ " + $scope.allQuestions[$scope.currentIndexNum].answer);
 
             //ionicToast.show("Wrong! Right answer is " + $scope.allQuestions[$scope.currentIndexNum].answer, 'bottom', false, 2250);
+            var wwish = shuffle(wrongAnswerWish);
             var wrongAnsAlert = $ionicPopup.show({
-                    title: '<h3 class="title light">ভুল!</h3>',
+                    title: '<h3 class="title light">'+ wwish[0] +'</h3>',
                     cssClass: 'wrong-answer',
                     template: '<h5 class="title light" style="text-align:center;">'+'সঠিক উত্তরঃ ' + $scope.allQuestions[$scope.currentIndexNum].answer+'</h5>'
                 });
             
             $timeout(function() {
                 wrongAnsAlert.close(); //close the popup after specified seconds for some reason
-            }, 2250);
+            }, 2650);
 
 
             $scope.count.wrong++;
@@ -322,7 +381,7 @@ function ($scope, $cordovaNativeAudio, Questions, $stateParams, $ionicPopup, ion
                         firebase.database().goOnline();
                         var hotRef = firebase.database().ref().child("reportedQuestions");
                         hotRef.child(id).set("reported");
-                        ionicToast.show("আপনার অভিযোগটি রাখা হয়েছে। ধন্যবাদ আপনার সহযোগিতার জন্য। শীঘ্রই আমরা আপানর অভিযোগ ভুলটি সংশোধন করে ফেলবো।", 'top', true, 3500);
+                        ionicToast.show("আপনার অভিযোগটি রাখা হয়েছে। ধন্যবাদ আপনার সহযোগিতার জন্য। শীঘ্রই আমরা আপানর অভিযোগ ভুলটি সংশোধন করে ফেলবো।", 'top', false, 3500);
                     }
                 }// Checking network connection
             } else {

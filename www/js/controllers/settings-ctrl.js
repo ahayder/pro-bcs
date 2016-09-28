@@ -1,10 +1,10 @@
 
 angular.module('app.settingsController', [])
 
-.controller('settingsCtrl', ['$scope', 'ionicToast', '$rootScope', '$ionicNavBarDelegate', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('settingsCtrl', ['$scope', 'ionicToast', '$rootScope', '$ionicNavBarDelegate', '$state', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, ionicToast, $rootScope, $ionicNavBarDelegate) {
+function ($scope, ionicToast, $rootScope, $ionicNavBarDelegate, $state) {
 
     $ionicNavBarDelegate.showBackButton(false);
 
@@ -31,7 +31,6 @@ function ($scope, ionicToast, $rootScope, $ionicNavBarDelegate) {
 
 
 
-
     $scope.quizRanges = [5, 10, 15, 20, 25, 30, 50, 70, 100];
 
     $scope.studyRanges = [5, 10, 15, 20, 25, 30, 50, 70, 100];
@@ -51,6 +50,7 @@ function ($scope, ionicToast, $rootScope, $ionicNavBarDelegate) {
 
     $scope.save = function(){
         ionicToast.show("Saved!", 'top', false, 1000);
+        $state.go('quizWay', {}, { reload: true });
     }
 
 }])

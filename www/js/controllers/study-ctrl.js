@@ -1,9 +1,9 @@
 angular.module('app.studyController', [])
 
-.controller('studyCtrl', ['$scope', 'Questions', '$stateParams', '$firebaseArray', '$ionicPopup', 'ionicToast', '$state', '$timeout', '$rootScope', 'ResultFacotry', '$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('studyCtrl', ['$scope', '$ionicPlatform', 'Questions', '$stateParams', '$ionicPopup', 'ionicToast', '$state', '$rootScope', '$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, Questions, $stateParams, $firebaseArray, $ionicPopup, ionicToast, $state, $timeout, $rootScope, ResultFacotry, $ionicLoading) {
+function ($scope, $ionicPlatform, Questions, $stateParams, $ionicPopup, ionicToast, $state, $rootScope, $ionicLoading) {
     $ionicLoading.show({
       template: '<ion-spinner icon="spiral"></ion-spinner>'
     });
@@ -179,7 +179,18 @@ function ($scope, Questions, $stateParams, $firebaseArray, $ionicPopup, ionicToa
         }
 
     }
-    
+
+
+    $ionicPlatform.onHardwareBackButton(function() {
+        // Admob code
+            // preppare and load ad resource in background, e.g. at begining of game level
+            var inter_key = "ca-app-pub-9736917302037050/7106879122";
+            if(AdMob) AdMob.prepareInterstitial( {adId: inter_key, autoShow:true, isTesting:false} );
+            // show the interstitial later, e.g. at end of game level
+            if(AdMob) AdMob.showInterstitial();
+        // End of Admob code
+    });
+        
 
 
 }])

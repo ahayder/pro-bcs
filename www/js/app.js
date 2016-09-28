@@ -19,7 +19,6 @@ angular.module('app',
 'app.categoriesController',
 'app.feedbackController',
 'app.subController',
-'app.hotController',
 'app.routes', 
 'app.directives',
 'app.initFactory',
@@ -46,6 +45,7 @@ angular.module('app',
   ngFB.init({appId: '1746998085570124'});
 
   $ionicPlatform.ready(function() {
+
     // admob banner code
     var banner_key = "ca-app-pub-9736917302037050/1857374724";
     if(AdMob) AdMob.createBanner({
@@ -142,8 +142,16 @@ angular.module('app',
 })
 
 
-.controller('menuCtrl', ['$scope', '$timeout', '$ionicHistory', '$state', '$ionicLoading', 'UpdateFactory', '$firebaseAuth', 'InitFactory', 'ionicToast', '$rootScope',
-  function($scope, $timeout, $ionicHistory, $state, $ionicLoading, UpdateFactory, $firebaseAuth, InitFactory, ionicToast, $rootScope){
+.controller('menuCtrl', ['$scope', '$firebaseArray', '$timeout', '$ionicHistory', '$state', '$ionicLoading', 'UpdateFactory', '$firebaseAuth', 'InitFactory', 'ionicToast', '$rootScope',
+  function($scope, $firebaseArray, $timeout, $ionicHistory, $state, $ionicLoading, UpdateFactory, $firebaseAuth, InitFactory, ionicToast, $rootScope){
+
+  var subRef = firebase.database().ref().child("subCategories");
+  var allSubs = $firebaseArray(subRef);
+
+  // allSubs.$loaded().then(function(res){
+  //   console.log(res);
+  // })
+  
 
 
   $scope.signOut = function(){
@@ -202,7 +210,7 @@ angular.module('app',
   // Update App
   $scope.updateApp = function(){
     $ionicLoading.show({
-      template: '<ion-spinner icon="spiral"></ion-spinner>'
+      template: '<ion-spinner icon="spiral"></ion-spinner><p>সার্ভার থেকে প্রশ্ন ডাউনলোড হচ্ছে। দয়া করে অপেক্ষা করুন।</p>'
     });
 
     // Checking network connection

@@ -4,10 +4,10 @@
         <!--Show positoin-->
         <div class="card list" ng-show="enrolled">
             <div class="item item-divider positive-bg primary-text-color">
-                আপনি {{your.position}} তম অবস্থান এ আছেন {{totalLeaders}} জন এর মাঝে
+                আপনি {{:: your.position}} তম অবস্থান এ আছেন {{:: totalLeaders}} জন এর মাঝে
             </div>
             <div class="item item-text-wrap">
-                স্কোর: {{your.score}}({{your.correctness}}%)
+                স্কোর: {{:: your.score}}({{:: your.correctness}}%)
             </div>
         </div>
 
@@ -37,10 +37,10 @@
 
 
         <ion-list>
-            <ion-item class="item-thumbnail-left" ng-repeat="leader in allleaders | orderBy: '-score'">
+            <ion-item class="item-thumbnail-left" ng-repeat="leader in ::allleaders | orderBy: '-score'">
                 <img ng-src="{{leader.photoURL || placeholderImage}}">
-                <h2>{{$index+1}}. {{leader.name}}</h2>
-                <p>স্কোরঃ {{leader.score}}({{leader.correctness}}%)</p>
+                <h2>{{:: $index+1}}. {{:: leader.name}}</h2>
+                <p>স্কোরঃ {{:: leader.score}}({{:: leader.correctness}}%)</p>
             </ion-item>
         </ion-list>
     </ion-content>

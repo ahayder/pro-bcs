@@ -12,14 +12,14 @@ function($firebaseArray, $localStorage){
             return categories.$loaded();
         },
         getSubCatsFromFirebase: function(){
-            // categories
+            // sub categories
             var subRef = firebase.database().ref().child("subCategories");
             var allSubs = $firebaseArray(subRef);
 
             return allSubs.$loaded();
         },
         getQuestionsFromFirebase: function(){
-            // categories
+            // question categories
             var quesRef = firebase.database().ref().child("questions");
             var allQuestions = $firebaseArray(quesRef);
 

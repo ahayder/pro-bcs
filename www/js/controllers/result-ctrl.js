@@ -1,9 +1,9 @@
 angular.module('app.resultController', [])
 
-.controller('resultCtrl', ['$scope', '$state', '$rootScope', 'ResultFacotry', '$stateParams', '$ionicModal', '$firebaseAuth', 'Auth', 'ionicToast', '$firebaseArray', '$firebaseObject', 'ngFB', '$ionicHistory', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('resultCtrl', ['$scope', '$state', '$rootScope', 'ResultFacotry', '$stateParams', '$ionicModal', 'Auth', 'ionicToast', '$firebaseArray', '$firebaseObject', 'ngFB', '$ionicHistory', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $state, $rootScope, ResultFacotry, $stateParams, $ionicModal, $firebaseAuth, Auth, ionicToast, $firebaseArray, $firebaseObject, ngFB, $ionicHistory) {
+function ($scope, $state, $rootScope, ResultFacotry, $stateParams, $ionicModal, Auth, ionicToast, $firebaseArray, $firebaseObject, ngFB, $ionicHistory) {
 
     // Admob code
         // preppare and load ad resource in background, e.g. at begining of game level
@@ -197,7 +197,7 @@ function ($scope, $state, $rootScope, ResultFacotry, $stateParams, $ionicModal, 
         if(window.Connection) {
             if(navigator.connection.type == Connection.NONE) {
                 firebase.database().goOffline();
-                ionicToast.show("দুঃখিত আপনার ইন্টারনেট সংযোগ বিচ্ছিন্ন রয়েছে। ইন্টারনেট একটিভেট করে লিডারবোর্ডে যোগ দিয়ে সারা বাংলাদেশের মধ্যে আপনার অবস্থান দেখুন।", 'top', true, 1000);
+                ionicToast.show("দুঃখিত আপনার ইন্টারনেট সংযোগ বিচ্ছিন্ন রয়েছে। ইন্টারনেট একটিভেট করে লিডারবোর্ডে যোগ দিয়ে সারা বাংলাদেশের মধ্যে আপনার অবস্থান দেখুন।", 'top', true, 2500);
             }
             else{
                 firebase.database().goOnline();
@@ -225,7 +225,7 @@ function ($scope, $state, $rootScope, ResultFacotry, $stateParams, $ionicModal, 
                             }).then(function(response){
                                 $scope.modal.hide();
                                 $scope.lbButtonDisable = true;
-                                ionicToast.show('আপনার স্কোর লিডারবোর্ডে যোগ হয়েছে। আপনার অবস্থান দেখার জন্য লিডারবোর্ড মেনু তে যান।', 'middle', true, 5000);
+                                ionicToast.show('আপনার স্কোর লিডারবোর্ডে যোগ হয়েছে। আপনার অবস্থান দেখার জন্য লিডারবোর্ড মেনু তে যান।', 'middle', false, 2500);
                             },function(error){
                                 $scope.modal.hide();
                                 ionicToast.show('দুঃখিত আবার চেষ্টা করুন।', 'middle', false, 1000);
@@ -257,7 +257,7 @@ function ($scope, $state, $rootScope, ResultFacotry, $stateParams, $ionicModal, 
                                         console.log("Newly Added from update func");
                                         $scope.modal.hide();
                                         $scope.lbButtonDisable = true;
-                                        ionicToast.show("আপনার স্কোর লিডারবোর্ডে আপডেট হয়েছে। আপনার অবস্থান দেখার জন্য লিডারবোর্ড মেনু তে যান।", 'middle', true, 2000);
+                                        ionicToast.show("আপনার স্কোর লিডারবোর্ডে আপডেট হয়েছে। আপনার অবস্থান দেখার জন্য লিডারবোর্ড মেনু তে যান।", 'middle', false, 2500);
                                     },function(error){
                                         $scope.modal.hide();
                                         ionicToast.show('দুঃখিত আবার চেষ্টা করুন।', 'middle', false, 1000);

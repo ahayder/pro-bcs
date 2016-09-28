@@ -71,17 +71,17 @@ border-right: 0px;
 }
 
 .menu-text{
-    color: #303F9F !important;
-    border-bottom: #C5CAE9 !important;
+    color: #D32F2F !important;
+    border-bottom: #e66258 !important;
 }
 
 .quiz-menu{
     color: #4CAF50  !important;
-    border-bottom: #C5CAE9 !important;
+    border-bottom: #e66258 !important;
 }
 
 .item {
-    border-color: #C5CAE9 !important;
+    border-color: #e66258 !important;
 }
 
 .small-font{
@@ -95,10 +95,10 @@ border-right: 0px;
 
 
 
-.dark-primary-color    { background: #303F9F; }
-.dark-primary-color-text    { color: #303F9F; }
-.default-primary-color { background: #3F51B5 !important; }
-.default-primary-color-text { color: #3F51B5; }
+.dark-primary-color    { background: #D32F2F; }
+.dark-primary-color-text    { color: #D32F2F; }
+.default-primary-color { background: #e66258 !important; }
+.default-primary-color-text { color: #e66258; }
 .light-primary-color   { background: #C5CAE9; }
 .light-primary-color-text   { color: #C5CAE9 !important; }
 .text-primary-color    { color: #FFFFFF !important; }
@@ -171,4 +171,20 @@ border-right: 0px;
     margin-top: -50px;
     margin-bottom: -50px;
     padding-top: 0;
+}
+
+.pdf{
+    width: 100%;
+}
+
+.syl{
+    text-decoration: underline !important;
+}
+
+.see-syl{
+    margin-right: 6px !important;
+}
+
+.into-image{
+    width: 80%;
 }

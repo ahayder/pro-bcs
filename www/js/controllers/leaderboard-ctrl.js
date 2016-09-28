@@ -14,7 +14,7 @@ function ($scope, $rootScope, $firebaseArray, ionicToast, $ionicLoading, $fireba
     if(window.Connection) {
         if(navigator.connection.type == Connection.NONE) {
             firebase.database().goOffline();
-            ionicToast.show("দুঃখিত আপনার ইন্টারনেট সংযোগ বিচ্ছিন্ন রয়েছে। ইন্টারনেট একটিভেট করে কুইজ দিয়ে লিডারবোর্ডে যোগ দিন। সারা বাংলাদেশের মধ্যে আপনার অবস্থান দেখুন।", 'middle', true, 1000);
+            ionicToast.show("দুঃখিত আপনার ইন্টারনেট সংযোগ বিচ্ছিন্ন রয়েছে। ইন্টারনেট একটিভেট করে কুইজ দিয়ে লিডারবোর্ডে যোগ দিন। সারা বাংলাদেশের মধ্যে আপনার অবস্থান দেখুন।", 'middle', false, 5000);
         }
         else{
             firebase.database().goOnline();

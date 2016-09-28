@@ -52,7 +52,7 @@ function ($scope, ionicToast, UpdateFactory, Questions, SubCategories, $statePar
         var allqs = tempQuestions;
         if(allqs.length == 0){
             $ionicLoading.hide();
-            ionicToast.show("দুঃখিত এই সাবক্যাটাগরিতে এখনও কোন প্রশ্ন যোগ করা হয়নি। আমরা প্রতিদিন ১০০ এর বেশী প্রশ্ন যোগ করে যাচ্ছি। প্রতিদিন অ্যাপ এর মেন্যুতে গিয়ে আপডেট করুন।", 'middle', true, 3000);
+            ionicToast.show("দুঃখিত এই সাবক্যাটাগরিতে এখনও কোন প্রশ্ন যোগ করা হয়নি। আমরা প্রতিদিন ১০০ এর বেশী প্রশ্ন যোগ করে যাচ্ছি। প্রতিদিন অ্যাপ এর মেন্যুতে গিয়ে আপডেট করুন।", 'middle', false, 3500);
             return;
         }
         // console.log(allqs);
@@ -230,7 +230,7 @@ function ($scope, ionicToast, UpdateFactory, Questions, SubCategories, $statePar
      // Update App
   $scope.updateApp = function(){
     $ionicLoading.show({
-      template: '<ion-spinner icon="spiral"></ion-spinner>'
+      template: '<ion-spinner icon="spiral"></ion-spinner><p>সার্ভার থেকে প্রশ্ন ডাউনলোড হচ্ছে। দয়া করে অপেক্ষা করুন।</p>'
     });
 
     // Checking network connection

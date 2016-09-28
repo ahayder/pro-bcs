@@ -1,19 +1,34 @@
 angular.module('app.categoriesController', [])
 
-.controller('categoriesCtrl', ['$scope', '$ionicHistory', '$state', 'Categories', 'UpdateFactory', '$ionicLoading', 'ionicToast', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $ionicHistory, $state, Categories, UpdateFactory, $ionicLoading, ionicToast) {
+.controller('categoriesCtrl', ['$scope', '$timeout', '$ionicHistory', '$state', 'Categories', 'UpdateFactory', '$ionicLoading', 'ionicToast', '$ionicModal',
+function ($scope, $timeout, $ionicHistory, $state, Categories, UpdateFactory, $ionicLoading, ionicToast, $ionicModal) {
 
     // Questions Loading
     $ionicLoading.show({
       template: '<ion-spinner icon="spiral"></ion-spinner>'
     });
+  
+    $timeout(function() {
+                $ionicLoading.hide();
+            }, 1500);
 
-    $scope.cats = Categories.getAllCats();
+    var allcats = Categories.getAllCats();
     
-    $ionicLoading.hide();
- 
+    allcats[0].examTotalMarks = "৩৫";
+    allcats[1].examTotalMarks = "35";
+    allcats[2].examTotalMarks = "৩০";
+    allcats[3].examTotalMarks = "২০";
+    allcats[4].examTotalMarks = "১০";
+    allcats[5].examTotalMarks = "১৫";
+    allcats[6].examTotalMarks = "১৫";
+    allcats[7].examTotalMarks = "১৫";
+    allcats[8].examTotalMarks = "১৫";
+    allcats[9].examTotalMarks = "১০";
+    
+    
+    $scope.cats = allcats;
+
+
     // Questions Loading
 
 
@@ -62,7 +77,7 @@ function ($scope, $ionicHistory, $state, Categories, UpdateFactory, $ionicLoadin
       // Update App
   $scope.updateApp = function(){
     $ionicLoading.show({
-      template: '<ion-spinner icon="spiral"></ion-spinner>'
+      template: '<ion-spinner icon="spiral"></ion-spinner><p>সার্ভার থেকে প্রশ্ন ডাউনলোড হচ্ছে। দয়া করে অপেক্ষা করুন।</p>'
     });
 
     // Checking network connection
@@ -78,5 +93,70 @@ function ($scope, $ionicHistory, $state, Categories, UpdateFactory, $ionicLoadin
     }
         
   }// Update App
+
+
+
+  var initModal = function(subject){
+    $ionicModal.fromTemplateUrl('templates/modals/syl-modals/'+subject+'.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.modal = modal;
+      $scope.modal.show();
+    });
+  }
+
+  $scope.showSyllabus = function(index){
+    var subject = "";
+    
+    switch(index) {
+      case 0:
+        subject = "bangla";
+        initModal(subject);
+        break;
+      case 1:
+        subject = "english";
+        initModal(subject);
+        break;
+      case 2:
+        subject = "bangladesh";
+        initModal(subject);
+        break;
+      case 3:
+        subject = "international";
+        initModal(subject);
+        break;
+      case 4:
+        subject = "geography";
+        initModal(subject);
+        break;
+      case 5:
+        subject = "general-science";
+        initModal(subject);
+        break;
+      case 6:
+        subject = "computer";
+        initModal(subject);
+        break;
+      case 7:
+        subject = "math";
+        initModal(subject);
+        break;
+      case 8:
+        subject = "mental-ability";
+        initModal(subject);
+        break;
+      case 9:
+        subject = "ethics";
+        initModal(subject);
+    }
+  }
+
+  $scope.closeModal = function(){
+    $scope.modal.hide();
+    $scope.$on('$destroy', function() {
+      $scope.modal.remove();
+    });
+  }
 
 }]);

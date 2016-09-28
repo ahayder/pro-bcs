@@ -16,10 +16,10 @@
     <script src="lib/ngCordova/dist/ng-cordova.js"></script>
     <script src="cordova.js"></script>
 
-    <link href="css/style.css" rel="stylesheet">
 
     <!-- compiled css output -->
     <link href="css/ionic.app.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 
   </head>
 
@@ -36,7 +36,7 @@
             <ion-nav-view></ion-nav-view>
         </ion-side-menu-content>
         <ion-side-menu side="left" id="side-menu21">
-            <ion-header-bar class="bar-dark">
+            <ion-header-bar class="bar-assertive">
                 <div class="title">মেন্যু</div>
             </ion-header-bar>
             <ion-content padding="false" class="side-menu-left has-header" ng-controller="menuCtrl">
@@ -50,7 +50,6 @@
                     <ion-item class="menu-text item-icon-left" ng-click="updateApp()" menu-close=""><i class="icon ion-ios-loop-strong"></i>আপডেট</ion-item>
                     <ion-item class="quiz-menu item-icon-left" ui-sref="quizWay" menu-close=""><i class="icon ion-ios-speedometer"></i>কুইজ</ion-item>
                     <ion-item class="menu-text item-icon-left" ui-sref="studyWay" menu-close=""><i class="icon ion-ios-book"></i>স্টাডি</ion-item>
-                    <ion-item class="menu-text item-icon-left" ui-sref="hot" menu-close=""><i class="icon ion-fireball"></i>জনপ্রিয় বিষয়</ion-item>
                     <ion-item class="menu-text item-icon-left" ui-sref="leaderboard" menu-close=""><i class="icon ion-connection-bars"></i>লিডার বোর্ড</ion-item>
                     <ion-item class="menu-text item-icon-left" ui-sref="settings" menu-close=""><i class="icon ion-settings"></i>প্রশ্নসেট সেটিংস</ion-item>
                     <ion-item class="menu-text item-icon-left" ui-sref="feedback" menu-close=""><i class="icon ion-ios-chatbubble-outline"></i>পরামর্শ দিন</ion-item>
@@ -80,7 +79,6 @@
     <script src="js/controllers/sub-cat-ctrl.js"></script>
     <script src="js/controllers/leaderboard-ctrl.js"></script>
     <script src="js/controllers/feedback-ctrl.js"></script>
-    <script src="js/controllers/hot-ctrl.js"></script>
     <script src="js/routes.js"></script>
     <script src="js/directives.js"></script>
     <script src="js/factories/init-factory.js"></script>
@@ -122,5 +120,7 @@
     <script src="js/openfb.js"></script>
     <script src="js/ngopenfb.js"></script>
     <script src="lib/ionic-native-transitions/dist/ionic-native-transitions.min.js"></script>
+
+
   </body>
 </html>

@@ -1,9 +1,9 @@
 angular.module('app.loginController', [])
 
-.controller('loginCtrl', ['$scope', '$stateParams', '$firebaseAuth', '$state', 'ionicToast', 'Auth', 'ngFB', '$ionicLoading',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('loginCtrl', ['$scope', '$firebaseAuth', '$state', 'ionicToast', 'Auth', 'ngFB',// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $firebaseAuth, $state, ionicToast, Auth, ngFB) {
+function ($scope, $firebaseAuth, $state, ionicToast, Auth, ngFB) {
 
     // FB Login
     $scope.fbLogin = function(){

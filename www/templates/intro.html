@@ -1,63 +1,77 @@
-<ion-view view-title="স্বাগতম">
+<ion-view>
 
-        <ion-nav-buttons side="left">
+  <ion-nav-buttons side="left">
 
-          <button class="button button-light button-clear no-animation"
-                  ng-click="startApp()" ng-show="!slideIndex">
+    <button class="button button-light button-clear no-animation" ng-click="startApp()" ng-show="!slideIndex">
             বাদ দিন
           </button>
-          <button class="button button-light button-clear no-animation"
-                  ng-click="previous()" ng-show="slideIndex > 0">
+    <button class="button button-light button-clear no-animation" ng-click="previous()" ng-show="slideIndex > 0">
             পূর্ববর্তী
           </button>
 
-        </ion-nav-buttons>
+  </ion-nav-buttons>
 
-        <ion-nav-buttons side="right"> 
+  <ion-nav-buttons side="right">
 
-          <button class="button button-light button-clear no-animation"
-                  ng-click="next()" ng-show="slideIndex != 3">
+    <button class="button button-light button-clear no-animation" ng-click="next()" ng-show="slideIndex != 3">
             পরবর্তী
           </button>
-          <button class="button button-light button-clear no-animation"
-                  ng-click="startApp()" ng-show="slideIndex == 3">
+    <button class="button button-light button-clear no-animation" ng-click="startApp()" ng-show="slideIndex == 3">
             শুরু করুন
           </button>
 
-        </ion-nav-buttons>
+  </ion-nav-buttons>
 
-        <ion-slide-box on-slide-changed="slideChanged(index)">
+  <ion-slide-box on-slide-changed="slideChanged(index)">
 
-          <ion-slide>
-            <div id="logo">
-              <img src="img/icon.png" width="150" height="150">
-            </div>
-            <h2>স্বাগতম Pro BCS Preparation অ্যাপ এ</h2>
-            <h5>কুইজ/স্টাডি করুন অনলাইন অথবা অফলাইন এ</h5>
-            <p>স্কোর শেয়ার করুন লিডারবোর্ড এ</p>
-            <h3>শেষ মুহূর্তের প্রস্তুতি পাবেন ২০ তারিখ</h3>
-            <p>ঝালাই করে নিন ৩৭ তম BCS প্রিলি পরীক্ষার পড়া লেটেস্ট সাজেশন থেকে তৈরি করা প্রশ্ন থেকে। শেষ মুহূর্তের প্রস্তুতি মেন্যুতে পেতে ২০ তারিখ রাত ১২ টার পড় অ্যাপ আপডেট দিন।</p>
-          </ion-slide>
+    <ion-slide>
+      <div id="logo">
+        <img src="img/icon.png" width="150" height="150">
+      </div>
+      <h2>স্বাগতম Pro BCS Preparation অ্যাপ এ</h2>
+      <h4>মানুষের মনে রাখার কৌশল এর উপর নির্ভর করে বিশেষ ভাবে তৈরী করা অ্যাপ</h4>
+      <h5>কুইজ/স্টাডি করুন অনলাইন অথবা অফলাইন এ</h5>
+      <ul>
+        <li><strong>***৩০০০ এর উপর প্রশ্ন***</strong></li>
+        <li>MCQ</li>
+        <li>স্টাডি</li>
+        <li>লিডারবোর্ড</li>
+        <li>আর মজা :)</li>
+      </ul>
+      <br>
+      <br>
+      <h5>স্লাইড করুন -></h5>
 
-          <ion-slide>
-            <div id="leader">
-            </div>
-          </ion-slide>
+    </ion-slide>
 
-          <ion-slide>
-            <div id="set-setting">
-            </div>
-          </ion-slide>
+    <ion-slide>
+      <div>
+        <img class="into-image" src="img/leaderboard.png" alt="">
+        <h3>লিডারবোর্ড এ যোগ দিয়ে অন্যদের মাঝে আপনার অবস্থান দেখে নিন</h3>
+      </div>
+    </ion-slide>
 
-          <ion-slide>
-            <div id="update">
-            </div>
-            <button class="button button-positive button-small no-animation"
-                  ng-click="startApp()">
+    <ion-slide>
+      <div>
+        <img class="into-image" src="img/set-settings.png" alt="">
+        <h3>মেন্যু থেকে অথবা এই <i class="icon ion-settings"></i> চিহ্ন থেকে যেকোনো সময় প্রশ্ন সংখ্যা ঠিক করে নিন</h3>
+      </div>
+    </ion-slide>
+
+    <ion-slide>
+      <div>
+        <img class="into-image" src="img/update.png" alt="">
+      </div>
+      <h3>প্রতিনিয়ত আরো নতুন প্রশ্ন পেতে আপডেট করুন এই <i class="icon ion-ios-loop-strong"></i> চিহ্নের বাটন এ ক্লিক করে</h3><br><br><br>
+      <button class="button button-positive button-small no-animation" ng-click="updateApp()">
+            এখনই আপডেট করুন
+            </button>
+      <button class="button button-positive button-small no-animation" ng-click="startApp()">
             শুরু করুন
             </button>
-          </ion-slide>
 
-        </ion-slide-box>
-        
+    </ion-slide>
+
+  </ion-slide-box>
+
 </ion-view>

@@ -22,14 +22,6 @@ angular.module('app.routes', [])
     controller: 'categoriesCtrl'
   })
 
-
-  .state('hot', {
-    url: '/hot',
-    cache: false,
-    templateUrl: 'templates/hot.html',
-    controller: 'hotCtrl'
-  })
-
   .state('login', {
     url: '/login',
     templateUrl: 'templates/login.html',
@@ -106,7 +98,7 @@ angular.module('app.routes', [])
     controller: 'introCtrl'
   });
 
-  $urlRouterProvider.otherwise('quizWay');
+  $urlRouterProvider.otherwise('/quizWay');
 
   
 
