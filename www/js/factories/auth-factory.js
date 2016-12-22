@@ -3,13 +3,18 @@ angular.module('app.authFactory', [])
 .factory('Auth', ['$cordovaOauth', function($cordovaOauth){
     return {
             loginWithGoogle : function (myConfig) {
+                console.log("inside auth factory loginWithGoogle function");
                 if(ionic.Platform.isWebView()){
-                    return $cordovaOauth.google(myConfig.googleClientId + '&include_profile=true', ["email", "profile"]).then(function (result) {
+                    console.log("inside auth factory loginWithGoogle function if");
+                    return $cordovaOauth.google(myConfig + '&include_profile=true', ["email", "profile"]).then(function (result) {
                         var credential = firebase.auth.GoogleAuthProvider.credential(result.id_token);
                         return firebase.auth().signInWithCredential(credential);
-                    });
+                    },function(error){
+                        alert(JSON.stringify(error));
+                    })
                 }
                 else{
+                    console.log("inside auth factory loginWithGoogle function else");
                     var provider = new firebase.auth.GoogleAuthProvider();
                     provider.addScope('email');
                     provider.addScope('profile');

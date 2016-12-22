@@ -1,13 +1,13 @@
 <ion-view view-title="টিউটোরিয়াল">
 
-        <ion-nav-buttons side="left">
+        <ion-nav-buttons side="left" hide-back-button="true">
 
           <button class="button button-light button-clear no-animation"
-                  ng-click="startApp()" ng-show="!slideIndex">
+                  ng-click="vm.startApp()" ng-show="vm.!slideIndex">
             বাদ দিন
           </button>
           <button class="button button-light button-clear no-animation"
-                  ng-click="previous()" ng-show="slideIndex > 0">
+                  ng-click="vm.previous()" ng-show="vm.slideIndex > 0">
             পূর্ববর্তী
           </button>
 
@@ -16,17 +16,17 @@
         <ion-nav-buttons side="right"> 
 
           <button class="button button-light button-clear no-animation"
-                  ng-click="next()" ng-show="slideIndex != 2">
+                  ng-click="vm.next()" ng-show="vm.slideIndex != 2">
             পরবর্তী
           </button>
           <button class="button button-light button-clear no-animation"
-                  ng-click="startApp()" ng-show="slideIndex == 2">
+                  ng-click="vm.startApp()" ng-show="vm.slideIndex == 2">
             পরবর্তী
           </button>
 
         </ion-nav-buttons>
 
-        <ion-slide-box on-slide-changed="slideChanged(index)">
+        <ion-slide-box on-slide-changed="vm.slideChanged(index)">
 
             <ion-slide>
             <h3>প্রধান দুটি ফিচার</h3>

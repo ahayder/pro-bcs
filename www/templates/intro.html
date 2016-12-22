@@ -2,10 +2,10 @@
 
   <ion-nav-buttons side="left">
 
-    <button class="button button-light button-clear no-animation" ng-click="startApp()" ng-show="!slideIndex">
+    <button class="button button-light button-clear no-animation" ng-click="vm.startApp()" ng-show="!vm.slideIndex">
             বাদ দিন
           </button>
-    <button class="button button-light button-clear no-animation" ng-click="previous()" ng-show="slideIndex > 0">
+    <button class="button button-light button-clear no-animation" ng-click="vm.previous()" ng-show="vm.slideIndex > 0">
             পূর্ববর্তী
           </button>
 
@@ -13,16 +13,16 @@
 
   <ion-nav-buttons side="right">
 
-    <button class="button button-light button-clear no-animation" ng-click="next()" ng-show="slideIndex != 3">
+    <button class="button button-light button-clear no-animation" ng-click="vm.next()" ng-show="vm.slideIndex != 3">
             পরবর্তী
           </button>
-    <button class="button button-light button-clear no-animation" ng-click="startApp()" ng-show="slideIndex == 3">
+    <button class="button button-light button-clear no-animation" ng-click="vm.startApp()" ng-show="vm.slideIndex == 3">
             শুরু করুন
           </button>
 
   </ion-nav-buttons>
 
-  <ion-slide-box on-slide-changed="slideChanged(index)">
+  <ion-slide-box on-slide-changed="vm.slideChanged(index)">
 
     <ion-slide>
       <div id="logo">
@@ -63,10 +63,10 @@
         <img class="into-image" src="img/update.png" alt="">
       </div>
       <h3>প্রতিনিয়ত আরো নতুন প্রশ্ন পেতে আপডেট করুন এই <i class="icon ion-ios-loop-strong"></i> চিহ্নের বাটন এ ক্লিক করে</h3><br><br><br>
-      <button class="button button-positive button-small no-animation" ng-click="updateApp()">
+      <button class="button button-positive button-small no-animation" ng-click="vm.updateApp()">
             এখনই আপডেট করুন
             </button>
-      <button class="button button-positive button-small no-animation" ng-click="startApp()">
+      <button class="button button-positive button-small no-animation" ng-click="vm.startApp()">
             শুরু করুন
             </button>
 

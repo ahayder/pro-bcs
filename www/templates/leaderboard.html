@@ -4,10 +4,10 @@
         <!--Show positoin-->
         <div class="card list" ng-show="enrolled">
             <div class="item item-divider positive-bg primary-text-color">
-                আপনি {{:: your.position}} তম অবস্থান এ আছেন {{:: totalLeaders}} জন এর মাঝে
+                আপনি {{:: your.position}} তম অবস্থানে আছেন {{:: totalLeaders}} জন এর মাঝে
             </div>
             <div class="item item-text-wrap">
-                স্কোর: {{:: your.score}}({{:: your.correctness}}%)
+                স্কোর: {{:: your.score}}(উত্তর সঠিক হয়েছে {{:: your.correctness}}%)
             </div>
         </div>
 
@@ -15,11 +15,10 @@
         <!--When not enlisted in leader board-->
         <div class="card list" ng-show="notEnrolled">
             <div class="item item-divider energized-bg primary-text-color">
-                <i class="icon ion-alert-circled"></i> আজই লিডার বোর্ড এ যোগদান করুন
+                <i class="icon ion-alert-circled"></i> আজই লিডার বোর্ডে যোগদান করুন!
             </div>
             <div class="item item-text-wrap">
-                অন্যদের মাঝে আপনার অবস্থান দেখুন এই লিডার বোর্ড এ।</br>
-                আপনি এখনো লিডার বোর্ডে যোগদান করেননি! কুইজ দিয়ে লিডার বোর্ডে আপনার অবস্থান গড়ুন। 
+                অন্যদের মাঝে আপনার অবস্থান দেখুন এই লিডার বোর্ডে।<br> এখনি কুইজ দিয়ে অন্যদেরকে দেখিয়ে দিন যে আপনিও একজন লিডার!
             </div>
         </div>
 
@@ -27,10 +26,10 @@
         <!--when logged out-->
         <div class="card list" ng-hide="loginState">
             <div class="item item-divider item-text-wrap energized-bg primary-text-color">
-                <i class="icon ion-alert-circled"></i> লগইন করুন লিডার বোর্ড এ আপনার অবস্থান দেখার জন্য
+                <i class="icon ion-alert-circled"></i> লগইন করুন লিডার বোর্ডে আপনার অবস্থান দেখার জন্য
             </div>
             <div class="item item-text-wrap">
-                অন্যদের মাঝে আপনার অবস্থান দেখুন এই লিডার বোর্ড এ।
+                অন্যদের মাঝে আপনার অবস্থান দেখুন এই লিডার বোর্ডে।
             </div>
         </div>
 
@@ -40,8 +39,9 @@
             <ion-item class="item-thumbnail-left" ng-repeat="leader in ::allleaders | orderBy: '-score'">
                 <img ng-src="{{leader.photoURL || placeholderImage}}">
                 <h2>{{:: $index+1}}. {{:: leader.name}}</h2>
-                <p>স্কোরঃ {{:: leader.score}}({{:: leader.correctness}}%)</p>
+                <p>স্কোরঃ {{:: leader.score}}(উত্তর সঠিক হয়েছে {{:: leader.correctness}}%)</p>
             </ion-item>
         </ion-list>
+
     </ion-content>
 </ion-view>

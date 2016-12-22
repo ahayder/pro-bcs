@@ -8,5 +8,10 @@
   "watchPatterns": [
     "www/**/*",
     "!www/lib/**/*"
+  ],
+  "gulpStartupTasks": [
+    "sass",
+    "templatecache",
+    "watch"
   ]
 }

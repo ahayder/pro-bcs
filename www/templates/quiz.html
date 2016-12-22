@@ -1,14 +1,14 @@
 <ion-view title="কুইজ" id="page7">
 
     <ion-nav-buttons side="right">
-      <button class="button"><span style="font-size:22px;">স্কোর: {{score.mark}}</span></button>
-      <button class="button icon ion-volume-mute" ng-click="mute()"></button>
+        <button class="button"><span style="font-size:22px;">স্কোর: {{score.mark}}</span></button>
+        <button class="button icon ion-volume-mute" ng-click="mute()"></button>
     </ion-nav-buttons>
 
     <ion-content>
-        
+
         <div class="list" style="margin-bottom: 0 !important;">
-             <label class="item item-input item-select stable-bg">
+            <label class="item item-input item-select stable-bg">
                 <div class="input-label">
                 প্রশ্ন বদলানঃ
                 </div>
@@ -27,7 +27,7 @@
         <div class="list card energized-bg " id="quiz-card24" style="margin-top: 3px; margin-bottom: 1px;">
 
             <h4 id="quiz-heading1" class="primary-text-color" style="text-align:center;">{{allQuestions[currentIndexNum].title}}</h4>
-            
+
             <ion-checkbox class="item-text-wrap" ng-repeat="opt in options" ng-click="checkAnswer(opt.title)" ng-selected="{{opt.selected}}">{{opt.title}}</ion-checkbox>
 
         </div>

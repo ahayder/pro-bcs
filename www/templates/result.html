@@ -1,6 +1,6 @@
 <ion-view id="page7">
 
-     <ion-nav-buttons side="right">
+    <ion-nav-buttons side="right">
         <button class="button button-clear icon ion-settings text-primary-color" ui-sref="settings"></button>
     </ion-nav-buttons>
 
@@ -9,12 +9,12 @@
     </ion-nav-title>
 
     <ion-content padding="true" class="manual-remove-top-padding has-header">
-        
+
         <div class="row custom-row" style="margin-bottom:10px;">
             <div class="col custom-col">
                 <div class="card" style="margin: 10px 0 0 0">
                     <div class="item item-text-wrap">
-                    <h1 class="title dark-primary-color-text" style="text-align:center;">স্কোর : {{:: marks.score}}</h1>
+                        <h1 class="title dark-primary-color-text" style="text-align:center;">স্কোর : {{:: marks.score}}</h1>
                     </div>
                 </div>
             </div>
@@ -25,20 +25,20 @@
             <div class="col custom-col">
                 <div class="card" style="margin: 5px 5px 0 0">
                     <div class="item item-text-wrap bg-green">
-                    <i class="icon ion-checkmark-circled"></i> {{:: marks.correct}}  ({{:: marks.correctPercentage | number:2}}%)
+                        <i class="icon ion-checkmark-circled"></i> {{:: marks.correct}} ({{:: marks.correctPercentage | number:2}}%)
                     </div>
                 </div>
             </div>
             <div class="col custom-col">
                 <div class="card" style="margin: 5px 0 0 5px">
                     <div class="item item-text-wrap bg-red">
-                    <i class="icon ion-close-circled"></i> {{:: marks.wrong}}  ({{:: marks.wrongPercentage | number:2}}%)
+                        <i class="icon ion-close-circled"></i> {{:: marks.wrong}} ({{:: marks.wrongPercentage | number:2}}%)
                     </div>
                 </div>
             </div>
         </div>
 
-        
+
 
         <button class="button button-block button-positive" ng-click="joinNLB(marks)" ng-disabled="lbButtonDisable"><i class="icon ion-trophy"></i> লিডার বোর্ডে যোগ দিন</button>
         <button ng-show="ifNextSet" class="button button-block button-outline button-calm" ui-sref="quiz({id: subcategoryId, subCatName: subName, setIdx: nextSetIndex})">পরবর্তী সেট এর কুইজ দিন <i class="icon ion-android-arrow-forward"></i></button>
@@ -48,7 +48,7 @@
         <h3 class="title dark-primary-color-text" style="text-align:center;">এক নজরে</h3>
         <div class="card" ng-repeat="r in ::results track by $index">
             <div class="item item-text-wrap {{:: r.bgColor}}">
-               {{$index+1}}. প্রশ্নঃ {{:: r.question.title}}
+                {{$index+1}}. প্রশ্নঃ {{:: r.question.title}}
             </div>
             <div class="item item-text-wrap {{:: r.bgColor}}">
                 সঠিক উত্তরঃ {{:: r.question.answer}}

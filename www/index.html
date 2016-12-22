@@ -10,7 +10,7 @@
     
     <script src="lib/bluebird.min.js"></script>
     <script src="lib/ionic/js/ionic.bundle.js"></script>
-    <script src="lib/ionic.cloud.min.js"></script>
+    <!--<script src="lib/ionic.cloud.min.js"></script>-->
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="lib/ngCordova/dist/ng-cordova.js"></script>
@@ -100,13 +100,14 @@
     <script src="lib/firebase/firebase.js"></script>
     <script>
       // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyAubyPeusvCrz2AAj-gIARn3HBDJN_52C4",
-        authDomain: "bcs-quize-5a9f5.firebaseapp.com",
-        databaseURL: "https://bcs-quize-5a9f5.firebaseio.com",
-        storageBucket: "bcs-quize-5a9f5.appspot.com",
-      };
-      firebase.initializeApp(config);
+        var config = {
+            apiKey: "AIzaSyDKU5kvhuhrwNTOs-tJWOYiAke9wp5MOqo",
+            authDomain: "bcs-quize-5a9f5.firebaseapp.com",
+            databaseURL: "https://bcs-quize-5a9f5.firebaseio.com",
+            storageBucket: "bcs-quize-5a9f5.appspot.com",
+            messagingSenderId: "251798023266"
+        };
+        firebase.initializeApp(config);
     </script>
     
 
@@ -120,7 +121,5 @@
     <script src="js/openfb.js"></script>
     <script src="js/ngopenfb.js"></script>
     <script src="lib/ionic-native-transitions/dist/ionic-native-transitions.min.js"></script>
-
-
   </body>
 </html>

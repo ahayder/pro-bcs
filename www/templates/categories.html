@@ -10,33 +10,27 @@
 
         <ion-list id="categories-list3">
             <label class="item item-input calm-bg">
-                <i class="icon ion-search placeholder-icon"></i>
+                <i class="icon ion-search placeholder-icon light" style="font-size: 18px"></i>
                 <input type="search" placeholder="খুঁজুন" ng-model="search.$value">
             </label>
 
-            <ion-item  ng-repeat="cat in cats" class="item-icon-right" 
-                id="categories-list-item4" ui-sref="subCategories({id: cat.$id})" ng-if="$last">
+            <ion-item ng-repeat="cat in cats" class="item-icon-right" id="categories-list-item4" ui-sref="subCategories({id: cat.$id})"
+                ng-if="$last">
                 <h2 class="assertive">{{:: cat.$value}}</h2>
                 <i class="icon ion-ios-arrow-thin-right"></i>
             </ion-item>
-            <ion-item  ng-repeat="cat in ::cats | limitTo:7 | filter: search:strict" class="item-text-wrap item-icon-right"
-                id="categories-list-item4" ng-hide="$last">
+            <ion-item ng-repeat="cat in ::cats | limitTo:7 | filter: search:strict" class="item-text-wrap item-icon-right" id="categories-list-item4"
+                ng-hide="$last">
 
                 <div class="row row-no-padding">
                     <div class="col-25 see-syl">
                         <a class="button button-small button-assertive syl" ng-click="showSyllabus($index)">সিলেবাস</a>
                     </div>
                     <div class="col-75" ui-sref="subCategories({id: cat.$id})">
-                        <h2class="cat-item">{{:: cat.$value}}<sup style="color: #e66258;"> ({{cat.examTotalMarks}} নাম্বার)</sup></h2>
+                        <h2 class="cat-item">{{:: cat.$value}}<sup style="color: #e66258;"> ({{cat.examTotalMarks}} নাম্বার)</sup></h2>
                         <i class="icon ion-ios-arrow-thin-right"></i>
                     </div>
                 </div>
-
-
-
-                
-                
-                
             </ion-item>
         </ion-list>
 

@@ -1,3 +1,6 @@
+(function(){
+  'use strict';
+
 angular.module('app.resultController', [])
 
 .controller('resultCtrl', ['$scope', '$state', '$rootScope', 'ResultFacotry', '$stateParams', '$ionicModal', 'Auth', 'ionicToast', '$firebaseArray', '$firebaseObject', 'ngFB', '$ionicHistory', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
@@ -7,7 +10,7 @@ function ($scope, $state, $rootScope, ResultFacotry, $stateParams, $ionicModal, 
 
     // Admob code
         // preppare and load ad resource in background, e.g. at begining of game level
-        var inter_key = "ca-app-pub-9736917302037050/7106879122";
+        var inter_key = "ca-app-pub-9736917302037050/4559941520";
         if(AdMob) AdMob.prepareInterstitial( {adId: inter_key, autoShow:true, isTesting:false} );
         // show the interstitial later, e.g. at end of game level
         if(AdMob) AdMob.showInterstitial();
@@ -141,8 +144,7 @@ function ($scope, $state, $rootScope, ResultFacotry, $stateParams, $ionicModal, 
         function (response) {
             if (response.status === 'connected') {
                 $scope.loginModal.hide();
-                console.log('Facebook login succeeded', response)
-                ionicToast.show("Successfully signed in with Facebook", 'top', false, 2000);
+                ionicToast.show("ফেইসবুক দিয়ে লগইন সম্পন্ন হয়েছে", 'top', false, 2000);
                 $scope.modal.show();
  
                 var credential = firebase.auth.FacebookAuthProvider.credential(
@@ -160,26 +162,25 @@ function ($scope, $state, $rootScope, ResultFacotry, $stateParams, $ionicModal, 
                 });
  
             } else {
-                ionicToast.show("Facebook Login Failed try Google login. Best of luck!", 'top', false, 2000);
+                ionicToast.show("দুঃখিত, এই মুহূর্তে কোন কারণে ফেইসবুক দিয়ে লগইন করা সম্ভব হচ্ছেনা। দয়াকরে গুগল লগইন দিয়ে চেষ্টা করুন।", 'top', false, 3000);
             }
         },function(error){
-            ionicToast.show("Facebook Login Failed try Google login. Best of luck!", 'top', false, 2000);
+            ionicToast.show("দুঃখিত, এই মুহূর্তে কোন কারণে ফেইসবুক দিয়ে লগইন করা সম্ভব হচ্ছেনা। দয়াকরে গুগল লগইন দিয়ে চেষ্টা করুন।", 'top', false, 3000);
         });
     }
 
     // Google login
     $scope.googleLogin = function(){
         $scope.loginModal.hide();
-        var myconfig = {};
-        myconfig.googleClientId = "251798023266-t2t4rp4jn5sn9l61q3kg7u5qd0rqtod8.apps.googleusercontent.com";
-        Auth.loginWithGoogle(myconfig).then(function(suc){
-            
-            ionicToast.show("Successfully signed in with Google", 'top', false, 2000);
+        var androidGoogleClientId = "251798023266-cok690t322r1njo6rk8rl38vi2od6mf9.apps.googleusercontent.com";
+        Auth.loginWithGoogle(androidGoogleClientId).then(function(suc){
+            ionicToast.show("গুগল দিয়ে লগইন সম্পন্ন হয়েছে", 'top', false, 2000);
             $scope.modal.show();
         },
         function(err){
-
-            ionicToast.show("Google Login Failed try Facebook login. Best of luck!", 'top', false, 2000);
+            alert(json.stringify(err))
+            console.log("inside result controller");
+            ionicToast.show("দুঃখিত, এই মুহূর্তে কোন কারণে গুগল দিয়ে লগইন করা সম্ভব হচ্ছেনা। দয়াকরে ফেইসবুক লগইন দিয়ে চেষ্টা করুন।", 'top', false, 3000);
         });
     }
 
@@ -286,3 +287,5 @@ function ($scope, $state, $rootScope, ResultFacotry, $stateParams, $ionicModal, 
     }
 
 }])
+
+})();
