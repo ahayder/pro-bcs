@@ -3,10 +3,21 @@
 
     angular.module('app.leaderboardController', [])
 
-    .controller('leaderboardCtrl', ['$scope', '$rootScope', '$firebaseArray', 'ionicToast', '$ionicLoading', '$firebaseObject', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-    // You can include any angular dependencies as parameters for this function
-    // TIP: Access Route Parameters for your page via $stateParams.parameterName
-    function ($scope, $rootScope, $firebaseArray, ionicToast, $ionicLoading, $firebaseObject) {
+    .controller('leaderboardCtrl', leaderboardCtrl);
+    
+    leaderboardCtrl.$inject = ['$scope', '$rootScope', '$firebaseArray', 'ionicToast', '$ionicLoading', '$firebaseObject'];
+
+    function leaderboardCtrl($scope, $rootScope, $firebaseArray, ionicToast, $ionicLoading, $firebaseObject) {
+
+        var vm = this;
+
+        // Fucntion for getting the array postion
+        function arrayObjectIndexOf(myArray, searchTerm, property) {
+            for(var i = 0, len = myArray.length; i < len; i++) {
+                if (myArray[i][property] === searchTerm) return i;
+            }
+            return -1;
+        }// Fucntion for getting the array postion
 
 
         $ionicLoading.show({
@@ -24,32 +35,20 @@
                 var leadersRef = firebase.database().ref().child("leaderboard");
                 var allleaders = $firebaseArray(leadersRef);
 
-
-                // Fucntion for getting the array postion
-                function arrayObjectIndexOf(myArray, searchTerm, property) {
-                    for(var i = 0, len = myArray.length; i < len; i++) {
-                        if (myArray[i][property] === searchTerm) return i;
-                    }
-                    return -1;
-                }
-
-
                 // Var for logged in enrolled user information
-                $scope.your = {};
-
-
+                vm.your = {};
                 
                 allleaders.$loaded().then(function(result){
-                    $scope.allleaders = result;
-                    $scope.totalLeaders = result.length;
-                    console.log($scope.allleaders);
+                    vm.allleaders = result;
+                    vm.totalLeaders = result.length;
+                    console.log(vm.allleaders);
                     $ionicLoading.hide();
 
                     if($rootScope.user == null){ // if user is not logged in
-                        $scope.loginState = false;
+                        vm.loginState = false;
                         //console.log("true");
                     }else{ // if logged in
-                        $scope.loginState = true;
+                        vm.loginState = true;
                         var leaderRef = firebase.database().ref().child("leaderboard/"+$rootScope.user.uid);
                         // console.log(leaderRef);
                         var leader = $firebaseObject(leaderRef);
@@ -59,8 +58,8 @@
 
                             if(data.$value !== null){ // if user is enrolled in leader board
                                 console.log("true");
-                                $scope.enrolled = true;
-                                $scope.notEnrolled = false;
+                                vm.enrolled = true;
+                                vm.notEnrolled = false;
 
                                 // Getting user position
                                 var allLeaders = result;
@@ -70,18 +69,17 @@
                                     return bScore - aScore;
                                 });
 
-                                console.log($rootScope.user.displayName);
                                 var position = arrayObjectIndexOf(allLeaders, $rootScope.user.uid, "$id"); // 1
-                                $scope.your.position = position+1;
-                                $scope.your.score = allLeaders[position].score;
-                                $scope.your.correctness = allLeaders[position].correctness;
+                                vm.your.position = position+1;
+                                vm.your.score = allLeaders[position].score;
+                                vm.your.correctness = allLeaders[position].correctness;
                                 // End of getting postion
                                 
                                 
                             }else{ // if user is not enrolled in leader baord
                                 console.log("false");
-                                $scope.enrolled = false;
-                                $scope.notEnrolled = true;
+                                vm.enrolled = false;
+                                vm.notEnrolled = true;
 
                             } // End of if user is not enrolled in leader baord
                         },function(error){
@@ -99,6 +97,6 @@
         
 
 
-    }])
+    }
 
 })();

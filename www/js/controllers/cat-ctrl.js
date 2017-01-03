@@ -3,82 +3,100 @@
 
   angular.module('app.categoriesController', [])
 
-  .controller('categoriesCtrl', ['$scope', '$timeout', '$ionicHistory', '$state', 'Categories', 'UpdateFactory', '$ionicLoading', 'ionicToast', '$ionicModal',
-  function ($scope, $timeout, $ionicHistory, $state, Categories, UpdateFactory, $ionicLoading, ionicToast, $ionicModal) {
+  .controller('categoriesCtrl', categoriesCtrl);
+  
+  categoriesCtrl.$inject = ['$scope', '$timeout', '$ionicHistory', '$state', 'Categories', 'UpdateFactory', '$ionicLoading', 'ionicToast', '$ionicModal'];
 
-      // Questions Loading
-      $ionicLoading.show({
-        template: '<ion-spinner icon="spiral"></ion-spinner>'
-      });
+  function categoriesCtrl($scope, $timeout, $ionicHistory, $state, Categories, UpdateFactory, $ionicLoading, ionicToast, $ionicModal) {
+
+    var vm = this;
+
+    // Questions Loading
+    $ionicLoading.show({
+      template: '<ion-spinner icon="spiral"></ion-spinner>'
+    });
+  
+    $timeout(function() {
+                $ionicLoading.hide();
+            }, 1500);
+
+    // goin to quiz or Study
+    console.log($state);
+    if($state){
+        if($state.current.name == "quizWay"){
+          vm.way = "কুইজ";
+            
+        }else{
+          vm.way = "স্টাডি";  
+        }
+    }else{
+        vm.way = "কুইজ";
+    }
+
+    var allcats = Categories.getAllCats();
     
-      $timeout(function() {
-                  $ionicLoading.hide();
-              }, 1500);
-
-      var allcats = Categories.getAllCats();
-      
-      allcats[0].examTotalMarks = "৩৫";
-      allcats[1].examTotalMarks = "৩৫";
-      allcats[2].examTotalMarks = "৩০";
-      allcats[3].examTotalMarks = "২০";
-      allcats[4].examTotalMarks = "১০";
-      allcats[5].examTotalMarks = "১৫";
-      allcats[6].examTotalMarks = "১৫";
-      allcats[7].examTotalMarks = "১৫";
-      allcats[8].examTotalMarks = "১৫";
-      allcats[9].examTotalMarks = "১০";
-      
-      
-      $scope.cats = allcats;
+    allcats[0].examTotalMarks = "৩৫";
+    allcats[1].examTotalMarks = "৩৫";
+    allcats[2].examTotalMarks = "৩০";
+    allcats[3].examTotalMarks = "২০";
+    allcats[4].examTotalMarks = "১০";
+    allcats[5].examTotalMarks = "১৫";
+    allcats[6].examTotalMarks = "১৫";
+    allcats[7].examTotalMarks = "১৫";
+    allcats[8].examTotalMarks = "১৫";
+    allcats[9].examTotalMarks = "১০";
+    
+    
+    vm.cats = allcats;
 
 
-      // Questions Loading
+    // Questions Loading
 
 
-      // questioins update
-      var updateQuestions = function(){
-        UpdateFactory.getQuestionsFromFirebase().then(function(response){
-          UpdateFactory.updateQuestions(response);
-          $ionicLoading.hide();
-          ionicToast.show("প্রশ্ন আপডেট হয়েছে", 'top', false, 1000);
-          $ionicHistory.nextViewOptions({
-            disableBack: true
-          });
-          $state.go('quizWay', {}, { reload: true });
-        },function(error){
-          ionicToast.show("দুঃখিত প্রশ্ন আপডেট হয়নি, আবার চেষ্টা করুন।", 'top', false, 1000);
-          $ionicLoading.hide();
+    // questioins update
+    var updateQuestions = function(){
+      UpdateFactory.getQuestionsFromFirebase().then(function(response){
+        UpdateFactory.updateQuestions(response);
+        $ionicLoading.hide();
+        ionicToast.show("প্রশ্ন আপডেট হয়েছে", 'top', false, 1000);
+        $ionicHistory.nextViewOptions({
+          disableBack: true
         });
-      };// end of questioins update
+        $state.go('quizWay', {}, { reload: true });
+      },function(error){
+        ionicToast.show("দুঃখিত প্রশ্ন আপডেট হয়নি, আবার চেষ্টা করুন।", 'top', false, 1000);
+        $ionicLoading.hide();
+      });
+    };// end of questioins update
 
-      // subcats update
-      var updateSubCategories = function(){
-        UpdateFactory.getSubCatsFromFirebase().then(function(response){
-          UpdateFactory.updateSubCats(response);
-          ionicToast.show("সাবক্যাটাগরি আপডেট হয়েছে", 'top', false, 1000);
-          updateQuestions();
-        },function(error){
-          ionicToast.show("দুঃখিত সাবক্যাটাগরি আপডেট হয়নি, আবার চেষ্টা করুন।", 'top', false, 1000);
-          $ionicLoading.hide();
-        });
-      };// end of subcats update
+    // subcats update
+    var updateSubCategories = function(){
+      UpdateFactory.getSubCatsFromFirebase().then(function(response){
+        UpdateFactory.updateSubCats(response);
+        ionicToast.show("সাবক্যাটাগরি আপডেট হয়েছে", 'top', false, 1000);
+        updateQuestions();
+      },function(error){
+        ionicToast.show("দুঃখিত সাবক্যাটাগরি আপডেট হয়নি, আবার চেষ্টা করুন।", 'top', false, 1000);
+        $ionicLoading.hide();
+      });
+    };// end of subcats update
 
-      // cats update
-      var updateCategories = function(){
-        UpdateFactory.getCatsFromFirebase().then(function(response){
-          UpdateFactory.updateCats(response);
-          ionicToast.show("ক্যাটাগরি আপডেট হয়েছে", 'top', false, 1000);
-          updateSubCategories();
-        },function(error){
-          ionicToast.show("দুঃখিত ক্যাটাগরি আপডেট হয়নি! আবার চেষ্টা করুন।", 'top', false, 1000);
-          $ionicLoading.hide();
-        });
-      };// end of cats update
+    // cats update
+    var updateCategories = function(){
+      UpdateFactory.getCatsFromFirebase().then(function(response){
+        UpdateFactory.updateCats(response);
+        ionicToast.show("ক্যাটাগরি আপডেট হয়েছে", 'top', false, 1000);
+        updateSubCategories();
+      },function(error){
+        ionicToast.show("দুঃখিত ক্যাটাগরি আপডেট হয়নি! আবার চেষ্টা করুন।", 'top', false, 1000);
+        $ionicLoading.hide();
+      });
+    };// end of cats update
 
 
-      
-        // Update App
-    $scope.updateApp = function(){
+    
+    // Update App
+    vm.updateApp = function(){
       $ionicLoading.show({
         template: '<ion-spinner icon="spiral"></ion-spinner><p>সার্ভার থেকে প্রশ্ন ডাউনলোড হচ্ছে। দয়া করে অপেক্ষা করুন। সাধারানত ২-৩ মিনিট এর মধ্যে ডাউনলোড হয়ে যায়। যদি তা না হয় তবে অ্যাপটি বন্ধ করে আবার চালু করুন।</p>'
       });
@@ -104,12 +122,12 @@
         scope: $scope,
         animation: 'slide-in-up'
       }).then(function(modal) {
-        $scope.modal = modal;
-        $scope.modal.show();
+        vm.modal = modal;
+        vm.modal.show();
       });
     }
 
-    $scope.showSyllabus = function(index){
+    vm.showSyllabus = function(index){
       var subject = "";
       
       switch(index) {
@@ -155,13 +173,13 @@
       }
     }
 
-    $scope.closeModal = function(){
-      $scope.modal.hide();
+    vm.closeModal = function(){
+      vm.modal.hide();
       $scope.$on('$destroy', function() {
-        $scope.modal.remove();
+        vm.modal.remove();
       });
     }
 
-  }])
+  }
 
 })();

@@ -3,10 +3,13 @@
 
     angular.module('app.subController', [])
 
-    .controller('subCategoriesCtrl', ['$scope', 'ionicToast', 'UpdateFactory', 'Questions', 'SubCategories', '$stateParams', '$ionicLoading', '$firebaseObject', '$ionicHistory', '$state', '$rootScope', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-    // You can include any angular dependencies as parameters for this function
-    // TIP: Access Route Parameters for your page via $stateParams.parameterName
-    function ($scope, ionicToast, UpdateFactory, Questions, SubCategories, $stateParams, $ionicLoading, $firebaseObject, $ionicHistory, $state, $rootScope) {
+    .controller('subCategoriesCtrl', subCategoriesCtrl);
+     
+    subCategoriesCtrl.$inject = ['$scope', 'ionicToast', 'UpdateFactory', 'Questions', 'SubCategories', '$stateParams', '$ionicLoading', '$firebaseObject', '$ionicHistory', '$state', '$rootScope'];
+
+    function subCategoriesCtrl ($scope, ionicToast, UpdateFactory, Questions, SubCategories, $stateParams, $ionicLoading, $firebaseObject, $ionicHistory, $state, $rootScope) {
+
+        var vm = this;
 
         $ionicLoading.show({
         template: '<ion-spinner icon="spiral"></ion-spinner>'
@@ -21,13 +24,13 @@
             }
         }
 
-        $scope.subs = tempSubs;
+        vm.subs = tempSubs;
         $ionicLoading.hide();
 
 
 
         // init qestion set
-        $scope.initQuestionsSets = function(way, subId, subTitle){
+        vm.initQuestionsSets = function(way, subId, subTitle){
 
             $ionicLoading.show({
                 template: '<ion-spinner icon="spiral"></ion-spinner>'
@@ -60,7 +63,7 @@
 
             // // All questions
             // Total questions in this subcategory
-            $scope.totalQuestions = allqs.length;
+            vm.totalQuestions = allqs.length;
             //console.log(allqs);
 
             // If interval or range is bigger than all questions length
@@ -148,7 +151,7 @@
 
         
         // Goto quiz
-        $scope.goToQuizOrStudy = function(subId, subTitle){
+        vm.goToQuizOrStudy = function(subId, subTitle){
 
             // Checking network connection
             if(window.Connection) {
@@ -174,14 +177,19 @@
             // goin to quiz or Study
             var history = $ionicHistory.viewHistory();
 
-            if(history.backView.stateName == "quizWay"){
-                $scope.initQuestionsSets("quizWay", subId, subTitle);
-                
+            if(history.backView.stateName){
+                if(history.backView.stateName == "quizWay"){
+                    vm.initQuestionsSets("quizWay", subId, subTitle);
+                    
+                }else{
+                    vm.initQuestionsSets("studyWay", subId, subTitle);
+                    
+                }
+            }else{
+                vm.initQuestionsSets("quizWay", subId, subTitle);
             }
-            else{
-                $scope.initQuestionsSets("studyWay", subId, subTitle);
-                
-            }
+
+            
         }// Goto quiz
 
 
@@ -229,7 +237,7 @@
 
         
         // Update App
-    $scope.updateApp = function(){
+    vm.updateApp = function(){
         $ionicLoading.show({
         template: '<ion-spinner icon="spiral"></ion-spinner><p>সার্ভার থেকে প্রশ্ন ডাউনলোড হচ্ছে। দয়া করে অপেক্ষা করুন।</p>'
         });
@@ -248,6 +256,6 @@
             
     }// Update App
 
-    }])
+    }
 
 })();

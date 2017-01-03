@@ -2,17 +2,19 @@
   'use strict';
 
     angular.module('app.studyController', [])
+    .controller('studyCtrl', studyCtrl);
+    
+    studyCtrl.$inject = ['$scope', '$ionicPlatform', 'Questions', '$stateParams', '$ionicPopup', 'ionicToast', '$state', '$rootScope', '$ionicLoading'];
+    function studyCtrl($scope, $ionicPlatform, Questions, $stateParams, $ionicPopup, ionicToast, $state, $rootScope, $ionicLoading) {
 
-    .controller('studyCtrl', ['$scope', '$ionicPlatform', 'Questions', '$stateParams', '$ionicPopup', 'ionicToast', '$state', '$rootScope', '$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-    // You can include any angular dependencies as parameters for this function
-    // TIP: Access Route Parameters for your page via $stateParams.parameterName
-    function ($scope, $ionicPlatform, Questions, $stateParams, $ionicPopup, ionicToast, $state, $rootScope, $ionicLoading) {
+        var vm = this;
+
         $ionicLoading.show({
         template: '<ion-spinner icon="spiral"></ion-spinner>'
         });
 
         // Sate Params /quiz/:id/:subCatName/:qType/:startIdx/:endIdx
-        $scope.subCatName = $stateParams.subName;
+        vm.subCatName = $stateParams.subName;
 
 
         // Score
@@ -22,7 +24,7 @@
         
 
         // Suffle function
-        var shuffle = function(array) {
+        function shuffle(array) {
             var m = array.length, t, i;
 
             // While there remain elements to shuffle…
@@ -59,15 +61,15 @@
             set.value = "সেট "+ setNumber +"("+$rootScope.ranges[i].starting + " থেকে " + $rootScope.ranges[i].ending+ ")";
             sets.push(set);
         }
-        $scope.studyQuestionSets = sets;
+        vm.studyQuestionSets = sets;
         // End of Making sets
 
         var setIndex = parseInt($stateParams.setIdx);
-        $scope.setShowing = {};
-        $scope.setShowing.selectedSet = sets[setIndex];
+        vm.setShowing = {};
+        vm.setShowing.selectedSet = sets[setIndex];
         
-        $scope.fixSet = function(){
-            $state.go("study", {id: $stateParams.id, subCatName: $stateParams.subName, setIdx: $scope.setShowing.selectedSet.id});
+        vm.fixSet = function(){
+            $state.go("study", {id: $stateParams.id, subCatName: $stateParams.subName, setIdx: vm.setShowing.selectedSet.id});
         }
 
         // end of question set settings
@@ -77,7 +79,7 @@
 
 
         // arrray index number of the currently showing question
-        $scope.currentIndexNum = 0;
+        vm.currentIndexNum = 0;
 
 
         // Question from index to index
@@ -97,20 +99,20 @@
         var rangedQtns = allqs.slice(start, end);
 
         // Total questions in this subcategory
-        $scope.totalQuestions = rangedQtns.length;
+        vm.totalQuestions = rangedQtns.length;
 
         // Shuffling all questions
-        $scope.allQuestions = shuffle(rangedQtns);
+        vm.allQuestions = shuffle(rangedQtns);
 
         // Shuffling respective question's answers
         var tempOptionsArray = [
-                                {title: $scope.allQuestions[$scope.currentIndexNum].option1, selected: false},
-                                {title: $scope.allQuestions[$scope.currentIndexNum].option2, selected: false},
-                                {title: $scope.allQuestions[$scope.currentIndexNum].option3, selected: false},
-                                {title: $scope.allQuestions[$scope.currentIndexNum].answer, selected: false}
+                                {title: vm.allQuestions[vm.currentIndexNum].option1, selected: false},
+                                {title: vm.allQuestions[vm.currentIndexNum].option2, selected: false},
+                                {title: vm.allQuestions[vm.currentIndexNum].option3, selected: false},
+                                {title: vm.allQuestions[vm.currentIndexNum].answer, selected: false}
                                 ];
         
-        $scope.options = shuffle(tempOptionsArray);
+        vm.options = shuffle(tempOptionsArray);
 
         $ionicLoading.hide();
 
@@ -118,44 +120,44 @@
 
 
     // next-------------------------
-        $scope.next = function(){
+        vm.next = function(){
 
-            if($scope.allQuestions.length == ($scope.currentIndexNum + 1) ){
+            if(vm.allQuestions.length == (vm.currentIndexNum + 1) ){
                 ionicToast.show('এই সেট এর প্রশ্ন শেষ। পরবর্তী সেট এর প্রশ্নের উপর স্টাডি করতে "প্রশ্ন বদলান" থেকে নতুন সেট সিলেক্ট করুন।', 'middle', true, 3500);
             }
             else{
-                $scope.currentIndexNum++;
+                vm.currentIndexNum++;
 
                 // Shuffling next question's answers
                     var tempOptionsArray = [
-                                    {title: $scope.allQuestions[$scope.currentIndexNum].option1, selected: false},
-                                    {title: $scope.allQuestions[$scope.currentIndexNum].option2, selected: false},
-                                    {title: $scope.allQuestions[$scope.currentIndexNum].option3, selected: false},
-                                    {title: $scope.allQuestions[$scope.currentIndexNum].answer, selected: false}
+                                    {title: vm.allQuestions[vm.currentIndexNum].option1, selected: false},
+                                    {title: vm.allQuestions[vm.currentIndexNum].option2, selected: false},
+                                    {title: vm.allQuestions[vm.currentIndexNum].option3, selected: false},
+                                    {title: vm.allQuestions[vm.currentIndexNum].answer, selected: false}
                                     ];
             
-                $scope.options = shuffle(tempOptionsArray);
+                vm.options = shuffle(tempOptionsArray);
             }
             
         }
 
 
-        $scope.previous = function(){
+        vm.previous = function(){
 
-            if($scope.currentIndexNum == 0){
+            if(vm.currentIndexNum == 0){
                 ionicToast.show('এই সেট এর প্রশ্ন শেষ। পরবর্তী সেট এর প্রশ্নের উপর স্টাডি করতে "প্রশ্ন বদলান" থেকে নতুন সেট সিলেক্ট করুন।', 'middle', true, 3500);
             }
             else{
-                $scope.currentIndexNum--;
+                vm.currentIndexNum--;
                     // Shuffling next question's answers
                     var tempOptionsArray = [
-                                    {title: $scope.allQuestions[$scope.currentIndexNum].option1, selected: false},
-                                    {title: $scope.allQuestions[$scope.currentIndexNum].option2, selected: false},
-                                    {title: $scope.allQuestions[$scope.currentIndexNum].option3, selected: false},
-                                    {title: $scope.allQuestions[$scope.currentIndexNum].answer, selected: false}
+                                    {title: vm.allQuestions[vm.currentIndexNum].option1, selected: false},
+                                    {title: vm.allQuestions[vm.currentIndexNum].option2, selected: false},
+                                    {title: vm.allQuestions[vm.currentIndexNum].option3, selected: false},
+                                    {title: vm.allQuestions[vm.currentIndexNum].answer, selected: false}
                                     ];
             
-                $scope.options = shuffle(tempOptionsArray);
+                vm.options = shuffle(tempOptionsArray);
             }
             
         }
@@ -164,11 +166,11 @@
 
 
 
-        $scope.showAnswer = function(options){
+        vm.showAnswer = function(options){
 
             for(var i = 0 ; i < options.length; i++){
-                if($scope.allQuestions[$scope.currentIndexNum].answer == options[i].title){
-                    $scope.rightAnswer = options[i].title;
+                if(vm.allQuestions[vm.currentIndexNum].answer == options[i].title){
+                    vm.rightAnswer = options[i].title;
                 }
             }
 
@@ -187,6 +189,6 @@
             
 
 
-    }])
+    }
 
 })();

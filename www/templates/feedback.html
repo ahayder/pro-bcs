@@ -2,9 +2,9 @@
     <ion-content padding="true" class="has-header">
         <div class="list">
             <label class="item item-input">
-                <textarea placeholder="আপনার মতামত, পরামর্শ অথবা প্রশ্ন ভুল থাকলে অভিযোগ জানান।" ng-model="feed.text"></textarea>
+                <textarea placeholder="আপনার মতামত, পরামর্শ অথবা প্রশ্ন ভুল থাকলে অভিযোগ জানান।" ng-model="vm.feed.text"></textarea>
             </label>
         </div>
-        <button class="button button-block button-positive" ng-click="save(feed.text)">Submit</button>
+        <button class="button button-block button-positive" ng-click="vm.save(vm.feed.text)">পাঠান</button>
     </ion-content>
 </ion-view>

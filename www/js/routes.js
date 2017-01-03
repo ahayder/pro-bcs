@@ -15,20 +15,20 @@
       url: '/quizWay',
       cache: false,
       templateUrl: 'templates/categories.html',
-      controller: 'categoriesCtrl'
+      controller: 'categoriesCtrl as vm'
     })
 
 
     .state('studyWay', {
       url: '/studyWay',
       templateUrl: 'templates/categories.html',
-      controller: 'categoriesCtrl'
+      controller: 'categoriesCtrl as vm'
     })
 
     .state('login', {
       url: '/login',
       templateUrl: 'templates/login.html',
-      controller: 'loginCtrl'
+      controller: 'loginCtrl as vm'
     })
 
 
@@ -37,7 +37,7 @@
       url: '/subCategories/:id',
       cache: false,
       templateUrl: 'templates/subCategories.html',
-      controller: 'subCategoriesCtrl'
+      controller: 'subCategoriesCtrl as vm'
     })
 
     .state('settings', {
@@ -53,14 +53,14 @@
         localStorage.setItem('results',[]);
       },
       templateUrl: 'templates/quiz.html',
-      controller: 'quizCtrl'
+      controller: 'quizCtrl as vm'
     })
 
     .state('study', {
       url: '/study/:id/:subCatName/:setIdx',  
       cache: false,
       templateUrl: 'templates/study.html',
-      controller: 'studyCtrl'
+      controller: 'studyCtrl as vm'
     })
 
     .state('result', {
@@ -70,21 +70,21 @@
         localStorage.setItem('results',[]);
       },
       templateUrl: 'templates/result.html',
-      controller: 'resultCtrl'
+      controller: 'resultCtrl as vm'
     })
 
     .state('leaderboard', {
       url: '/leaderboard',
       cache: false,
       templateUrl: 'templates/leaderboard.html',
-      controller: 'leaderboardCtrl'
+      controller: 'leaderboardCtrl as vm'
     })
 
     .state('feedback', {
       url: '/feedback',
       cache: false,
       templateUrl: 'templates/feedback.html',
-      controller: 'feedbackCtrl'
+      controller: 'feedbackCtrl as vm'
     })
 
     .state('tutorial', {

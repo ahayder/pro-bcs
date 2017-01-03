@@ -1,7 +1,7 @@
 <ion-view title="স্টাডি" id="page7">
 
      <ion-nav-buttons side="right">
-      <button class="button"><span style="font-size:22px;">{{currentIndexNum+1}}/{{totalQuestions}}</span></button>
+      <button class="button"><span style="font-size:22px;">{{vm.currentIndexNum+1}}/{{vm.totalQuestions}}</span></button>
     </ion-nav-buttons>
 
     <ion-header-bar class="bar-subheader calm-bg">
@@ -26,21 +26,21 @@
                     <div class="input-label">
                     প্রশ্ন বদলানঃ
                     </div>
-                    <select ng-model="setShowing.selectedSet" ng-selected="setShowing.selectedSet" 
-                            ng-options="set.value for set in studyQuestionSets" ng-change="fixSet()"></select>
+                    <select ng-model="vm.setShowing.selectedSet" ng-selected="vm.setShowing.selectedSet" 
+                            ng-options="set.value for set in vm.studyQuestionSets" ng-change="vm.fixSet()"></select>
                 </label>
             </div>
 
             <div class="list card" style="margin-top:3px; margin-bottom:3px;">
-                <div class="item item-divider item-energized item-text-wrap primary-text-color">{{allQuestions[currentIndexNum].title}}</div>
-                <div class="item item-text-wrap" ng-repeat="opt in options" 
-                ng-class="opt.title == rightAnswer ? 'show-answer' : 'nothing-class'">{{opt.title}}</div>
+                <div class="item item-divider item-energized item-text-wrap primary-text-color">{{vm.allQuestions[vm.currentIndexNum].title}}</div>
+                <div class="item item-text-wrap" ng-repeat="opt in vm.options" 
+                ng-class="opt.title == vm.rightAnswer ? 'show-answer' : 'nothing-class'">{{opt.title}}</div>
             </div>
 
             <div class="button-bar">
-                <div class="button button-clear button-small button-calm icon ion-arrow-left-a" ng-click="previous()"></div>
-                <div class="button button-small button-positive" ng-click="showAnswer(options)">উত্তর দেখুন</div>
-                <div class="button button-clear button-small button-calm icon ion-arrow-right-a" ng-click="next()"></div>
+                <div class="button button-clear button-small button-calm icon ion-arrow-left-a" ng-click="vm.previous()"></div>
+                <div class="button button-small button-positive" ng-click="vm.showAnswer(vm.options)">উত্তর দেখুন</div>
+                <div class="button button-clear button-small button-calm icon ion-arrow-right-a" ng-click="vm.next()"></div>
             </div>
         </div>
 
@@ -54,7 +54,7 @@
 
 
         <div ng-show="view">
-            <div class="card " ng-repeat="q in allQuestions">
+            <div class="card " ng-repeat="q in vm.allQuestions">
                 <div class="item item-divider item-energized item-text-wrap primary-text-color">
                     {{q.title}}
                 </div>

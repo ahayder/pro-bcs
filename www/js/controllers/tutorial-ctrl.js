@@ -2,8 +2,11 @@
   'use strict';
 
   angular.module('app.tutorialController', [])
+  .controller('tutorialCtrl', tutorialCtrl)
+  .controller('introCtrl', introCtrl);
 
-  .controller('tutorialCtrl', ['$state', '$ionicSlideBoxDelegate', '$ionicHistory', function($state, $ionicSlideBoxDelegate, $ionicHistory) {
+  tutorialCtrl.$inject = ['$state', '$ionicSlideBoxDelegate', '$ionicHistory'];
+  function tutorialCtrl($state, $ionicSlideBoxDelegate, $ionicHistory) {
     
     var vm = this;
     // Called to navigate to the main app
@@ -24,10 +27,12 @@
     vm.slideChanged = function(index) {
       vm.slideIndex = index;
     };
-  }])
+  }
 
-  .controller('introCtrl', ['$state', '$ionicSlideBoxDelegate', '$ionicHistory', 'ionicToast', '$ionicLoading', 'UpdateFactory',
-  function($state, $ionicSlideBoxDelegate, $ionicHistory, ionicToast, $ionicLoading, UpdateFactory) {
+  
+  
+  introCtrl.$inject = ['$state', '$ionicSlideBoxDelegate', '$ionicHistory', 'ionicToast', '$ionicLoading', 'UpdateFactory'];
+  function introCtrl($state, $ionicSlideBoxDelegate, $ionicHistory, ionicToast, $ionicLoading, UpdateFactory){
 
     var vm = this;
   
@@ -112,6 +117,6 @@
           
     }// Update App
 
-  }])
+  }
 
 })();

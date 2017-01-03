@@ -3,15 +3,18 @@
 
     angular.module('app.feedbackController', [])
         
-    .controller('feedbackCtrl', ['$scope', '$state', '$firebaseArray', 'ionicToast', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-    // You can include any angular dependencies as parameters for this function
-    // TIP: Access Route Parameters for your page via $stateParams.parameterName
-    function ($scope, $state, $firebaseArray, ionicToast) {
+    .controller('feedbackCtrl', feedbackCtrl);
+    
+    feedbackCtrl.$inject = ['$scope', '$state', '$firebaseArray', 'ionicToast'];
 
-        $scope.feed = {};
-        $scope.feed.text = "";
+    function feedbackCtrl($scope, $state, $firebaseArray, ionicToast) {
 
-        $scope.save = function(text){
+        var vm = this;
+
+        vm.feed = {};
+        vm.feed.text = "";
+
+        vm.save = function(text){
             // Checking network connection
             if(window.Connection) {
                 if(navigator.connection.type == Connection.NONE) {
@@ -28,11 +31,11 @@
                     },function(error){
                         ionicToast.show('দুঃখিত আবার চেষ্টা করুন', 'middle', false, 1000);
                     });
-                    $scope.feed.text = "";
+                    vm.feed.text = "";
                 }
             }// Checking network connection
         }
         
-    }])
+    }
 
 })();

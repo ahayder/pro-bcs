@@ -1,7 +1,7 @@
-<ion-view title="ক্যাটাগরি" id="page4">
+<ion-view title="ক্যাটাগরি - {{vm.way}}" id="page4">
 
     <ion-nav-buttons side="right">
-        <button class="button button-clear icon ion-ios-loop-strong text-primary-color" ng-click="updateApp()"></button>
+        <button class="button button-clear icon ion-ios-loop-strong text-primary-color" ng-click="vm.updateApp()"></button>
         <button class="button button-clear icon ion-settings text-primary-color" ui-sref="settings"></button>
     </ion-nav-buttons>
 
@@ -14,17 +14,17 @@
                 <input type="search" placeholder="খুঁজুন" ng-model="search.$value">
             </label>
 
-            <ion-item ng-repeat="cat in cats" class="item-icon-right" id="categories-list-item4" ui-sref="subCategories({id: cat.$id})"
+            <ion-item ng-repeat="cat in vm.cats" class="item-icon-right" id="categories-list-item4" ui-sref="subCategories({id: cat.$id})"
                 ng-if="$last">
                 <h2 class="assertive">{{:: cat.$value}}</h2>
                 <i class="icon ion-ios-arrow-thin-right"></i>
             </ion-item>
-            <ion-item ng-repeat="cat in ::cats | limitTo:7 | filter: search:strict" class="item-text-wrap item-icon-right" id="categories-list-item4"
+            <ion-item ng-repeat="cat in ::vm.cats | limitTo:7 | filter: search:strict" class="item-text-wrap item-icon-right" id="categories-list-item4"
                 ng-hide="$last">
 
                 <div class="row row-no-padding">
                     <div class="col-25 see-syl">
-                        <a class="button button-small button-assertive syl" ng-click="showSyllabus($index)">সিলেবাস</a>
+                        <a class="button button-small button-assertive syl" ng-click="vm.showSyllabus($index)">সিলেবাস</a>
                     </div>
                     <div class="col-75" ui-sref="subCategories({id: cat.$id})">
                         <h2 class="cat-item">{{:: cat.$value}}<sup style="color: #e66258;"> ({{cat.examTotalMarks}} নাম্বার)</sup></h2>

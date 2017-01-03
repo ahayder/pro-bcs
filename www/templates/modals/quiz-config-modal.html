@@ -1,7 +1,7 @@
 <ion-modal-view>
     
     <ion-header-bar class="bar-subheader calm-bg">
-        <h2 class="title text-primary-color">মোট {{totalQuestions}} টি প্রশ্ন</h2>
+        <h2 class="title text-primary-color">মোট {{vm.totalQuestions}} টি প্রশ্ন</h2>
     </ion-header-bar>
     <ion-content padding="true" class="has-header">
 
@@ -14,7 +14,7 @@
                 <div class="input-label primary-text-color ">
                     কুইজে কতগুলো প্রশ্ন থাকবে?
                 </div>
-                <select ng-model="selectedValue"  ng-selected="selectedValue" ng-options="range.value as range.value for range in dropdownRanges" ng-change="getRange(selectedValue)">
+                <select ng-model="selectedValue"  ng-selected="selectedValue" ng-options="range.value as range.value for range in vm.dropdownRanges" ng-change="vm.getRange(selectedValue)">
                 </select>
             </label>
 
@@ -25,7 +25,7 @@
                 প্রশ্ন সেট সিলেক্ট করুন
             </div>
             <ion-list>
-                <ion-radio name="forRange" ng-repeat="range in ranges" ng-model="$parent.rangeValue" ng-value="range" ng-click="showActionSheet(range)">({{range.starting}} to {{range.ending}}) <span class="light-primary-color-text">সেট {{$index+1}}</span></ion-radio>
+                <ion-radio name="forRange" ng-repeat="range in ranges" ng-model="$parent.rangeValue" ng-value="range" ng-click="vm.showActionSheet(range)">({{range.starting}} to {{range.ending}}) <span class="light-primary-color-text">সেট {{$index+1}}</span></ion-radio>
             </ion-list>
         </div>  
     </ion-content>

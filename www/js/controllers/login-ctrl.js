@@ -3,13 +3,16 @@
 
     angular.module('app.loginController', [])
 
-    .controller('loginCtrl', ['$scope', '$firebaseAuth', '$state', 'ionicToast', 'Auth', 'ngFB', '$cordovaOauth', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-    // You can include any angular dependencies as parameters for this function
-    // TIP: Access Route Parameters for your page via $stateParams.parameterName
-    function ($scope, $firebaseAuth, $state, ionicToast, Auth, ngFB, $cordovaOauth) {
+    .controller('loginCtrl', loginCtrl);
+    
+    loginCtrl.$inject = ['$scope', '$firebaseAuth', '$state', 'ionicToast', 'Auth', 'ngFB', '$cordovaOauth'];
+
+    function loginCtrl($scope, $firebaseAuth, $state, ionicToast, Auth, ngFB, $cordovaOauth) {
+
+        var vm = this;
 
         // FB Login
-        $scope.fbLogin = function(){
+        vm.fbLogin = function(){
             // var myconfig = {};
             // myconfig.fbClientId = "1746998085570124";
             // Auth.loginWithFacebook(myconfig).then(function(suc){
@@ -51,7 +54,7 @@
         }// End of fb login
 
 
-        $scope.googleLogin = function(){
+        vm.googleLogin = function(){
             
             var androidGoogleClientId = "251798023266-cok690t322r1njo6rk8rl38vi2od6mf9.apps.googleusercontent.com";
             Auth.loginWithGoogle(androidGoogleClientId).then(function(suc){
@@ -68,6 +71,6 @@
 
         
 
-    }])
+    }
 
 })();

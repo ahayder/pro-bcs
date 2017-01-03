@@ -3,32 +3,40 @@
 
 angular.module('app.resultController', [])
 
-.controller('resultCtrl', ['$scope', '$state', '$rootScope', 'ResultFacotry', '$stateParams', '$ionicModal', 'Auth', 'ionicToast', '$firebaseArray', '$firebaseObject', 'ngFB', '$ionicHistory', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $state, $rootScope, ResultFacotry, $stateParams, $ionicModal, Auth, ionicToast, $firebaseArray, $firebaseObject, ngFB, $ionicHistory) {
+.controller('resultCtrl', resultCtrl)
+
+resultCtrl.$inject = ['$scope', '$state', '$rootScope', 'ResultFacotry', '$stateParams', '$ionicModal', 'Auth', 'ionicToast', '$firebaseArray', '$firebaseObject', 'ngFB', '$ionicHistory'];
+
+function resultCtrl($scope, $state, $rootScope, ResultFacotry, $stateParams, $ionicModal, Auth, ionicToast, $firebaseArray, $firebaseObject, ngFB, $ionicHistory) {
+
+    var vm = this;
 
     // Admob code
         // preppare and load ad resource in background, e.g. at begining of game level
         var inter_key = "ca-app-pub-9736917302037050/4559941520";
-        if(AdMob) AdMob.prepareInterstitial( {adId: inter_key, autoShow:true, isTesting:false} );
-        // show the interstitial later, e.g. at end of game level
-        if(AdMob) AdMob.showInterstitial();
+        try{
+            if(AdMob) AdMob.prepareInterstitial( {adId: inter_key, autoShow:true, isTesting:false} );
+            // show the interstitial later, e.g. at end of game level
+            if(AdMob) AdMob.showInterstitial();
+        }catch(e){
+            conosole.log(e);
+        }
+        
     // End of Admob code
 
     
     // Finding next set
-    $scope.subcategoryId = $stateParams.subId;
-    $scope.subName = $stateParams.subCatName;
+    vm.subcategoryId = $stateParams.subId;
+    vm.subName = $stateParams.subCatName;
     var allSets = $rootScope.quizQuestionSets
-    var setIndex = parseInt($stateParams.setIdx);
+    var setIndex = parseFloat($stateParams.setIdx);
 
     if((allSets.length-1) > setIndex){
-        $scope.ifNextSet = true;
-        $scope.nextSetIndex = setIndex + 1;
+        vm.ifNextSet = true;
+        vm.nextSetIndex = setIndex + 1;
         // User Review functionality could be implemented here
     }else{
-        $scope.ifNextSet = false;
+        vm.ifNextSet = false;
         // User Review functionality could be implemented here
     }
 
@@ -46,7 +54,7 @@ function ($scope, $state, $rootScope, ResultFacotry, $stateParams, $ionicModal, 
     
     var temp = ResultFacotry.getResult();
 
-    $scope.lbButtonDisable = false;
+    vm.lbButtonDisable = false;
     
 
     // Setting the backgroud color classs based on answer correctness
@@ -61,7 +69,7 @@ function ($scope, $state, $rootScope, ResultFacotry, $stateParams, $ionicModal, 
         }
     }
 
-    $scope.results = temp;
+    vm.results = temp;
 
 
     // Calculation of result
@@ -70,11 +78,11 @@ function ($scope, $state, $rootScope, ResultFacotry, $stateParams, $ionicModal, 
     marks.correctPercentage = marks.correct *  100 / marks.total;
     marks.wrongPercentage = marks.wrong *  100 / marks.total;
     var score = marks.correct - (marks.wrong * 0.50);
-    marks.score = score < 0 ? 0:score;
+    marks.score = score < 0 ? 0:parseFloat(score);
 
 
 
-    $scope.marks = marks;
+    vm.marks = marks;
 
     // For chlering the the temp value in result facotry
     $scope.$on('$ionicView.beforeLeave', function() {
@@ -90,7 +98,7 @@ function ($scope, $state, $rootScope, ResultFacotry, $stateParams, $ionicModal, 
         scope: $scope,
         animation: 'slide-in-up'
     }).then(function(modal) {
-        $scope.modal = modal;
+        vm.modal = modal;
     });
 
 
@@ -100,20 +108,20 @@ function ($scope, $state, $rootScope, ResultFacotry, $stateParams, $ionicModal, 
         scope: $scope,
         animation: 'slide-in-up'
     }).then(function(modal) {
-        $scope.loginModal = modal;
+        vm.loginModal = modal;
     });
 
 
 
 
     // Join NLB
-    $scope.joinNLB = function(){
+    vm.joinNLB = function(){
         if ($rootScope.user) {
             // User is signed in.
             // Share score into leaderboard
-                $scope.modal.show();
+                vm.modal.show();
         } else { 
-                $scope.loginModal.show();
+                vm.loginModal.show();
         }
     }
 
@@ -126,26 +134,26 @@ function ($scope, $state, $rootScope, ResultFacotry, $stateParams, $ionicModal, 
 
 
     // FB Login
-    $scope.fbLogin = function(){
-        // $scope.loginModal.hide();
+    vm.fbLogin = function(){
+        // vm.loginModal.hide();
         // var myconfig = {};
         // myconfig.fbClientId = "1746998085570124";
         // Auth.loginWithFacebook(myconfig).then(function(suc){
             
         //     ionicToast.show("Successfully signed in with Facebook", 'top', false, 2000);
-        //     $scope.modal.show();
+        //     vm.modal.show();
         // },
         // function(err){
-        //     $scope.loginModal.hide();
+        //     vm.loginModal.hide();
         //     ionicToast.show("Something went wrong, please try agin", 'top', false, 2000);
         // });
 
         ngFB.login({ scope: 'email' }).then(
         function (response) {
             if (response.status === 'connected') {
-                $scope.loginModal.hide();
+                vm.loginModal.hide();
                 ionicToast.show("ফেইসবুক দিয়ে লগইন সম্পন্ন হয়েছে", 'top', false, 2000);
-                $scope.modal.show();
+                vm.modal.show();
  
                 var credential = firebase.auth.FacebookAuthProvider.credential(
                     response.authResponse.accessToken);
@@ -170,12 +178,12 @@ function ($scope, $state, $rootScope, ResultFacotry, $stateParams, $ionicModal, 
     }
 
     // Google login
-    $scope.googleLogin = function(){
-        $scope.loginModal.hide();
+    vm.googleLogin = function(){
+        vm.loginModal.hide();
         var androidGoogleClientId = "251798023266-cok690t322r1njo6rk8rl38vi2od6mf9.apps.googleusercontent.com";
         Auth.loginWithGoogle(androidGoogleClientId).then(function(suc){
             ionicToast.show("গুগল দিয়ে লগইন সম্পন্ন হয়েছে", 'top', false, 2000);
-            $scope.modal.show();
+            vm.modal.show();
         },
         function(err){
             alert(json.stringify(err))
@@ -192,7 +200,7 @@ function ($scope, $state, $rootScope, ResultFacotry, $stateParams, $ionicModal, 
 
     // Leader board score Share
 
-    $scope.goToLeaderboard = function(){
+    vm.goToLeaderboard = function(){
 
         // Checking network connection
         if(window.Connection) {
@@ -212,33 +220,33 @@ function ($scope, $state, $rootScope, ResultFacotry, $stateParams, $ionicModal, 
                 leader.$loaded().then(
                     function(ref){
                         if(ref.length == 0){
-                            var score = $scope.marks.score.toFixed(2);
-                            var correctness = $scope.marks.correctPercentage.toFixed(2);
+                            var score = parseFloat(vm.marks.score);
+                            var correctness = vm.marks.correctPercentage.toFixed(2);
 
                             leadersRef.child($rootScope.user.uid).set({
 
                                 name: $rootScope.user.displayName,
                                 email: $rootScope.user.email,
-                                score: score,
+                                score: score.toFixed(2),
                                 correctness: correctness,
                                 photoURL: $rootScope.user.photoURL
 
                             }).then(function(response){
-                                $scope.modal.hide();
-                                $scope.lbButtonDisable = true;
+                                vm.modal.hide();
+                                vm.lbButtonDisable = true;
                                 ionicToast.show('আপনার স্কোর লিডারবোর্ডে যোগ হয়েছে। আপনার অবস্থান দেখার জন্য লিডারবোর্ড মেনু তে যান।', 'middle', false, 2500);
                             },function(error){
-                                $scope.modal.hide();
+                                vm.modal.hide();
                                 ionicToast.show('দুঃখিত আবার চেষ্টা করুন।', 'middle', false, 1000);
                             });
 
                         }  // End of if
                         else{
-                            var oldCorrectness = parseInt(ref[0].$value);
-                            var oldScore = parseInt(ref[3].$value);
+                            var oldCorrectness = parseFloat(ref[0].$value);
+                            var oldScore = parseFloat(ref[3].$value);
 
-                            var newCorrectness = (oldCorrectness + $scope.marks.correctPercentage)/2;
-                            var newScore = oldScore + parseInt($scope.marks.score);
+                            var newCorrectness = (oldCorrectness + vm.marks.correctPercentage)/2;
+                            var newScore = oldScore + parseFloat(vm.marks.score);
 
                             console.log(newCorrectness);
                             console.log(newScore);
@@ -256,22 +264,22 @@ function ($scope, $state, $rootScope, ResultFacotry, $stateParams, $ionicModal, 
 
                                     }).then(function(response){
                                         console.log("Newly Added from update func");
-                                        $scope.modal.hide();
-                                        $scope.lbButtonDisable = true;
+                                        vm.modal.hide();
+                                        vm.lbButtonDisable = true;
                                         ionicToast.show("আপনার স্কোর লিডারবোর্ডে আপডেট হয়েছে। আপনার অবস্থান দেখার জন্য লিডারবোর্ড মেনু তে যান।", 'middle', false, 2500);
                                     },function(error){
-                                        $scope.modal.hide();
+                                        vm.modal.hide();
                                         ionicToast.show('দুঃখিত আবার চেষ্টা করুন।', 'middle', false, 1000);
                                     });
                             },
                             function(error){
-                                $scope.modal.hide();
+                                vm.modal.hide();
                                 ionicToast.show('দুঃখিত আবার চেষ্টা করুন।', 'middle', false, 1000);
                             });
                         } // End of else
                     }, // End ot ref function
                     function(error){
-                        $scope.modal.hide();
+                        vm.modal.hide();
                         ionicToast.show('দুঃখিত আবার চেষ্টা করুন।', 'middle', false, 2000);
                     }// End of error funciton
                 ); // End of then
@@ -282,10 +290,10 @@ function ($scope, $state, $rootScope, ResultFacotry, $stateParams, $ionicModal, 
     } /// End of go to leaderboard funciton
 
 
-    $scope.backToQuiz = function(){
+    vm.backToQuiz = function(){
         $ionicHistory.goBack(-2);    
     }
 
-}])
+}
 
 })();

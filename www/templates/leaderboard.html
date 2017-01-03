@@ -2,18 +2,18 @@
     <ion-content padding="true" class="has-header">
 
         <!--Show positoin-->
-        <div class="card list" ng-show="enrolled">
+        <div class="card list" ng-show="vm.enrolled">
             <div class="item item-divider positive-bg primary-text-color">
-                আপনি {{:: your.position}} তম অবস্থানে আছেন {{:: totalLeaders}} জন এর মাঝে
+                আপনি {{:: vm.your.position}} তম অবস্থানে আছেন {{:: vm.totalLeaders}} জন এর মাঝে
             </div>
             <div class="item item-text-wrap">
-                স্কোর: {{:: your.score}}(উত্তর সঠিক হয়েছে {{:: your.correctness}}%)
+                স্কোর: {{:: vm.your.score}}(উত্তর সঠিক হয়েছে {{:: vm.your.correctness}}%)
             </div>
         </div>
 
 
         <!--When not enlisted in leader board-->
-        <div class="card list" ng-show="notEnrolled">
+        <div class="card list" ng-show="vm.notEnrolled">
             <div class="item item-divider energized-bg primary-text-color">
                 <i class="icon ion-alert-circled"></i> আজই লিডার বোর্ডে যোগদান করুন!
             </div>
@@ -24,7 +24,7 @@
 
 
         <!--when logged out-->
-        <div class="card list" ng-hide="loginState">
+        <div class="card list" ng-hide="vm.loginState">
             <div class="item item-divider item-text-wrap energized-bg primary-text-color">
                 <i class="icon ion-alert-circled"></i> লগইন করুন লিডার বোর্ডে আপনার অবস্থান দেখার জন্য
             </div>
@@ -36,7 +36,7 @@
 
 
         <ion-list>
-            <ion-item class="item-thumbnail-left" ng-repeat="leader in ::allleaders | orderBy: '-score'">
+            <ion-item class="item-thumbnail-left" ng-repeat="leader in ::vm.allleaders | orderBy: '-score'">
                 <img ng-src="{{leader.photoURL || placeholderImage}}">
                 <h2>{{:: $index+1}}. {{:: leader.name}}</h2>
                 <p>স্কোরঃ {{:: leader.score}}(উত্তর সঠিক হয়েছে {{:: leader.correctness}}%)</p>

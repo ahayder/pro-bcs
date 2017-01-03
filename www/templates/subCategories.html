@@ -1,7 +1,7 @@
 <ion-view title="সাব ক্যাটাগরি" id="page6">
 
     <ion-nav-buttons side="right">
-        <button class="button button-clear icon ion-ios-loop-strong text-primary-color" ng-click="updateApp()"></button>
+        <button class="button button-clear icon ion-ios-loop-strong text-primary-color" ng-click="vm.updateApp()"></button>
         <button class="button button-clear icon ion-settings text-primary-color" ui-sref="settings"></button>
     </ion-nav-buttons>
 
@@ -16,8 +16,8 @@
                 <input type="search" placeholder="খুঁজুন" ng-model="search.title">
             </label>
 
-            <ion-item  ng-repeat="sub in ::subs | filter: search:strict" class="item-icon-right" 
-            ng-click="goToQuizOrStudy(sub.$id, sub.title)">{{:: sub.title}}
+            <ion-item  ng-repeat="sub in ::vm.subs | filter: search:strict" class="item-icon-right" 
+            ng-click="vm.goToQuizOrStudy(sub.$id, sub.title)">{{:: sub.title}}
                 <i class="icon ion-ios-arrow-thin-right"></i>
             </ion-item>
 
